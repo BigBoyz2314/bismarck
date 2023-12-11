@@ -1,0 +1,20 @@
+.bg-nav {
+    background-color: #0F4FA8;
+}
+
+.input-field {
+    padding: 2px 2px;
+    border-radius: 2px;   
+}
+
+.form-control, .form-select {
+    padding: 2px 10px !important;
+}
+
+.office-info .form-control, .form-select {
+    width: 40% !important;
+}
+
+.office-info ul {
+    
+}
