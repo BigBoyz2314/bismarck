@@ -18,11 +18,11 @@
         <div class="row justify-content-center mt-5">
             <div class="col-md-6">
                 <h2 class="text-center mb-4">Login</h2>
-                <form action="login.php" method="POST">
-                    <div class="mb-3">
+                <form action="auth.php" method="POST">
+                    <!-- <div class="mb-3">
                         <label for="clientid" class="form-label">Client ID</label>
                         <input type="text" class="form-control" id="clientid" name="clientid" required>
-                    </div>
+                    </div> -->
                     <div class="mb-3">
                         <label for="username" class="form-label">User Name</label>
                         <input type="text" class="form-control" id="username" name="username" required>
