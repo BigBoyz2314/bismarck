@@ -6,5 +6,7 @@ deployment:
     - /bin/cp login.php $DEPLOYPATH
     - /bin/cp index.php $DEPLOYPATH
     - /bin/cp register.php $DEPLOYPATH
+    - /bin/cp register-codes.php $DEPLOYPATH
+    - /bin/cp installation.php $DEPLOYPATH
     # - /bin/cp -R includes $DEPLOYPATH
     - /bin/cp -R css $DEPLOYPATH
