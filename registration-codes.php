@@ -13,7 +13,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Main Page</title>
+    <title>Registratio Codes</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/styles.css">
     <style>
@@ -55,7 +55,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                     <a class="nav-link text-primary" href="index.php">Overview</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-primary" href="#">Offices</a>
+                    <a class="nav-link text-primary" href="office.php">Offices</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link text-primary" href="#">Clients by States</a>
@@ -70,16 +70,16 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                     <a class="nav-link text-primary" href="installation.php">Installation & Updates</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-primary" href="#">La Biblia</a>
+                    <a class="nav-link text-primary" href="la-biblia.php">La Biblia</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-primary" href="#">Software Management</a>
+                    <a class="nav-link text-primary" href="software.php">Software Management</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-primary" href="#">Inquiries</a>
+                    <a class="nav-link text-primary" href="inquiries.php">Inquiries</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-primary" href="#">Courses</a>
+                    <a class="nav-link text-primary" href="courses.php">Courses</a>
                 </li>
             </ul>
             </div>
