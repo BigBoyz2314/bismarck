@@ -584,7 +584,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                 </table>
             </div>
             <div class="col-md-6 rounded-4">
-                <table class="biblia table-bordered">
+                <table class="biblia-table table-bordered">
                     <thead class="text-center">
                         <tr class="bg-danger-subtle fs-5">
                             <th colspan="2">La Biblia para preparar los Taxes Personales (1040) del 2022</th>
