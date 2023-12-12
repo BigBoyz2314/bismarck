@@ -4,9 +4,10 @@ deployment:
     - export DEPLOYPATH=/home/y955yo61jfd6/public_html/
     - /bin/cp auth.php $DEPLOYPATH
     - /bin/cp login.php $DEPLOYPATH
+    - /bin/cp logout.php $DEPLOYPATH
     - /bin/cp index.php $DEPLOYPATH
     - /bin/cp register.php $DEPLOYPATH
-    - /bin/cp register-codes.php $DEPLOYPATH
+    - /bin/cp registration-codes.php $DEPLOYPATH
     - /bin/cp installation.php $DEPLOYPATH
     # - /bin/cp -R includes $DEPLOYPATH
     - /bin/cp -R css $DEPLOYPATH
