@@ -1,5 +1,13 @@
 <?php
 
+session_start();
+
+// Check if the user is logged in, if not then redirect him to login page
+if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true || $_SESSION["role"] !== 1){
+    header("location: index.php");
+    exit;
+}
+
 if($_SERVER["REQUEST_METHOD"] == "POST") { 
       
     // Include file which makes the 

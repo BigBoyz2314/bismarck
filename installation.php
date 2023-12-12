@@ -52,7 +52,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
             <div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
             <ul class="navbar-nav mb-2 mb-lg-0 fw-semibold">
                 <li class="nav-item">
-                    <a class="nav-link active" href="#">Overview</a>
+                    <a class="nav-link text-primary" href="index.php">Overview</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link text-primary" href="#">Offices</a>
@@ -67,7 +67,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                     <a class="nav-link text-primary" href="registration-codes.php">Registration Codes</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-primary" href="installation.php">Installation & Updates</a>
+                    <a class="nav-link active" href="installation.php">Installation & Updates</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link text-primary" href="#">La Biblia</a>
@@ -88,93 +88,60 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 	<div class="container-fluid w-75">
         <div class="row mt-3">
             <div class="col-md-6">
-                <h3>Overview</h3>
+                <h3>Installation & Updates</h3>
             </div>
-            <div class="col-md-2 offset-2 fw-semibold">
-                <a href="#" class="d-block">Add New Office</a>
-                <a href="#">Add Student</a>
+            <div class="col-md-12 rounded-4">
+            <table class="table table-bordered w-25">
+                <thead class="table-info">
+                    <tr>
+                        <th>2022</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Software Instalaltion</td>
+                    </tr>
+                    <tr>
+                        <td>Software Update</td>
+                    </tr>
+                    <tr>
+                        <td>Insta</td>
+                    </tr>
+                    <tr>
+                        <td>709 Gift Tax</td>
+                    </tr>
+                    <tr>
+                        <td>990 Exempt Organizations</td>
+                    </tr>
+                    <tr>
+                        <td>1040 Individual</td>
+                    </tr>
+                    <tr>
+                        <td>1041 Fiduciary</td>
+                    </tr>
+                    <tr>
+                        <td>1065 Partnership</td>
+                    </tr>
+                    <tr>
+                        <td>1120 C</td>
+                    </tr>
+                    <tr>
+                        <td>1120 S</td>
+                    </tr>
+                    <tr>
+                        <td>State Updates - Individuals</td>
+                    </tr>
+                    <tr>
+                        <td>State Updates - Business</td>
+                    </tr>
+                </tbody>
+            </table>
             </div>
-            <div class="col-md-2 fw-semibold">
-                <a href="#">Register Payment</a>
-            </div>
-            <hr>
-            <div class="col-md-4">
-                <div class="d-flex flex-column align-items-center border p-3 rounded-4">
-                    <canvas id="myChart" height="200px"></canvas>
-                    <div class="w-100 text-center">
-                        <label for="officeType">Office Type:</label>
-                        <select name="officeType" id="officetype" class="d-inline form-select w-50">
-                            <option value="Active">Active</option>
-                            <option value="Inactive">Inactive</option>
-                            <option value="Released">Released</option>
-                            <option value=""></option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-8 text-center bg-info-subtle rounded-4">
-                <h4 class="py-3">Office Information</h4>
-                <div class="office-info">
-                    <select name="officeSelect" id="officeSelect" class="me-2 form-select d-inline">
-                        <option value="EFIN">EFIN</option>
-                    </select>
-                    <input type="text" name="" id="" class="ms-2 form-control d-inline">
-                    <button class="btn btn-primary ms-2">Search</button>
-                    <hr>
-                    <ul class="list-unstyled text-start fw-semibold ps-5">
-                        <li>EFIN: </li>
-                        <li>Company Name: </li>
-                        <li>Contact First Name: </li>
-                        <li>Contact Last Name: </li>
-                        <li>Phone: </li>
-                        <li>Email: </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-
-
-
-
-	</div>
+	    </div>
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-	<script type="text/javascript">
-		function googleTranslateElementInit() {
-		  new google.translate.TranslateElement({pageLanguage: 'en', includedLanguages: 'es', layout: google.translate.TranslateElement.InlineLayout.SIMPLE, autoDisplay: false}, 'google_translate_element');
-		}
-
-        var xValues = ["2023", "2022", "2021"];
-        var yValues = [60, 49, 44,];
-        var barColors = ["red", "green","blue","orange","brown"];
-
-        new Chart("myChart", {
-        type: "bar",
-        data: {
-            labels: xValues,
-            datasets: [{
-            backgroundColor: barColors,
-            data: yValues
-            }]
-        },
-        options: {
-            plugins: {
-                legend: {
-                    display: false,
-                },
-                title: {
-                    display: true,
-                    text: "Office Information Graph"
-                }
-            }
-            // title: "Office Information Graph",
-        }
-        });
-		
-		</script>
-		
-		<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+	<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </body>
 </html>
