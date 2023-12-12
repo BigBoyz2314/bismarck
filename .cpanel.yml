@@ -11,6 +11,7 @@ deployment:
     - /bin/cp login.php $DEPLOYPATH
     - /bin/cp logout.php $DEPLOYPATH
     - /bin/cp office.php $DEPLOYPATH
+    - /bin/cp production.php $DEPLOYPATH
     - /bin/cp register.php $DEPLOYPATH
     - /bin/cp registration-codes.php $DEPLOYPATH
     - /bin/cp software.php $DEPLOYPATH
