@@ -183,6 +183,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                 <table class="table table-bordered table-responsive">
                     <thead>
                         <tr>
+                            <th>EFIN</th>
                             <th>Contact First Name</th>
                             <th>Contact Last Name</th>
                             <th>Phone</th>
@@ -195,6 +196,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                     </thead>
                     <tbody>
                         <tr>
+                            <td></td>
                             <td></td>
                             <td></td>
                             <td></td>
