@@ -61,7 +61,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                     <a class="nav-link text-primary" href="#">Clients by States</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-primary" href="#">Production</a>
+                    <a class="nav-link text-primary" href="production.php">Production</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link text-primary" href="registration-codes.php">Registration Codes</a>

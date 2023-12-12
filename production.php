@@ -13,7 +13,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Courses</title>
+    <title>Overview</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/styles.css">
     <style>
@@ -61,7 +61,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                     <a class="nav-link text-primary" href="#">Clients by States</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-primary" href="production.php">Production</a>
+                    <a class="nav-link active" href="production.php">Production</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link text-primary" href="registration-codes.php">Registration Codes</a>
@@ -79,7 +79,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                     <a class="nav-link text-primary" href="inquiries.php">Inquiries</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" href="courses.php">Courses</a>
+                    <a class="nav-link text-primary" href="courses.php">Courses</a>
                 </li>
             </ul>
             </div>
@@ -88,54 +88,134 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 	<div class="container-fluid w-75">
         <div class="row mt-3">
             <div class="col-md-6">
-                <h3>Courses</h3>
+                <h3>Bismarck Business Group, LLC</h3>
             </div>
-            <div class="col-md-12 rounded-4">
-                <table class="table table-bordered w-50">
-                    <thead class="table-success">
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table table-bordered">
+                    <thead class="table-warning">
                         <tr>
-                            <th>Curso de Preparacion de Impuestos</th>
+                            <th>Production</th>
+                            <th>2022</th>
+                            <th>2021</th>
+                            <th>2020</th>
+                            <th>Total</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td>TEMA 1</td>
+                            <td>Transmision Taxes Personales - 1040</td>
+                            <td>150</td>
+                            <td>10</td>
+                            <td>2</td>
+                            <td>162</td>
                         </tr>
                         <tr>
-                            <td>TEMA 2</td>
+                            <td>Transmision Taxes Corporaciones C - 1120</td>
+                            <td>5</td>
+                            <td></td>
+                            <td></td>
+                            <td>5</td>
                         </tr>
                         <tr>
-                            <td>TEMA 3</td>
+                            <td>Transmision Taxes Corporaciones S - 1120-S</td>
+                            <td>2</td>
+                            <td></td>
+                            <td></td>
+                            <td>2</td>
                         </tr>
                         <tr>
-                            <td>TEMA 4</td>
+                            <td>Transmision Taxes Partneship - 1165</td>
+                            <td>3</td>
+                            <td></td>
+                            <td></td>
+                            <td>3</td>
                         </tr>
                         <tr>
-                            <td>TEMA 5</td>
+                            <td>Total Transmisiones</td>
+                            <td>160</td>
+                            <td>10</td>
+                            <td>2</td>
+                            <td>172</td>
                         </tr>
                         <tr>
-                            <td>TEMA 6</td>
+                            <td>Total Taxes con Fee Collect aprobados.</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td class="bg-danger-subtle">25</td>
                         </tr>
                         <tr>
-                            <td>TEMA 7</td>
-                        </tr>
-                        <tr>
-                            <td>TEMA 8</td>
-                        </tr>
-                        <tr>
-                            <td>TEMA 9</td>
-                        </tr>
-                        <tr>
-                            <td>TEMA 10</td>
+                            <td>Total Taxes Efile Only transmitidos.</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td class="bg-warning-subtle">147</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
-	    </div>
-    </div>
+            <div class="col-md-12">
+                <table class="table table-bordered">
+                    <thead class="table-warning">
+                        <tr>
+                            <th>Ganancia (Perdida) </th>
+                            <th></th>
+                            <th></th>
+                            <th>CXC</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Venta del Programa a Cobrar</td>
+                            <td></td>
+                            <td>800</td>
+                            <td>800</td>
+                        </tr>
+                        <tr>
+                            <td>Costo del Programa a pagar a TaxWise</td>
+                            <td></td>
+                            <td>-561</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Cargo a la Oficina por el Efile Fee</td>
+                            <td>$4 </td>
+                            <td>588</td>
+                            <td>588</td>
+                        </tr>
+                        <tr>
+                            <td>Costo del Efile Fee a pagar a TaxWise</td>
+                            <td>$3 </td>
+                            <td>-441</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Fee Asignado para los Productos Bancarios </td>
+                            <td>$25 </td>
+                            <td>625</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Comision por Fee Collect por pagar a la Oficina</td>
+                            <td>$15 </td>
+                            <td>-375</td>
+                            <td>-375</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td>636</td>
+                            <td>1,013</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+	</div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
 	<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </body>
 </html>

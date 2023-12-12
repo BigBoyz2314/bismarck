@@ -61,7 +61,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                     <a class="nav-link text-primary" href="#">Clients by States</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-primary" href="#">Production</a>
+                    <a class="nav-link text-primary" href="production.php">Production</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link text-primary" href="registration-codes.php">Registration Codes</a>
@@ -95,21 +95,25 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                     <div class="col-md-4">
                         <h6>Advanced Search</h6>
                         <div class="d-block">
-                            <input type="checkbox" name="adv-search" id="" value="online">
+                            <input type="radio" name="adv-search" id="" value="all" checked>
+                            <label for="all">All</label>
+                        </div>
+                        <div class="d-block">
+                            <input type="radio" name="adv-search" id="" value="online">
                             <label for="online">TaxWise Online</label>
                         </div>
                         <div class="d-block">
-                            <input type="checkbox" name="adv-search" id="" value="desktop">
+                            <input type="radio" name="adv-search" id="" value="desktop">
                         <label for="desktop">TaxWise Desktop</label>
                         </div>
                         <div class="d-block">
-                            <input type="checkbox" name="adv-search" id="" value="student">
+                            <input type="radio" name="adv-search" id="" value="student">
                             <label for="student">Student</label>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <h6>Office Status</h6>
-                        <select class="form-select" name="officeStatus" id="">
+                        <select class="form-select w-50" name="officeStatus" id="">
                             <option value="Active">Active</option>
                             <option value="Inactive">Inactive</option>
                             <option value="Released">Released</option>
