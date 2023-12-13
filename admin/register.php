@@ -12,7 +12,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
       
     // Include file which makes the 
     // Database Connection. 
-    include 'includes/config.php';    
+  include '../includes/config.php';    
     
     $name = $_POST["name"];  
     $password = $_POST["password"];

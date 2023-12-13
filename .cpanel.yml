@@ -2,18 +2,8 @@
 deployment:
   tasks:
     - export DEPLOYPATH=/home/y955yo61jfd6/public_html/
-    - /bin/cp auth.php $DEPLOYPATH
-    - /bin/cp courses.php $DEPLOYPATH
     - /bin/cp index.php $DEPLOYPATH
-    - /bin/cp inquiries.php $DEPLOYPATH
-    - /bin/cp installation.php $DEPLOYPATH
-    - /bin/cp la-biblia.php $DEPLOYPATH
-    - /bin/cp login.php $DEPLOYPATH
-    - /bin/cp logout.php $DEPLOYPATH
-    - /bin/cp office.php $DEPLOYPATH
-    - /bin/cp production.php $DEPLOYPATH
-    - /bin/cp register.php $DEPLOYPATH
-    - /bin/cp registration-codes.php $DEPLOYPATH
-    - /bin/cp software.php $DEPLOYPATH
     # - /bin/cp -R includes $DEPLOYPATH
     - /bin/cp -R css $DEPLOYPATH
+    - /bin/cp -R admin $DEPLOYPATH
+    - /bin/cp -R images $DEPLOYPATH

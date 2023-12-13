@@ -1,177 +1,143 @@
-<?php
-// Initialize the session
-session_start();
-
-// Check if the user is logged in, if not then redirect him to login page
-if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
-    header("location: login.php");
-    exit;
-}
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Overview</title>
+    <title>Main Page</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/styles.css">
-    <style>
-    </style>
+	<link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-
-    <nav class="navbar navbar-expand-lg bg-nav">
-        <div class="container-fluid w-75">
-            <div class="d-flex flex-column py-1">
-                <a class="navbar-brand p-0 fw-bold text-light fs-3" href="#">Central Office Manager</a>
-            </div>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
-                <ul class="navbar-nav mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link text-light" href="#">Manage Users</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-light" href="logout.php">Logout</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-        </nav>
-
-
     
-    <nav class="navbar navbar-expand-lg bg-light text-primary border-bottom border-primary">
-        <div class="container-fluid">
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
-            <ul class="navbar-nav mb-2 mb-lg-0 fw-semibold">
-                <li class="nav-item">
-                    <a class="nav-link active" href="#">Overview</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-primary" href="office.php">Offices</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-primary" href="#">Clients by States</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-primary" href="production.php">Production</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-primary" href="registration-codes.php">Registration Codes</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-primary" href="installation.php">Installation & Updates</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-primary" href="la-biblia.php">La Biblia</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-primary" href="software.php">Software Management</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-primary" href="inquiries.php">Inquiries</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-primary" href="courses.php">Courses</a>
-                </li>
-            </ul>
-            </div>
+<nav class="navbar navbar-expand-lg">
+    <div class="container-fluid">
+		<div class="d-flex flex-column">
+	        <a class="navbar-brand p-0" href="#">Bismarck Business Group LLC</a>
+			<p class="m-0">A TaxWise Service Bureau</p>
+		</div>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mb-2 mb-lg-0 align-items-center mx-auto">
+            <li class="nav-item">
+            	<a class="nav-link active" aria-current="page" href="#">Main</a>
+            </li>
+            <li class="nav-item">
+            	<a class="nav-link" href="#">Our Product</a>
+            </li>
+            <li class="nav-item">
+            	<a class="nav-link" href="#">Create an account</a>
+            </li>
+            <li class="nav-item">
+            	<a class="nav-link" href="#">Office Registration</a>
+            </li>
+            <li class="nav-item">
+            	<a class="nav-link" href="#">Student Registration</a>
+            </li>
+            <li class="nav-item">
+            	<a class="nav-link" href="#">About Us</a>
+            </li>
+        </ul>
+		<div id="google_translate_element"></div>
         </div>
+    </div>
     </nav>
-	<div class="container-fluid w-75">
-        <div class="row mt-3">
-            <div class="col-md-6">
-                <h3>Overview</h3>
-            </div>
-            <div class="col-md-2 offset-2 fw-semibold">
-                <a href="#" class="d-block">Add New Office</a>
-                <a href="#">Add Student</a>
-            </div>
-            <div class="col-md-2 fw-semibold">
-                <a href="#">Register Payment</a>
-            </div>
-            <hr>
-            <div class="col-md-4">
-                <div class="d-flex flex-column align-items-center border p-3 rounded-4">
-                    <canvas id="myChart" height="200px"></canvas>
-                    <div class="w-100 text-center">
-                        <label for="officeType">Office Type:</label>
-                        <select name="officeType" id="officetype" class="d-inline form-select w-50">
-                            <option value="Active">Active</option>
-                            <option value="Inactive">Inactive</option>
-                            <option value="Released">Released</option>
-                            <option value=""></option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-8 text-center bg-info-subtle rounded-4">
-                <h4 class="py-3">Office Information</h4>
-                <div class="office-info">
-                    <select name="officeSelect" id="officeSelect" class="me-2 form-select d-inline">
-                        <option value="EFIN">EFIN</option>
-                    </select>
-                    <input type="text" name="" id="" class="ms-2 form-control d-inline">
-                    <button class="btn btn-primary ms-2">Search</button>
-                    <hr>
-                    <ul class="list-unstyled text-start fw-semibold ps-5">
-                        <li>EFIN: </li>
-                        <li>Company Name: </li>
-                        <li>Contact First Name: </li>
-                        <li>Contact Last Name: </li>
-                        <li>Phone: </li>
-                        <li>Email: </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-
-
-
-
+	<div class="container-fluid p-0">
+		<div class="row">
+			<div class="col-md-12">
+				<div id="carouselExampleCaptions" class="carousel">
+					<div class="carousel-inner">
+						<div class="carousel-item active">
+							<img src="images/main-img.jpg" class="d-block w-100" alt="">
+							<div class="carousel-caption d-block text-black text-md-start mb-5 start-0 ms-5 ps-5 mt-5">
+								<h4 class="d-none d-md-block">TaxWise</h4>
+								<h6 class="text-primary d-none d-md-block">Software for Tax Professionals</h6>
+								<br>
+								<p class="d-none d-md-block">If you are a registered tax handler, we recommend you to use the <br> TaxWise Professional Tax preparation Program?</p>
+								<a href="#" class="btn btn-primary rounded-5 px-5">Contact us</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row px-md-5 mx-md-5 mt-5">
+			<div class="col-md-8">
+				<h5>We can help you!</h5>
+				<p>If you work with us, we'll help you with:</p>
+				<ol>
+					<li>Installation of the program.</li>
+					<li>The setting of it.</li>
+					<li>To register with the Bank so that you can offer the services of Banking products.</li>
+					<li>our technical support is available during and after the season 7 days a week.</li>
+				</ol>
+			</div>
+			<div class="col-md-4 d-flex justify-content-center align-items-center flex-column">
+				<a href="#" class="btn btn-success rounded-5 px-5 mb-2">Click Here!</a>
+				<p>or</p>
+				<p>Call us for a Free consultation</p>
+				<a href="#" class="btn btn-primary rounded-5 px-5 mt-2">239-391-6775</a>
+			</div>
+		</div>
+		<div class="row px-md-5 mx-md-5 mt-5 pt-5 mb-5">
+			<div class="col-md-8">
+				<h5>Training:</h5>
+				<p>Do you want to learn how to prepare taxes and become a trainer?</p>
+				<ol>
+					<li>We can train you.</li>
+					<li>It doesn't matter that you don't have any prior knowledge about tax preparation. We will teach you from scratch.</li>
+					<li>If you are already a trainer, but you need to acquire more knowledge in order to be able to work without doubt and prepare the sheets safely, we can also help you.</li>
+					<li>If you really have the interest in learning a new trade with the aim of making extra money in the year, this is your chance and we're gonna help you.</li>
+					<li>It is a trade that you can exercise in any of the 50 states of the nation.</li>
+				</ol>
+			</div>
+			<div class="col-md-4 d-flex justify-content-center align-items-center flex-column">
+				<a href="#" class="btn btn-success rounded-5 px-5 mb-2">Click Here!</a>
+				<p>or</p>
+				<p>Call us for a Free consultation</p>
+				<a href="#" class="btn btn-primary rounded-5 px-5 mt-2">239-391-6775</a>
+			</div>
+		</div>
+		<hr>
+		<footer>
+			<div class="row mx-5 px-5">
+				<div class="col-md-4">
+					<a class="fs-5 text-decoration-none text-dark" href="#">Bismarck Business Group LLC</a>
+					<p class="m-0">A TaxWise Service Bureau</p>
+				</div>
+				<div class="col-md-6 offset-2">
+					<ul class="list-unstyled">
+						<li>
+							<a class="text-dark-emphasis text-decoration-none" href="#">Main</a>
+						</li>
+						<li>
+							<a class="text-dark-emphasis text-decoration-none" href="#">Our Product</a>
+						</li>
+						<li>
+							<a class="text-dark-emphasis text-decoration-none" href="#">Create an account</a>
+						</li>
+						<li>
+							<a class="text-dark-emphasis text-decoration-none" href="#">Office Registration</a>
+						</li>
+						<li>
+							<a class="text-dark-emphasis text-decoration-none" href="#">Student Registration</a>
+						</li>
+						<li>
+							<a class="text-dark-emphasis text-decoration-none" href="#">About Us</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</footer>
 	</div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 	<script type="text/javascript">
 		function googleTranslateElementInit() {
 		  new google.translate.TranslateElement({pageLanguage: 'en', includedLanguages: 'es', layout: google.translate.TranslateElement.InlineLayout.SIMPLE, autoDisplay: false}, 'google_translate_element');
 		}
-
-        var xValues = ["2023", "2022", "2021"];
-        var yValues = [60, 49, 44,];
-        var barColors = ["red", "green","blue","orange","brown"];
-
-        new Chart("myChart", {
-        type: "bar",
-        data: {
-            labels: xValues,
-            datasets: [{
-            backgroundColor: barColors,
-            data: yValues
-            }]
-        },
-        options: {
-            plugins: {
-                legend: {
-                    display: false,
-                },
-                title: {
-                    display: true,
-                    text: "Office Information Graph"
-                }
-            }
-            // title: "Office Information Graph",
-        }
-        });
 		
 		</script>
 		

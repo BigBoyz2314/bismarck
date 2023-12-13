@@ -4,7 +4,7 @@
   
   // Include database connectivity
       
-  include_once('includes/config.php');
+  include_once('../includes/config.php');
   
 if (isset($_POST)) {
       
