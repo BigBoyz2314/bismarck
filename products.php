@@ -21,10 +21,10 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mb-2 mb-lg-0 align-items-center mx-auto">
             <li class="nav-item">
-            	<a class="nav-link active" aria-current="page" href="#">Main</a>
+            	<a class="nav-link" href="index.php">Main</a>
             </li>
             <li class="nav-item">
-            	<a class="nav-link" href="products.php">Our Product</a>
+            	<a class="nav-link active" href="products.php">Our Product</a>
             </li>
             <li class="nav-item">
             	<a class="nav-link" href="#">Create an account</a>
