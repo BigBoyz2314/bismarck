@@ -3,6 +3,7 @@ deployment:
   tasks:
     - export DEPLOYPATH=/home/y955yo61jfd6/public_html/
     - /bin/cp index.php $DEPLOYPATH
+    - /bin/cp products.php $DEPLOYPATH
     # - /bin/cp -R includes $DEPLOYPATH
     - /bin/cp -R css $DEPLOYPATH
     - /bin/cp -R admin $DEPLOYPATH

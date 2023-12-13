@@ -24,7 +24,7 @@
             	<a class="nav-link active" aria-current="page" href="#">Main</a>
             </li>
             <li class="nav-item">
-            	<a class="nav-link" href="#">Our Product</a>
+            	<a class="nav-link" href="products.php">Our Product</a>
             </li>
             <li class="nav-item">
             	<a class="nav-link" href="#">Create an account</a>
