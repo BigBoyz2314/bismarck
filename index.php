@@ -9,7 +9,7 @@
 </head>
 <body>
     
-<nav class="navbar navbar-expand-lg px-5">
+<nav class="navbar navbar-expand-lg bg-white px-5 sticky-top">
     <div class="container-fluid">
 		<div class="d-flex flex-column">
 	        <a class="navbar-brand p-0" href="#">Bismarck Business Group LLC</a>
@@ -27,7 +27,7 @@
             	<a class="nav-link" href="#product">Our Product</a>
             </li>
             <li class="nav-item">
-            	<a class="nav-link" href="#">Create an account</a>
+            	<a class="nav-link" href="create-account.php">Create an account</a>
             </li>
             <li class="nav-item">
             	<a class="nav-link" href="#">Office Registration</a>
@@ -50,7 +50,7 @@
 				<h6 class="text-primary d-none d-md-block">Software for Tax Professionals</h6>
 				<br>
 				<p>If you are a registered tax handler, we recommend you to use the <br> TaxWise Professional Tax preparation Program?</p>
-				<a href="#" class="btn btn-primary rounded-5 px-5">Contact us</a>
+				<a href="#secondPage" class="btn btn-primary rounded-5 px-5">Learn More</a>
 			</div>
 		</div>
 		<div class="row flex-row-reverse">
@@ -68,7 +68,7 @@
 					<li>our technical support is available during and after the season 7 days a week.</li>
 				</ul>
 				<div class="mt-4 d-flex justify-content-center align-items-center flex-column">
-					<a href="#" class="btn btn-success rounded-5 px-5 mb-2">Click Here!</a>
+					<a href="#product" class="btn btn-success rounded-5 px-5 mb-2">Click Here!</a>
 					<p>or</p>
 					<p>Call us for a Free consultation</p>
 					<a href="#" class="btn btn-primary rounded-5 px-5 mt-2">239-391-6775</a>
@@ -91,7 +91,7 @@
 					<li>If you are already a trainer, but you need to acquire more knowledge in order to be able to work without doubt and prepare the sheets safely, we can also help you.</li>
 				</ul>
 				<div class="mt-4 d-flex justify-content-center align-items-center flex-column">
-					<a href="#" class="btn btn-success rounded-5 px-5 mb-2">Click Here!</a>
+					<a href="#product" class="btn btn-success rounded-5 px-5 mb-2">Click Here!</a>
 					<p>or</p>
 					<p>Call us for a Free consultation</p>
 					<a href="#" class="btn btn-primary rounded-5 px-5 mt-2">239-391-6775</a>
