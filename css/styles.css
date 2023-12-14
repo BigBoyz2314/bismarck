@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 
+
 body {
     overflow-x: hidden;
     font-family: 'Roboto', sans-serif;
@@ -7,6 +8,89 @@ body {
 
 .bg-nav {
     background-color: #0F4FA8;
+}
+
+.ha-bg-parallax {
+	background: url('../images/main-img.jpg') 100% -0 no-repeat fixed;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	-webkit-background-size: cover;
+	background-size: cover;
+	min-height: 550px;
+	margin: 0 auto;
+	width: 100%;
+	display: table;
+	vertical-align: middle;
+	position: relative;
+}
+
+.ha-bg-parallax-2 {
+	background: url('../images/bottom-img.jpg') 100% -0 no-repeat fixed;
+    filter: brightness( 0.6 );
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	-webkit-background-size: cover;
+	background-size: cover;
+	min-height: 450px;
+	margin: 0 auto;
+	width: 100%;
+	display: table;
+	vertical-align: middle;
+	position: relative;
+}
+
+.ha-parallax-body {
+    display: flex;
+    align-items: center; 
+	vertical-align: middle;
+    justify-content: center;
+    flex-direction: column;
+	background: rgba(6, 32, 119, 0.7);
+    color: white;
+	min-height: 550px;
+    width: 41.5%;
+}
+
+
+
+.list-1 {
+    list-style-type: none;
+    display: inline-block;
+    width: 49%;
+}
+.list-1 li {
+    padding: 5px 0;
+    font-size: 20px;
+}
+  
+.list-1 li::before {
+    content: "\25A0";  /* Add content: \2022 is the CSS Code/unicode for a bullet */
+    color: black; /* Change the color */
+    font-size: 25px; /* Bullet size */
+    font-weight: bold; /* If you want it to be bold */
+    display: inline-block; /* Needed to add space between the bullet and the text */
+    width: 1em; /* Also needed for space (tweak if needed) */
+    margin-left: -1em; /* Also needed for space (tweak if needed) */
+}
+
+.list-2 {
+    list-style-type: none;
+    display: inline-block;
+    width: 49%;
+}
+.list-2 li {
+    padding: 5px 0;
+    font-size: 18px;
+}
+  
+.list-2 li::before {
+    content: "\25A0";  /* Add content: \2022 is the CSS Code/unicode for a bullet */
+    color: black; /* Change the color */
+    font-size: 25px; /* Bullet size */
+    font-weight: bold; /* If you want it to be bold */
+    display: inline-block; /* Needed to add space between the bullet and the text */
+    width: 1em; /* Also needed for space (tweak if needed) */
+    margin-left: -1em; /* Also needed for space (tweak if needed) */
 }
 
 .input-field {
@@ -32,4 +116,35 @@ body {
 
 .software-table tbody tr td {
     font-size: 12px !important;
+}
+
+@media only screen and (max-width: 768px) {
+    
+    .ha-bg-parallax {
+        background: url('../images/main-img.jpg') 100% -0 no-repeat fixed;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        -webkit-background-size: cover;
+        background-size: cover;
+        min-height: 550px;
+        margin: 0 auto;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        vertical-align: middle;
+        position: relative;
+    }
+
+    .ha-parallax-body {
+        display: flex;
+        align-items: center; 
+        vertical-align: middle;
+        justify-content: center;
+        flex-direction: column;
+        background: rgba(6, 32, 119, 0.7);
+        color: white;
+        min-height: 400px;
+        width: 100%;
+    }
+    
 }
