@@ -38,6 +38,9 @@
             <li class="nav-item">
             	<a class="nav-link" href="#">About Us</a>
             </li>
+            <li class="nav-item">
+            	<a class="nav-link" href="client/login.php">Client Login</a>
+            </li>
         </ul>
 		<div id="google_translate_element"></div>
         </div>
