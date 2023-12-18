@@ -102,8 +102,20 @@ body {
     padding: 2px 10px !important;
 }
 
+.disabled-input {
+    width: 33% !important;  
+    padding: 2px 2px !important;
+    text-align: center;
+    font-weight: bold;
+}
+
 .office-info .form-control, .office-info .form-select {
     width: 40% !important;
+}
+
+.client-info div input:disabled {
+    background-color: #fafafa !important;
+
 }
 
 .biblia-table tbody tr td {

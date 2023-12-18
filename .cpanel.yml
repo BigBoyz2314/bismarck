@@ -7,4 +7,5 @@ deployment:
     # - /bin/cp -R includes $DEPLOYPATH
     - /bin/cp -R css $DEPLOYPATH
     - /bin/cp -R admin $DEPLOYPATH
+    - /bin/cp -R client $DEPLOYPATH
     - /bin/cp -R images $DEPLOYPATH
