@@ -111,23 +111,25 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                             <label for="student">Student</label>
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-3">
                         <h6>Office Status</h6>
-                        <select class="form-select w-50" name="officeStatus" id="">
+                        <select class="form-select" name="officeStatus" id="">
                             <option value="Active">Active</option>
                             <option value="Inactive">Inactive</option>
                             <option value="Released">Released</option>
                             <option value="EFIN Pending">EFIN Pending</option>
                             <option value="Balance Pending">Balance Pending</option>
                         </select>
-
+                    </div>
+                    <div class="col-md-5 mt-1">
+                    <input type="text" name="search" id="search" class="form-control mt-4" placeholder="Search...">
                     </div>
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="col-md-12">
-                <table class="table table-responsive table-bordered office-table">
+                <table class="table table-responsive table-bordered office-table" id="table">
                     <thead>
                         <tr class="text-center">
                             <th>EFIN</th>
@@ -220,38 +222,15 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-	<script type="text/javascript">
-		function googleTranslateElementInit() {
-		  new google.translate.TranslateElement({pageLanguage: 'en', includedLanguages: 'es', layout: google.translate.TranslateElement.InlineLayout.SIMPLE, autoDisplay: false}, 'google_translate_element');
-		}
+	<script>
 
-        var xValues = ["2023", "2022", "2021"];
-        var yValues = [60, 49, 44,];
-        var barColors = ["red", "green","blue","orange","brown"];
-
-        new Chart("myChart", {
-        type: "bar",
-        data: {
-            labels: xValues,
-            datasets: [{
-            backgroundColor: barColors,
-            data: yValues
-            }]
-        },
-        options: {
-            plugins: {
-                legend: {
-                    display: false,
-                },
-                title: {
-                    display: true,
-                    text: "Office Information Graph"
-                }
-            }
-            // title: "Office Information Graph",
-        }
+        $("#search").on("keyup", function() {
+            var value = $(this).val().toLowerCase();
+            $("#table tbody tr").filter(function() {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
         });
-		
+          
 		</script>
 		
 		<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>

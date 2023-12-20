@@ -19,10 +19,10 @@
             <div class="col-md-6">
                 <h2 class="text-center mb-4">Login</h2>
                 <form action="auth.php" method="POST">
-                    <div class="mb-3">
+                    <!-- <div class="mb-3">
                         <label for="clientid" class="form-label">Client ID</label>
                         <input type="number" class="form-control" id="clientid" name="clientid" required>
-                    </div>
+                    </div> -->
                     <div class="mb-3">
                         <label for="username" class="form-label">User Name</label>
                         <input type="text" class="form-control" id="username" name="username" required>
@@ -31,6 +31,13 @@
                         <label for="password" class="form-label">Password</label>
                         <input type="password" class="form-control" id="password" name="password" required>
                     </div>
+                    <?php
+                        session_start();
+                        if (isset($_SESSION['errorMsg'])) {
+                            echo '<div class="alert alert-danger">' . $_SESSION['errorMsg'] . '</div>';
+                            unset($_SESSION['errorMsg']); // Clear the error message from session after displaying
+                        }
+                    ?>
                     <div class="mb-3">
                         <p>Warning: Five unsuccessfull login attemps will lock your account</p>
                     </div>

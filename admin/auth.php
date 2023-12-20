@@ -13,27 +13,33 @@ if (isset($_POST)) {
 
 
     if (!empty($name) || !empty($password)) {
-        $stmt  = "SELECT * FROM users WHERE name = '$name'";
+        $stmt  = "SELECT * FROM users WHERE name = '$name' AND role_id = 1";
         $result = mysqli_query($conn, $stmt);
         if(mysqli_num_rows($result) == 1){
           while ($row = mysqli_fetch_assoc($result)) {
             if (password_verify($password, $row['password'])) {
                 $_SESSION['role'] = $row['role'];
-				$_SESSION['loggedin'] = true;
+				        $_SESSION['loggedin'] = true;
                 $_SESSION['name'] = $row['name'];
                 header("Location:index.php");
             }
 			else {
-                $errorMsg = "Email or Password is invalid";
+        $_SESSION['errorMsg'] =  "Email or Password is invalid!";
+        header("Location: login.php");
+        exit();
             }    
           }
         }
 		else {
-          $errorMsg = "No user found on this email";
+      $_SESSION['errorMsg'] =  "No such Admin user found!";
+      header("Location: login.php");
+      exit();
         } 
     }
 	else {
-      $errorMsg = "Email and Password is required";
+    $_SESSION['errorMsg'] =  "Email and Password is required!";
+    header("Location: login.php");
+    exit();
     }
 }
   

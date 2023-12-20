@@ -4,7 +4,7 @@ deployment:
     - export DEPLOYPATH=/home/y955yo61jfd6/public_html/
     - /bin/cp index.php $DEPLOYPATH
     - /bin/cp create-account.php $DEPLOYPATH
-    - /bin/cp -R includes $DEPLOYPATH
+    # - /bin/cp -R includes $DEPLOYPATH
     - /bin/cp -R css $DEPLOYPATH
     - /bin/cp -R admin $DEPLOYPATH
     - /bin/cp -R client $DEPLOYPATH

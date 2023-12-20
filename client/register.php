@@ -13,8 +13,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     // Include file which makes the 
     // Database Connection. 
   include '../includes/config.php';    
-    
-    $clientID = $_POST["clientid"];
     $name = $_POST["name"];  
     $password = $_POST["password"];
     $role = $_POST["role"];
@@ -25,8 +23,8 @@ if(($password)) {
     $hash = password_hash($password, PASSWORD_DEFAULT); 
         
     // Password Hashing is used here.  
-    $sql = "INSERT INTO `users` ( `client_id`, `name`, 
-        `password`, `role_id`, `created_at`) VALUES ('$clientID', '$name',  
+    $sql = "INSERT INTO `users` ( `name`, 
+        `password`, `role_id`, `created_at`) VALUES ('$name',  
         '$hash', '$role', current_timestamp())"; 
 
     $result = mysqli_query($conn, $sql); 
@@ -60,10 +58,10 @@ if(($password)) {
             <div class="col-md-6">
                 <h2 class="text-center mb-4">Login</h2>
                 <form action="register.php" method="POST">
-                    <div class="mb-3">
+                    <!-- <div class="mb-3">
                         <label for="clientid" class="form-label">Client ID</label>
                         <input type="number" class="form-control" id="clientid" name="clientid" required>
-                    </div>
+                    </div> -->
                     <div class="mb-3">
                         <label for="name" class="form-label">User Name</label>
                         <input type="text" class="form-control" id="name" name="name" required>
