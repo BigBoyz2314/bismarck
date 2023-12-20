@@ -13,12 +13,12 @@ if (isset($_POST)) {
 
 
     if (!empty($name) || !empty($password)) {
-        $stmt  = "SELECT * FROM users WHERE name = '$name'";
+        $stmt  = "SELECT * FROM users WHERE name = '$name' AND role_id = 2";
         $result = mysqli_query($conn, $stmt);
         if(mysqli_num_rows($result) == 1){
           while ($row = mysqli_fetch_assoc($result)) {
             if (password_verify($password, $row['password'])) {
-                $_SESSION['role'] = $row['role'];
+                $_SESSION['role'] = $row['role_id'];
 				        $_SESSION['loggedin'] = true;
                 $_SESSION['name'] = $row['name'];
                 header("Location:index.php");
