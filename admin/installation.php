@@ -6,6 +6,8 @@ session_start();
 if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     header("location: login.php");
     exit;
+
+
 }
 ?>
 <!DOCTYPE html>
@@ -86,62 +88,168 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
         </div>
     </nav>
 	<div class="container-fluid w-75">
+        <!-- Edit Modal -->
+        <div class="modal" id="editModal" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Edit Installation Details</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                    <!-- Form to edit course details -->
+                    <form action="edit-installation.php" method="post" enctype="multipart/form-data">
+                        <input type="hidden" id="editId" name="id" value="">
+                        <!-- Add fields here to edit course details -->
+                        <label for="editData">Text:</label>
+                        <input type="text" class="form-control" id="editData" value="" name="data">
+                        
+                        <label for="editFileEn">File English:</label>
+                        <input type="file" class="form-control" id="file-en" name="file-en">
+                        
+                        <label for="editFileEs">File Spanish:</label>
+                        <input type="file" class="form-control" id="file-es" name="file-es">
+
+                        <!-- Other fields for editing -->
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Save changes</button>
+                        </div>
+                    </form>
+                </div>
+                </div>
+            </div>
+        </div>
+        
         <div class="row mt-3">
             <div class="col-md-6">
                 <h3>Installation & Updates</h3>
             </div>
-            <div class="col-md-12 rounded-4">
-            <table class="table table-bordered w-25">
-                <thead class="table-info">
-                    <tr>
-                        <th>2022</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Software Instalaltion</td>
-                    </tr>
-                    <tr>
-                        <td>Software Update</td>
-                    </tr>
-                    <tr>
-                        <td>Insta</td>
-                    </tr>
-                    <tr>
-                        <td>709 Gift Tax</td>
-                    </tr>
-                    <tr>
-                        <td>990 Exempt Organizations</td>
-                    </tr>
-                    <tr>
-                        <td>1040 Individual</td>
-                    </tr>
-                    <tr>
-                        <td>1041 Fiduciary</td>
-                    </tr>
-                    <tr>
-                        <td>1065 Partnership</td>
-                    </tr>
-                    <tr>
-                        <td>1120 C</td>
-                    </tr>
-                    <tr>
-                        <td>1120 S</td>
-                    </tr>
-                    <tr>
-                        <td>State Updates - Individuals</td>
-                    </tr>
-                    <tr>
-                        <td>State Updates - Business</td>
-                    </tr>
-                </tbody>
-            </table>
+        </div>
+        <div class="row">
+            <h4>Add New Entry</h4>
+            <div class="col-md-6">
+                <form action="add-installation.php" enctype="multipart/form-data" method="post">
+                    <div class="mb-3">
+                        <label for="text" class="form-label">Text*</label>
+                        <input type="text" class="form-control" id="text" name="text" required>
+                        <label for="year" class="form-label">Year*</label>
+                        <select name="year" id="year" required class="form-select">
+                            <option value="2022">2022</option>
+                            <option value="2023">2023</option>
+                            <option value="2024">2024</option>
+                            <option value="2025">2025</option>
+                        </select>
+                        <label for="file-en" class="form-label">File English</label>
+                        <input type="file" class="form-control" name="file-en">
+                        <label for="file-es" class="form-label">File Spanish</label>
+                        <input type="file" class="form-control" name="file-es">
+                    </div>
+                    <div class="mb-3">
+                        <input type="submit" value="Add" class="btn btn-primary">
+                    </div>
+                </form>
             </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <form action="" method="get">
+                    <select name="year" id="year" required class="form-select mb-3">
+                        <option value="2022">2022</option>
+                        <option value="2023">2023</option>
+                        <option value="2024">2024</option>
+                        <option value="2025">2025</option>
+                    </select>
+                    <input type="submit" value="Filter" class="btn btn-primary">
+                </form>
+            </div>
+        </div>
+        <div class="row">
+        <?php
+            include_once('../includes/config.php');
+
+            // Fetch unique years from the database
+            $query = "SELECT DISTINCT `year` FROM installation ORDER BY `year` DESC";
+            $result = $conn->query($query);
+
+            if ($result) {
+                while ($row = $result->fetch_assoc()) {
+                    $year = $row['year'];
+
+                    // Display the year before fetching data for that year
+                    echo "<div class='col-md-6 rounded-4 my-4'>";
+                        echo "<table class='table table-bordered w-100'>";
+                        echo "<thead class='table-info'>";
+                        echo "<tr>
+                                <th colspan='5'>". $year ."</th>
+                                </tr>";
+                        echo "</thead>";
+
+                    // Fetch data for each year
+                    $stmt1 = $conn->prepare("SELECT `id`, `data`, `file_en`, `file_es` FROM `installation` WHERE `year` = ?");
+                    $stmt1->bind_param("i", $year);
+                    $stmt1->execute();
+                    $resultYear = $stmt1->get_result();
+
+                    if ($resultYear->num_rows > 0) {
+                        // Display data rows for the year
+                        while ($rowYear = $resultYear->fetch_assoc()) {
+
+                            $id = $rowYear['id'];
+                            $data = $rowYear['data'];
+                            $file_en = $rowYear['file_en'];
+                            $file_es = $rowYear['file_es'];
+                            
+                            if ($file_en != '' or $file_es != '') {
+                            echo "<tr>";
+                            echo "<td>$data</td>";
+                            echo "<td><a href='../uploads/$file_en' target='_blank'>EN</a></td>";
+                            echo "<td><a href='../uploads/$file_es' target='_blank'>ES</a></td>";
+                            }
+                            else {
+                                echo "<tr>";
+                                echo "<td>$data</td>";
+                                echo "<td></td>";
+                                echo "<td></td>";
+                            }
+                            if ($_SESSION['role'] == '1') {
+                                echo "<td><button class='btn btn-warning edit-btn' data-bs-toggle='modal' data-bs-target='#editModal' data-id='$id' data-data='$data'>Edit</button></td>";
+                                echo "<td><form action='' method='get'><input type='hidden' name='desigName' value='". $data ."'><input type='hidden' name='year' value='". $year ."'><input type='hidden' name='id' value='". $id ."'><input type='submit' value='Delete' class='btn btn-danger'></form></td>";
+                            }
+                            echo "</tr>";
+                        }
+                    } else {
+                        // If there's no data for the year
+                        echo "<tr><td colspan='3'>No data available</td></tr>";
+                    }
+
+                    echo "</table>";
+                    echo "</div>";
+                }
+            }
+        ?>
+
 	    </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const editButtons = document.querySelectorAll('.edit-btn');
+        editButtons.forEach(btn => {
+            btn.addEventListener('click', function () {
+                
+                const id = this.getAttribute('data-id');
+                const data = this.getAttribute('data-data');
 
+                // Populate modal fields with the respective data
+                document.getElementById('editId').value = id;
+                document.getElementById('editData').value = data;
+            });
+        });
+    });
+    </script>
 	<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </body>
 </html>

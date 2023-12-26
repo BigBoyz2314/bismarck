@@ -94,11 +94,11 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                 <table class="biblia-table table-bordered">
                     <thead class="text-center">
                         <tr class="bg-danger-subtle fs-3">
-                            <th colspan="4">Bismarck Business Group, LLC</th>
+                            <th colspan="6">Bismarck Business Group, LLC</th>
                         </tr>
                         <tr class="bg-warning-subtle fs-5">
                             <th>Sr.</th>
-                            <th colspan="4">Si Taxpayer nos Trae el siguiente documento o situacion:</th>
+                            <th colspan="6">Si Taxpayer nos Trae el siguiente documento o situacion:</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -114,30 +114,27 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 
                                 $id = $row['id'];
                                 $data = $row['data'];
-
+                                $file_en = $row['file_en'];
+                                $file_es = $row['file_es'];
+                                
+                                if ($file_en != '' or $file_es != '') {
+                                    echo "<tr>";
+                                    echo "<td>". $i++ ."</td>";
+                                    echo "<td>$data</td>";
+                                    echo "<td><a href='../uploads/$file_en' target='_blank'>EN</a></td>";
+                                    echo "<td><a href='../uploads/$file_es' target='_blank'>ES</a></td>";
+                                }
+                                else {
                                 echo "<tr>";
                                 echo "<td>". $i++ ."</td>";
                                 echo "<td>$data</td>";
-
-                                if ($_SESSION['role'] == '1') {
-                                    echo "<td><form action='edit-biblia-consider.php' method='get'><input type='hidden' name='desigName' value='". $data ."'><input type='hidden' name='id' value='". $id ."'><input type='submit' value='Edit' class='btn btn-warning'></form></td>";
-                                    echo "<td><form action='' method='get'><input type='hidden' name='desigName' value='". $data ."'><input type='hidden' name='id' value='". $id ."'><input type='submit' value='Delete' class='btn btn-danger'></form></td>";
+                                echo "<td></td>";
+                                echo "<td></td>";
                                 }
 
                                 echo "</tr>";
                             }
                         }
-
-                            if (isset($_GET['id'])) {
-                                $delID = $_GET['id'];
-                                $delName = $_GET['desigName'];
-                                  
-                                echo '<script type="text/javascript"> ';  
-                                echo '  if (confirm("Are you sure you want to DELETE '. "'$delName'" .'?")) {';  
-                                echo '    window.location.href = "del-biblia-consider.php?delName='. $delName .'&delID='. $delID .'";';  
-                                echo '  }';
-                                echo '</script>';  
-                            }
                         ?>
                     </tbody>
                 </table>
@@ -146,11 +143,11 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                 <table class="biblia-table table-bordered">
                     <thead class="text-center">
                         <tr class="bg-danger-subtle fs-5">
-                            <th colspan="4">La Biblia para preparar los Taxes Personales (1040) del 2022</th>
+                            <th colspan="6">La Biblia para preparar los Taxes Personales (1040) del 2022</th>
                         </tr>
                         <tr class="bg-warning-subtle fs-5">
                             <th>Sr.</th>
-                            <th colspan="4">De que se trata o que debemos considerar:</th>
+                            <th colspan="6">De que se trata o que debemos considerar:</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -166,30 +163,27 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 
                                 $id = $row['id'];
                                 $data = $row['data'];
+                                $file_en = $row['file_en'];
+                                $file_es = $row['file_es'];
 
-                                echo "<tr>";
-                                echo "<td>". $i++ ."</td>";
-                                echo "<td>$data</td>";
-
-                                if ($_SESSION['role'] == '1') {
-                                    echo "<td><form action='edit-biblia-personal.php' method='get'><input type='hidden' name='data' value='". $data ."'><input type='hidden' name='id' value='". $id ."'><input type='submit' value='Edit' class='btn btn-warning'></form></td>";
-                                    echo "<td><form action='' method='get'><input type='hidden' name='data' value='". $data ."'><input type='hidden' name='id' value='". $id ."'><input type='submit' value='Delete' class='btn btn-danger'></form></td>";
+                                if ($file_en != '' or $file_es != '') {
+                                    echo "<tr>";
+                                    echo "<td>". $i++ ."</td>";
+                                    echo "<td>$data</td>";
+                                    echo "<td><a href='../uploads/$file_en' target='_blank'>EN</a></td>";
+                                    echo "<td><a href='../uploads/$file_es' target='_blank'>ES</a></td>";
+                                }
+                                else {
+                                    echo "<tr>";
+                                    echo "<td>". $i++ ."</td>";
+                                    echo "<td>$data</td>";
+                                    echo "<td></td>";
+                                    echo "<td></td>";
                                 }
 
                                 echo "</tr>";
                             }
                         }
-
-                            if (isset($_GET['id'])) {
-                                $delID = $_GET['id'];
-                                $delName = $_GET['data'];
-                                  
-                                echo '<script type="text/javascript"> ';  
-                                echo '  if (confirm("Are you sure you want to DELETE '. "'$delName'" .'?")) {';  
-                                echo '    window.location.href = "del-biblia-personal.php?delName='. $delName .'&delID='. $delID .'";';  
-                                echo '  }';
-                                echo '</script>';  
-                            }
                         ?>
                     </tbody>
                 </table>
@@ -200,11 +194,11 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
             <table class="biblia-table table-bordered">
                     <thead class="text-center">
                         <tr class="bg-danger-subtle fs-5">
-                            <th colspan="4">Hecha por Bismarck Valdez - 347-681-1111</th>
+                            <th colspan="6">Hecha por Bismarck Valdez - 347-681-1111</th>
                         </tr>
                         <tr class="bg-warning-subtle fs-5">
                             <th>Sr.</th>
-                            <th colspan="4">Como debemos registrarlos en TaxWise:</th>
+                            <th colspan="6">Como debemos registrarlos en TaxWise:</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -220,30 +214,27 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 
                                 $id = $row['id'];
                                 $data = $row['data'];
+                                $file_en = $row['file_en'];
+                                $file_es = $row['file_es'];
 
-                                echo "<tr>";
-                                echo "<td>". $i++ ."</td>";
-                                echo "<td>$data</td>";
-
-                                if ($_SESSION['role'] == '1') {
-                                    echo "<td><form action='edit-biblia-taxwise.php' method='get'><input type='hidden' name='data' value='". $data ."'><input type='hidden' name='id' value='". $id ."'><input type='submit' value='Edit' class='btn btn-warning'></form></td>";
-                                    echo "<td><form action='' method='get'><input type='hidden' name='data' value='". $data ."'><input type='hidden' name='id' value='". $id ."'><input type='submit' value='Delete' class='btn btn-danger'></form></td>";
+                                if ($file_en != '' or $file_es != '') {
+                                    echo "<tr>";
+                                    echo "<td>". $i++ ."</td>";
+                                    echo "<td>$data</td>";
+                                    echo "<td><a href='../uploads/$file_en' target='_blank'>EN</a></td>";
+                                    echo "<td><a href='../uploads/$file_es' target='_blank'>ES</a></td>";
+                                }
+                                else {
+                                    echo "<tr>";
+                                    echo "<td>". $i++ ."</td>";
+                                    echo "<td>$data</td>";
+                                    echo "<td></td>";
+                                    echo "<td></td>";
                                 }
 
                                 echo "</tr>";
                             }
                         }
-
-                            if (isset($_GET['id'])) {
-                                $delID = $_GET['id'];
-                                $delName = $_GET['data'];
-                                  
-                                echo '<script type="text/javascript"> ';  
-                                echo '  if (confirm("Are you sure you want to DELETE '. "'$delName'" .'?")) {';  
-                                echo '    window.location.href = "del-biblia-taxwise.php?delName='. $delName .'&delID='. $delID .'";';  
-                                echo '  }';
-                                echo '</script>';  
-                            }
                         ?>
                     </tbody>
                 </table>

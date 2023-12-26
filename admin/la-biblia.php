@@ -86,6 +86,108 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
         </div>
     </nav>
 	<div class="container-fluid px-5">
+        <!-- Edit Consider Modal -->
+        <div class="modal" id="editConsiderModal" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Edit Course Details</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                    <!-- Form to edit course details -->
+                    <form action="edit-biblia-consider.php" method="post" enctype="multipart/form-data">
+                        <input type="hidden" id="editId" name="id" value="">
+                        <!-- Add fields here to edit course details -->
+                        <label for="editData">Text:</label>
+                        <input type="text" class="form-control" id="editData" value="" name="data">
+                        
+                        <label for="editFileEn">File English:</label>
+                        <input type="file" class="form-control" id="file-en" name="file-en">
+                        
+                        <label for="editFileEs">File Spanish:</label>
+                        <input type="file" class="form-control" id="file-es" name="file-es">
+
+                        <!-- Other fields for editing -->
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Save changes</button>
+                        </div>
+                    </form>
+                </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Edit Personal Modal -->
+        <div class="modal" id="editPersonalModal" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Edit Course Details</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                    <!-- Form to edit course details -->
+                    <form action="edit-biblia-personal.php" method="post" enctype="multipart/form-data">
+                        <input type="hidden" id="editId" name="id" value="">
+                        <!-- Add fields here to edit course details -->
+                        <label for="editData">Text:</label>
+                        <input type="text" class="form-control" id="editData" value="" name="data">
+                        
+                        <label for="editFileEn">File English:</label>
+                        <input type="file" class="form-control" id="file-en" name="file-en">
+                        
+                        <label for="editFileEs">File Spanish:</label>
+                        <input type="file" class="form-control" id="file-es" name="file-es">
+
+                        <!-- Other fields for editing -->
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Save changes</button>
+                        </div>
+                    </form>
+                </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Edit Taxwise Modal -->
+        <div class="modal" id="editTaxwiseModal" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Edit Course Details</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                    <!-- Form to edit course details -->
+                    <form action="edit-biblia-taxwise.php" method="post" enctype="multipart/form-data">
+                        <input type="hidden" id="editId" name="id" value="">
+                        <!-- Add fields here to edit course details -->
+                        <label for="editData">Text:</label>
+                        <input type="text" class="form-control" id="editData" value="" name="data">
+                        
+                        <label for="editFileEn">File English:</label>
+                        <input type="file" class="form-control" id="file-en" name="file-en">
+                        
+                        <label for="editFileEs">File Spanish:</label>
+                        <input type="file" class="form-control" id="file-es" name="file-es">
+
+                        <!-- Other fields for editing -->
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Save changes</button>
+                        </div>
+                    </form>
+                </div>
+                </div>
+            </div>
+        </div>
+        
         <div class="row mt-3">
             <div class="col-md-6">
                 <h3>La Biblia</h3>
@@ -94,10 +196,14 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
         <div class="row">
             <h4>Add New Entry</h4>
             <div class="col-md-4">
-                <form action="add-biblia-consider.php" method="post">
+                <form action="add-biblia-consider.php" enctype="multipart/form-data" method="post">
                     <div class="mb-3">
-                        <label for="consider" class="form-label">Consider</label>
-                        <input type="text" class="form-control" id="consider" name="consider" required>
+                        <label for="consider-text" class="form-label">Consider*</label>
+                        <input type="text" class="form-control" id="consider-text" name="consider-text" required>
+                        <label for="file-en" class="form-label">Consider File English*</label>
+                        <input type="file" class="form-control" name="file-en" required>
+                        <label for="file-es" class="form-label">Consider File Spanish*</label>
+                        <input type="file" class="form-control" name="file-es" required>
                     </div>
                     <div class="mb-3">
                         <input type="submit" value="Add" class="btn btn-primary">
@@ -105,10 +211,14 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                 </form>
             </div>
             <div class="col-md-4">
-                <form action="add-biblia-personal.php" method="post">
+                <form action="add-biblia-personal.php" method="post" enctype="multipart/form-data">
                     <div class="mb-3">
                         <label for="personal" class="form-label">Personal</label>
-                        <input type="text" class="form-control" id="personal" name="personal" required>
+                        <input type="text" class="form-control" id="personal-text" name="personal-text" required>
+                        <label for="file-en" class="form-label">Personal File English</label>
+                        <input type="file" class="form-control" name="file-en">
+                        <label for="file-es" class="form-label">Personal File Spanish</label>
+                        <input type="file" class="form-control" name="file-es">
                     </div>
                     <div class="mb-3">
                         <input type="submit" value="Add" class="btn btn-primary">
@@ -116,26 +226,31 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                 </form>
             </div>
             <div class="col-md-4">
-                <form action="add-biblia-taxwise.php" method="post">
+                <form action="add-biblia-taxwise.php" method="post" enctype="multipart/form-data">
                     <div class="mb-3">
                         <label for="taxwise" class="form-label">Taxwise</label>
-                        <input type="text" class="form-control" id="taxwise" name="taxwise" required>
+                        <input type="text" class="form-control" id="taxwise-text" name="taxwise-text" required>
+                        <label for="file-en" class="form-label">Taxwise File English</label>
+                        <input type="file" class="form-control" name="file-en">
+                        <label for="file-es" class="form-label">Taxwise File Spanish</label>
+                        <input type="file" class="form-control" name="file-es">
                     </div>
                     <div class="mb-3">
                         <input type="submit" value="Add" class="btn btn-primary">
                     </div>
                 </form>
+            </div>
         </div>
         <div class="row">
             <div class="col-md-6 rounded-4">
                 <table class="biblia-table table-bordered">
                     <thead class="text-center">
                         <tr class="bg-danger-subtle fs-3">
-                            <th colspan="4">Bismarck Business Group, LLC</th>
+                            <th colspan="6">Bismarck Business Group, LLC</th>
                         </tr>
                         <tr class="bg-warning-subtle fs-5">
                             <th>Sr.</th>
-                            <th colspan="4">Si Taxpayer nos Trae el siguiente documento o situacion:</th>
+                            <th colspan="6">Si Taxpayer nos Trae el siguiente documento o situacion:</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -151,13 +266,26 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 
                                 $id = $row['id'];
                                 $data = $row['data'];
-
+                                $file_en = $row['file_en'];
+                                $file_es = $row['file_es'];
+                                
+                                if ($file_en != '' or $file_es != '') {
+                                    echo "<tr>";
+                                    echo "<td>". $i++ ."</td>";
+                                    echo "<td>$data</td>";
+                                    echo "<td><a href='../uploads/$file_en' target='_blank'>EN</a></td>";
+                                    echo "<td><a href='../uploads/$file_es' target='_blank'>ES</a></td>";
+                                }
+                                else {
                                 echo "<tr>";
                                 echo "<td>". $i++ ."</td>";
                                 echo "<td>$data</td>";
+                                echo "<td></td>";
+                                echo "<td></td>";
+                                }
 
                                 if ($_SESSION['role'] == '1') {
-                                    echo "<td><form action='edit-biblia-consider.php' method='get'><input type='hidden' name='desigName' value='". $data ."'><input type='hidden' name='id' value='". $id ."'><input type='submit' value='Edit' class='btn btn-warning'></form></td>";
+                                    echo "<td><button class='btn btn-warning edit-btn' data-bs-toggle='modal' data-bs-target='#editConsiderModal' data-id='$id' data-data='$data'>Edit</button></td>";
                                     echo "<td><form action='' method='get'><input type='hidden' name='desigName' value='". $data ."'><input type='hidden' name='id' value='". $id ."'><input type='submit' value='Delete' class='btn btn-danger'></form></td>";
                                 }
 
@@ -183,11 +311,11 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                 <table class="biblia-table table-bordered">
                     <thead class="text-center">
                         <tr class="bg-danger-subtle fs-5">
-                            <th colspan="4">La Biblia para preparar los Taxes Personales (1040) del 2022</th>
+                            <th colspan="6">La Biblia para preparar los Taxes Personales (1040) del 2022</th>
                         </tr>
                         <tr class="bg-warning-subtle fs-5">
                             <th>Sr.</th>
-                            <th colspan="4">De que se trata o que debemos considerar:</th>
+                            <th colspan="6">De que se trata o que debemos considerar:</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -203,23 +331,37 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 
                                 $id = $row['id'];
                                 $data = $row['data'];
+                                $file_en = $row['file_en'];
+                                $file_es = $row['file_es'];
 
-                                echo "<tr>";
-                                echo "<td>". $i++ ."</td>";
-                                echo "<td>$data</td>";
+                                if ($file_en != '' or $file_es != '') {
+                                    echo "<tr>";
+                                    echo "<td>". $i++ ."</td>";
+                                    echo "<td>$data</td>";
+                                    echo "<td><a href='../uploads/$file_en' target='_blank'>EN</a></td>";
+                                    echo "<td><a href='../uploads/$file_es' target='_blank'>ES</a></td>";
+                                }
+                                else {
+                                    echo "<tr>";
+                                    echo "<td>". $i++ ."</td>";
+                                    echo "<td>$data</td>";
+                                    echo "<td></td>";
+                                    echo "<td></td>";
+                                }
+
 
                                 if ($_SESSION['role'] == '1') {
-                                    echo "<td><form action='edit-biblia-personal.php' method='get'><input type='hidden' name='data' value='". $data ."'><input type='hidden' name='id' value='". $id ."'><input type='submit' value='Edit' class='btn btn-warning'></form></td>";
-                                    echo "<td><form action='' method='get'><input type='hidden' name='data' value='". $data ."'><input type='hidden' name='id' value='". $id ."'><input type='submit' value='Delete' class='btn btn-danger'></form></td>";
+                                    echo "<td><button class='btn btn-warning edit-btn' data-bs-toggle='modal' data-bs-target='#editPersonalModal' data-id='$id' data-data='$data'>Edit</button></td>";
+                                    echo "<td><form action='' method='get'><input type='hidden' name='data-personal' value='". $data ."'><input type='hidden' name='id-personal' value='". $id ."'><input type='submit' value='Delete' class='btn btn-danger'></form></td>";
                                 }
 
                                 echo "</tr>";
                             }
                         }
 
-                            if (isset($_GET['id'])) {
-                                $delID = $_GET['id'];
-                                $delName = $_GET['data'];
+                            if (isset($_GET['id-personal'])) {
+                                $delID = $_GET['id-personal'];
+                                $delName = $_GET['data-personal'];
                                   
                                 echo '<script type="text/javascript"> ';  
                                 echo '  if (confirm("Are you sure you want to DELETE '. "'$delName'" .'?")) {';  
@@ -237,11 +379,11 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
             <table class="biblia-table table-bordered">
                     <thead class="text-center">
                         <tr class="bg-danger-subtle fs-5">
-                            <th colspan="4">Hecha por Bismarck Valdez - 347-681-1111</th>
+                            <th colspan="6">Hecha por Bismarck Valdez - 347-681-1111</th>
                         </tr>
                         <tr class="bg-warning-subtle fs-5">
                             <th>Sr.</th>
-                            <th colspan="4">Como debemos registrarlos en TaxWise:</th>
+                            <th colspan="6">Como debemos registrarlos en TaxWise:</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -257,23 +399,36 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 
                                 $id = $row['id'];
                                 $data = $row['data'];
+                                $file_en = $row['file_en'];
+                                $file_es = $row['file_es'];
 
-                                echo "<tr>";
-                                echo "<td>". $i++ ."</td>";
-                                echo "<td>$data</td>";
+                                if ($file_en != '' or $file_es != '') {
+                                    echo "<tr>";
+                                    echo "<td>". $i++ ."</td>";
+                                    echo "<td>$data</td>";
+                                    echo "<td><a href='../uploads/$file_en' target='_blank'>EN</a></td>";
+                                    echo "<td><a href='../uploads/$file_es' target='_blank'>ES</a></td>";
+                                }
+                                else {
+                                    echo "<tr>";
+                                    echo "<td>". $i++ ."</td>";
+                                    echo "<td>$data</td>";
+                                    echo "<td></td>";
+                                    echo "<td></td>";
+                                }
 
                                 if ($_SESSION['role'] == '1') {
-                                    echo "<td><form action='edit-biblia-taxwise.php' method='get'><input type='hidden' name='data' value='". $data ."'><input type='hidden' name='id' value='". $id ."'><input type='submit' value='Edit' class='btn btn-warning'></form></td>";
-                                    echo "<td><form action='' method='get'><input type='hidden' name='data' value='". $data ."'><input type='hidden' name='id' value='". $id ."'><input type='submit' value='Delete' class='btn btn-danger'></form></td>";
+                                    echo "<td><button class='btn btn-warning edit-btn' data-bs-toggle='modal' data-bs-target='#editTaxwiseModal' data-id='$id' data-data='$data'>Edit</button></td>";
+                                    echo "<td><form action='' method='get'><input type='hidden' name='data-taxwise' value='". $data ."'><input type='hidden' name='id-taxwise' value='". $id ."'><input type='submit' value='Delete' class='btn btn-danger'></form></td>";
                                 }
 
                                 echo "</tr>";
                             }
                         }
 
-                            if (isset($_GET['id'])) {
-                                $delID = $_GET['id'];
-                                $delName = $_GET['data'];
+                            if (isset($_GET['id-taxwise'])) {
+                                $delID = $_GET['id-taxwise'];
+                                $delName = $_GET['data-taxwise'];
                                   
                                 echo '<script type="text/javascript"> ';  
                                 echo '  if (confirm("Are you sure you want to DELETE '. "'$delName'" .'?")) {';  
@@ -289,7 +444,28 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const editButtons = document.querySelectorAll('.edit-btn');
+        editButtons.forEach(btn => {
+            btn.addEventListener('click', function () {
+                const targetModalId = this.getAttribute('data-bs-target');
+                const id = this.getAttribute('data-id');
+                const data = this.getAttribute('data-data');
 
+                // Find the target modal using its ID
+                const targetModal = document.querySelector(targetModalId);
+
+                // Check if the modal exists
+                if (targetModal) {
+                    // Populate modal fields with the respective data
+                    targetModal.querySelector('#editId').value = id;
+                    targetModal.querySelector('#editData').value = data;
+                }
+            });
+        });
+    });
+    </script>
 	<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </body>
 </html>
