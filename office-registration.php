@@ -69,12 +69,13 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 	<div class="container-fluid">
 		<div class="row my-5 px-5">
 		<div class="col-md-6">
-			<form action="create-office.php" method="post">
+		<form action="includes/create-office.php" method="post">
 		<h5 class="pt-3 pb-1">Office Information</h5>
 			<div class="client-info d-flex flex-column">
 				<div class="d-flex flex-row mb-1">
 					<label class="w-50 d-inline">Contact Name:</label>
 					<input type="text" name="company-contact-name" id="contact-name" class="ms-2 form-control d-inline">
+					<input type="text" name="user-id" id="user-id" hidden value="<?php echo $_SESSION['id'] ?>">
 				</div>
 				<div class="d-flex flex-row mb-1">
 					<label class="w-50 d-inline">Company Name:</label>

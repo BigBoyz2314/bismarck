@@ -34,6 +34,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && $_POST['register'] == 'register') {
                     while ($row = mysqli_fetch_assoc($result)) {
                         if (password_verify($password, $row['password'])) {
                             $_SESSION['role'] = $row['role_id'];
+                            $_SESSION['id'] = $row['id'];
                             $_SESSION['loggedin'] = true;
                             $_SESSION['name'] = $row['name'];
                         header("Location:create-account.php");
@@ -57,6 +58,7 @@ elseif ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST['register'] == 'login') {
           while ($row = mysqli_fetch_assoc($result)) {
             if (password_verify($password, $row['password'])) {
                 $_SESSION['role'] = $row['role_id'];
+                $_SESSION['id'] = $row['id'];
 				$_SESSION['loggedin'] = true;
                 $_SESSION['name'] = $row['name'];
                 header("Location:office-registration.php");
@@ -118,7 +120,7 @@ elseif ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST['register'] == 'login') {
             	<a class="nav-link" href="#">About Us</a>
             </li>
             <?php
-                if ($_SESSION['loggedin'] == true) {
+                if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
                     echo '<li class="nav-item">
                             <a class="nav-link" href="client/index.php">'. $_SESSION['name'] .'</a>
                         </li>';

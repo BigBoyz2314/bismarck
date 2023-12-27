@@ -19,6 +19,7 @@ if (isset($_POST)) {
           while ($row = mysqli_fetch_assoc($result)) {
             if (password_verify($password, $row['password'])) {
                 $_SESSION['role'] = $row['role_id'];
+                $_SESSION['id'] = $row['id'];
 				        $_SESSION['loggedin'] = true;
                 $_SESSION['name'] = $row['name'];
                 header("Location:index.php");

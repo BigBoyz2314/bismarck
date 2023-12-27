@@ -44,7 +44,7 @@ session_start();
             </li>
             
 			<?php
-                if ($_SESSION['loggedin'] == true) {
+                if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
                     echo '<li class="nav-item">
                             <a class="nav-link" href="client/index.php">'. $_SESSION['name'] .'</a>
                         </li>';
