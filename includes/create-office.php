@@ -37,14 +37,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         company_contact_phone, company_fax, company_tax_id, preparer_id, preparer_name, preparer_company_name, 
         preparer_address, preparer_city, preparer_state, preparer_zip, preparer_phone, preparer_efin, preparer_ptin, 
         preparer_nytprin, preparer_ein, preparer_ero_pin, preparer_pin
-    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     // Prepare the SQL statement
     $stmt = $conn->prepare($query);
 
     // Bind parameters
     $stmt->bind_param(
-        "issssssssssssssssssss",
+        "isssssssssssssssssssssss",
         $userId, $companyContactName, $companyName, $companyAddress, $companyCity, $companyState, $companyZip,
         $companyContactPhone, $companyFax, $companyTaxId, $preparerId, $preparerName, $preparerCompanyName,
         $preparerAddress, $preparerCity, $preparerState, $preparerZip, $preparerPhone, $preparerEfin, $preparerPtin,

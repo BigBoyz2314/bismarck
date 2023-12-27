@@ -83,10 +83,6 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 				</div>
 				<div class="d-flex flex-row mb-1">
 					<label class="w-50 d-inline">Company Address:</label>
-					<input type="text" name="company-name" id="company-name" class="ms-2 form-control d-inline">
-				</div>
-				<div class="d-flex flex-row mb-1">
-					<label class="w-50 d-inline">Address:</label>
 					<input type="text" name="company-address" id="company-address" class="ms-2 form-control d-inline">
 				</div>
 				<div class="d-flex flex-row mb-1">

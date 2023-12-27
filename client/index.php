@@ -111,7 +111,89 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true || $_SESSION[
             <div class="col-md-8 mb-4 bg-info-subtle rounded-4">
                 <h5 class="pt-3 pb-1">Office/Contact Info</h5>
                 <div class="client-info d-flex flex-column">
-                    <div class="d-flex flex-row mb-1">
+                <?php
+// Assuming you have a database connection established
+
+include_once('../includes/config.php');
+
+// Check if the user is logged in and the session contains the user's ID
+if (isset($_SESSION['id'])) {
+    $userId = $_SESSION['id'];
+
+    // Select data from the offices table based on user_id
+    $query = "SELECT * FROM offices WHERE user_id = ?";
+    
+    // Prepare the SQL statement
+    $stmt = $conn->prepare($query);
+
+    // Bind parameter
+    $stmt->bind_param("i", $userId);
+
+    // Execute the prepared statement
+    $stmt->execute();
+
+    // Get the result
+    $result = $stmt->get_result();
+
+    // Associative array to store retrieved data
+    $data = [];
+
+    // Check if there are rows returned
+    if ($result->num_rows > 0) {
+        // Fetch the data from the query result
+        $data = $result->fetch_assoc();
+    }
+
+    // Close the statement
+    $stmt->close();
+
+    // Array of field names and labels
+        $fields = [
+            'Company Contact Name' => 'company_contact_name',
+            'Company Name' => 'company_name',
+            'Company Address' => 'company_address',
+            'Company City' => 'company_city',
+            'Company State' => 'company_state',
+            'Company Zip' => 'company_zip',
+            'Company Contact Phone' => 'company_contact_phone',
+            'Company Fax' => 'company_fax',
+            'Company Federal Tax ID' => 'company_tax_id',
+            'Preparer ID' => 'preparer_id',
+            'Preparer Name' => 'preparer_name',
+            'Preparer Company Name' => 'preparer_company_name',
+            'Preparer Address' => 'preparer_address',
+            'Preparer City' => 'preparer_city',
+            'Preparer State' => 'preparer_state',
+            'Preparer Zip' => 'preparer_zip',
+            'Preparer Phone' => 'preparer_phone',
+            'Preparer EFIN' => 'preparer_efin',
+            'Preparer PTIN' => 'preparer_ptin',
+            'Preparer NYTPRIN' => 'preparer_nytprin',
+            'Preparer EIN' => 'preparer_ein',
+            'ERO PIN' => 'preparer_ero_pin',
+            'Preparer PIN' => 'preparer_pin'
+        ];
+
+
+    // Function to create disabled input with value or empty if data is not available
+    function createInput($label, $fieldName, $value) {
+        return '
+            <div class="d-flex flex-row mb-1">
+                <label class="w-25 d-inline">' . $label . ':</label>
+                <input type="text" name="' . $fieldName . '" id="' . $fieldName . '" disabled value="' . ($value ?? '') . '" class="ms-2 form-control w-75 d-inline">
+            </div>';
+    }
+
+    // Output inputs for each field
+    foreach ($fields as $label => $fieldName) {
+        echo createInput($label, $fieldName, $data[$fieldName] ?? null);
+    }
+} else {
+    echo "User ID not found in session.";
+}
+?>
+
+                    <!-- <div class="d-flex flex-row mb-1">
                         <label class="w-25 d-inline">Office Name:</label>
                         <input type="text" name="" id="" disabled value="Bismarck Business Group, LLC" class="ms-2 form-control w-75 d-inline">
                     </div>
@@ -209,7 +291,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true || $_SESSION[
                         <label class="w-25 d-inline">Zip Code:</label>
                         <input type="text" name="" id="" disabled value="33904" class="ms-2 form-control w-75 d-inline">
                     </div>
-                </div>
+                </div> -->
             </div>
         </div>
 
