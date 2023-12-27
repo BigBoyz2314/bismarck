@@ -31,7 +31,7 @@ if(($password)) {
 
     if ($result) { 
         $showAlert = true;  
-    } 
+    }
 }
 }
 
