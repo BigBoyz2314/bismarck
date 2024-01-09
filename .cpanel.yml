@@ -5,6 +5,7 @@ deployment:
     - /bin/cp index.php $DEPLOYPATH
     - /bin/cp create-account.php $DEPLOYPATH
     - /bin/cp office-registration.php $DEPLOYPATH
+    - /bin/cp create-office.php $DEPLOYPATH
     # - /bin/cp -R includes $DEPLOYPATH
     - /bin/cp -R css $DEPLOYPATH
     - /bin/cp -R admin $DEPLOYPATH

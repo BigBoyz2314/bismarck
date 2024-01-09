@@ -69,7 +69,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 	<div class="container-fluid">
 		<div class="row my-5 px-5">
 		<div class="col-md-6">
-		<form action="includes/create-office.php" method="post">
+		<form action="create-office.php" method="post">
 		<h5 class="pt-3 pb-1">Office Information</h5>
 			<div class="client-info d-flex flex-column">
 				<div class="d-flex flex-row mb-1">
