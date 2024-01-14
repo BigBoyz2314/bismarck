@@ -115,20 +115,51 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true || $_SESSION[
             <div class="col-md-8 text-center bg-info-subtle rounded-4">
                 <h4 class="py-3">Office Information</h4>
                 <div class="office-info">
-                    <select name="officeSelect" id="officeSelect" class="me-2 form-select d-inline">
-                        <option value="EFIN">EFIN</option>
-                    </select>
-                    <input type="text" name="" id="" class="ms-2 form-control d-inline">
-                    <button class="btn btn-primary ms-2">Search</button>
+                    <form action="index.php" method="get">
+                        <select name="officeSelect" id="officeSelect" class="me-2 form-select d-inline">
+                            <option value="company_name">Company Name</option>
+                        </select>
+                        <input type="text" name="text" id="text" class="ms-2 form-control d-inline">
+                        <button type="submit" class="btn btn-primary ms-2">Search</button>
+                    </form>
                     <hr>
-                    <ul class="list-unstyled text-start fw-semibold ps-5">
-                        <li>EFIN: </li>
-                        <li>Company Name: </li>
-                        <li>Contact First Name: </li>
-                        <li>Contact Last Name: </li>
-                        <li>Phone: </li>
-                        <li>Email: </li>
-                    </ul>
+                    <div class="row text-start">
+                        <div class="col-md-4 fw-bold">
+                            <p>Company Name:</p>
+                            <p>EFIN:</p>
+                            <p>Address:</p>
+                            <p>City:</p>
+                            <p>Contact Name:</p>
+                            <p>Contact Phone:</p>
+                        </div>
+                        <div class="col-md-8">
+                            <?php
+                                if (isset($_GET['text']) && isset($_GET['officeSelect'])) {
+                                    $text = $_GET['text'];
+                                    $officeSelect = $_GET['officeSelect'];
+
+                                    require_once "../includes/config.php";
+                                    $sql = "SELECT * FROM offices WHERE $officeSelect = '$text'";
+                                    $result = mysqli_query($conn, $sql);
+                                    if(mysqli_num_rows($result) > 0){
+                                        while($row = mysqli_fetch_array($result)){
+                                            echo "<p>".$row['company_name']."</p>";
+                                            echo "<p>".$row['preparer_efin']."</p>";
+                                            echo "<p>".$row['company_address']."</p>";
+                                            echo "<p>".$row['company_city']."</p>";
+                                            echo "<p>".$row['company_contact_name']."</p>";
+                                            echo "<p>".$row['company_contact_phone']."</p>";
+                                        }
+                                    }
+                                    else{
+                                        echo "<p>No records matching your query were found.</p>";
+
+                                    }
+                                }
+                                
+                            ?>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

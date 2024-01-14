@@ -34,7 +34,7 @@ session_start();
             	<a class="nav-link" href="create-account.php">Create an account</a>
             </li>
             <li class="nav-item">
-            	<a class="nav-link" href="office-registration.php">Office Registration</a>
+            	<!-- <a class="nav-link" href="office-registration.php">Office Registration</a> -->
             </li>
             <li class="nav-item">
             	<a class="nav-link" href="#">Student Registration</a>

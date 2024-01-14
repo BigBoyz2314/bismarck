@@ -61,7 +61,7 @@ elseif ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST['register'] == 'login') {
                 $_SESSION['id'] = $row['id'];
 				$_SESSION['loggedin'] = true;
                 $_SESSION['name'] = $row['name'];
-                header("Location:office-registration.php");
+                header("Location:client/index.php");
             }
 			else {
         $error =  "Email or Password is invalid!";
@@ -111,7 +111,7 @@ elseif ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST['register'] == 'login') {
             	<a class="nav-link active" href="create-account.php">Create an account</a>
             </li>
             <li class="nav-item">
-            	<a class="nav-link" href="office-registration.php">Office Registration</a>
+            	<!-- <a class="nav-link" href="office-registration.php">Office Registration</a> -->
             </li>
             <li class="nav-item">
             	<a class="nav-link" href="#">Student Registration</a>
@@ -119,7 +119,10 @@ elseif ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST['register'] == 'login') {
             <li class="nav-item">
             	<a class="nav-link" href="#">About Us</a>
             </li>
-            <?php
+            
+        </ul>
+        <ul class="navbar-nav mb-2 mb-lg-0 align-items-center">
+        <?php
                 if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
                     echo '<li class="nav-item">
                             <a class="nav-link" href="client/index.php">'. $_SESSION['name'] .'</a>

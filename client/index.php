@@ -108,9 +108,11 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true || $_SESSION[
                 </div>
 
             </div>
-            <div class="col-md-8 mb-4 bg-info-subtle rounded-4">
-                <h5 class="pt-3 pb-1">Office/Contact Info</h5>
-                <div class="client-info d-flex flex-column">
+            <div class="col-md-8 mb-4 bg-info-subtle rounded-4 pt-3">
+                <h5 class="pt-3 pb-1 d-inline">Office/Contact Info</h5>
+                <button class="btn btn-warning float-end" id="editBtn">Edit</button>
+                <div class="client-info d-flex flex-column mt-4">
+                <form action="update.php" method="post">
                 <?php
 // Assuming you have a database connection established
 
@@ -193,105 +195,10 @@ if (isset($_SESSION['id'])) {
 }
 ?>
 
-                    <!-- <div class="d-flex flex-row mb-1">
-                        <label class="w-25 d-inline">Office Name:</label>
-                        <input type="text" name="" id="" disabled value="Bismarck Business Group, LLC" class="ms-2 form-control w-75 d-inline">
-                    </div>
-                    <div class="d-flex flex-row mb-1">
-                        <label class="w-25 d-inline">Contact First Name:</label>
-                        <input type="text" name="" id="" disabled value="Bismarck" class="ms-2 form-control w-75 d-inline">
-                    </div>
-                    <div class="d-flex flex-row mb-1">
-                        <label class="w-25 d-inline">Contact Last Name:</label>
-                        <input type="text" name="" id="" disabled value="Valdez" class="ms-2 form-control w-75 d-inline">
-                    </div>
-                    <div class="d-flex flex-row mb-1">
-                        <label class="w-25 d-inline">Email:</label>
-                        <input type="text" name="" id="" disabled value="Bismarckbusinessgroup@gmail.com" class="ms-2 form-control w-75 d-inline">
-                    </div>
-                    <div class="d-flex flex-row mb-1">
-                        <label class="w-25 d-inline">Phone:</label>
-                        <input type="text" name="" id="" disabled value="347-681-1111" class="ms-2 form-control w-75 d-inline">
-                    </div>
-                    <div class="d-flex flex-row mb-1">
-                        <label class="w-25 d-inline">EFIN:</label>
-                        <input type="text" name="" id="" disabled value="070743" class="ms-2 form-control w-75 d-inline">
-                    </div>
-                    <div class="d-flex flex-row mb-1">
-                        <label class="w-25 d-inline">Transmitting EFIN:</label>
-                        <input type="text" name="" id="" disabled value="070743" class="ms-2 form-control w-75 d-inline">
-                    </div>
-                    <div class="d-flex flex-row mb-1">
-                        <label class="w-25 d-inline">Transmission Type:</label>
-                        <input type="text" name="" id="" disabled value="PAPSPOWER" class="ms-2 form-control w-75 d-inline">
-                    </div>
-                    <div class="d-flex flex-row mb-1">
-                        <label class="w-25 d-inline">Shipping Method:</label>
-                        <input type="text" name="" id="" disabled value="Download" class="ms-2 form-control w-75 d-inline">
-                    </div>
-                    <div class="d-flex flex-row mb-1">
-                        <label class="w-25 d-inline">Ok to Ship:</label>
-                        <input type="text" name="" id="" disabled value="No" class="ms-2 form-control w-75 d-inline">
-                    </div>
-                    <div class="d-flex flex-row mb-1">
-                        <label class="w-25 d-inline">Client ID:</label>
-                        <input type="text" name="" id="" disabled value="123" class="ms-2 form-control w-75 d-inline">
-                    </div>
-                    <div class="d-flex flex-row mb-1">
-                        <label class="w-25 d-inline">User Name:</label>
-                        <input type="text" name="" id="" disabled value="user" class="ms-2 form-control w-75 d-inline">
-                    </div>
-                    <div class="d-flex flex-row mb-1">
-                        <label class="w-25 d-inline">Password:</label>
-                        <input type="text" name="" id="" disabled value="password" class="ms-2 form-control w-75 d-inline">
-                    </div>
-                </div>
-                <h5 class="pt-3 pb-1">Mailing Address:</h5>
-                <div class="client-info d-flex flex-column">
-                    <div class="d-flex flex-row mb-1">
-                        <label class="w-25 d-inline">Address Line 1:</label>
-                        <input type="text" name="" id="" disabled value="540 SE 47th Ter" class="ms-2 form-control w-75 d-inline">
-                    </div>
-                    <div class="d-flex flex-row mb-1">
-                        <label class="w-25 d-inline">Address Line 2:</label>
-                        <input type="text" name="" id="" disabled value="" class="ms-2 form-control w-75 d-inline">
-                    </div>
-                    <div class="d-flex flex-row mb-1">
-                        <label class="w-25 d-inline">City:</label>
-                        <input type="text" name="" id="" disabled value="Cape Coral" class="ms-2 form-control w-75 d-inline">
-                    </div>
-                    <div class="d-flex flex-row mb-1">
-                        <label class="w-25 d-inline">State:</label>
-                        <input type="text" name="" id="" disabled value="FL" class="ms-2 form-control w-75 d-inline">
-                    </div>
-                    <div class="d-flex flex-row mb-1">
-                        <label class="w-25 d-inline">Zip Code:</label>
-                        <input type="text" name="" id="" disabled value="33904" class="ms-2 form-control w-75 d-inline">
-                    </div>
-                </div>
-                <h5 class="pt-3 pb-1">Shipping Address:</h5>
-                <div class="client-info d-flex flex-column">
-                    <div class="d-flex flex-row mb-1">
-                        <label class="w-25 d-inline">Address Line 1:</label>
-                        <input type="text" name="" id="" disabled value="540 SE 47th Ter" class="ms-2 form-control w-75 d-inline">
-                    </div>
-                    <div class="d-flex flex-row mb-1">
-                        <label class="w-25 d-inline">Address Line 2:</label>
-                        <input type="text" name="" id="" disabled value="" class="ms-2 form-control w-75 d-inline">
-                    </div>
-                    <div class="d-flex flex-row mb-1">
-                        <label class="w-25 d-inline">City:</label>
-                        <input type="text" name="" id="" disabled value="Cape Coral" class="ms-2 form-control w-75 d-inline">
-                    </div>
-                    <div class="d-flex flex-row mb-1">
-                        <label class="w-25 d-inline">State:</label>
-                        <input type="text" name="" id="" disabled value="FL" class="ms-2 form-control w-75 d-inline">
-                    </div>
-                    <div class="d-flex flex-row mb-1">
-                        <label class="w-25 d-inline">Zip Code:</label>
-                        <input type="text" name="" id="" disabled value="33904" class="ms-2 form-control w-75 d-inline">
-                    </div>
-                </div> -->
+
+                <button class="btn btn-success my-3" id="saveBtn">Save</button>
+                </form>
+                    
             </div>
         </div>
 
@@ -329,6 +236,18 @@ if (isset($_SESSION['id'])) {
             }
             // title: "Office Information Graph",
         }
+        });
+
+        document.getElementById("saveBtn").addEventListener("click", function() {
+            document.querySelectorAll("input").forEach(function(input) {
+                input.disabled = true;
+            });
+        });
+
+        document.getElementById("editBtn").addEventListener("click", function() {
+            document.querySelectorAll("input").forEach(function(input) {
+                input.disabled = false;
+            });
         });
 		
 		</script>

@@ -130,7 +130,60 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
         <div class="row">
             <div class="col-md-12">
                 <table class="table table-responsive table-bordered office-table" id="table">
-                    <thead>
+                    <?php
+                        include_once '../includes/config.php';
+                        $sql = "SELECT * FROM offices";
+                        $result = mysqli_query($conn, $sql);
+                        $resultCheck = mysqli_num_rows($result);
+                        if ($resultCheck > 0) {
+                            echo "<thead>
+                                    <tr class='text-center'>
+                                        <th>EFIN</th>
+                                        <th>PID</th>
+                                        <th>Office Name</th>
+                                        <th>Contact Name</th>
+                                        <th>Phone</th>
+                                        <th>Email Address</th>
+                                        <th>City</th>
+                                        <th>State</th>
+                                        <th>Zipcode</th>
+                                        <th>Registration Code</th>
+                                        <th>Office Status</th>
+                                        <th>Bank App Status</th>
+                                        <th>Balance Acc Rec</th>
+                                        <th>Sofware Cost</th>
+                                        <th>Transm Fee</th>
+                                        <th>SB Fee  </th>
+                                        <th>Fee Collect</th>
+                                    </tr>
+                                </thead>
+                                <tbody>";
+                            while ($row = mysqli_fetch_assoc($result)) {
+                                echo "<tr class='text-center'>
+                                        <td>".$row['preparer_efin']."</td>
+                                        <td>".$row['preparer_ptin']."</td>
+                                        <td>".$row['company_name']."</td>
+                                        <td>".$row['company_contact_name']."</td>
+                                        <td>".$row['company_contact_phone']."</td>
+                                        <td></td>
+                                        <td>".$row['company_city']."</td>
+                                        <td>".$row['company_state']."</td>
+                                        <td>".$row['company_zip']."</td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>";
+                            }
+                            echo "</tbody>";
+                        }
+
+                    ?>
+                    <!-- <thead>
                         <tr class="text-center">
                             <th>EFIN</th>
                             <th>Client ID</th>
@@ -175,7 +228,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                             <td>1135</td>
                             <td>6</td>
                         </tr>
-                    </tbody>
+                    </tbody> -->
                 </table>
             </div>
         </div>
