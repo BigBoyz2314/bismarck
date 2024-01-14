@@ -42,8 +42,9 @@ session_start();
             <li class="nav-item">
             	<a class="nav-link" href="#">About Us</a>
             </li>
-            
-			<?php
+        </ul>
+		<ul class="navbar-nav mb-2 mb-lg-0 align-items-center">
+        <?php
                 if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
                     echo '<li class="nav-item">
                             <a class="nav-link" href="client/index.php">'. $_SESSION['name'] .'</a>
