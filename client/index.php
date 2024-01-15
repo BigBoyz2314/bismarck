@@ -109,10 +109,24 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true || $_SESSION[
 
             </div>
             <div class="col-md-8 mb-4 bg-info-subtle rounded-4 pt-3">
+            <?php 
+                if (isset($_GET['office']) && $_GET['office'] == 'added') {
+                    echo '<div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <strong>Success!</strong> Office information added successfully.
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>';
+                }
+                if (isset($_GET['office']) && $_GET['office'] == 'updated') {
+                    echo '<div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <strong>Success!</strong> Office information updated successfully.
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>';
+                }
+            ?>
                 <h5 class="pt-3 pb-1 d-inline">Office/Contact Info</h5>
                 <button class="btn btn-warning float-end" id="editBtn">Edit</button>
-                <div class="client-info d-flex flex-column mt-4">
                 <form action="update.php" method="post">
+                <div class="client-info d-flex flex-column mt-4">
                 <?php
 // Assuming you have a database connection established
 
@@ -150,31 +164,31 @@ if (isset($_SESSION['id'])) {
     $stmt->close();
 
     // Array of field names and labels
-        $fields = [
-            'Company Contact Name' => 'company_contact_name',
-            'Company Name' => 'company_name',
-            'Company Address' => 'company_address',
-            'Company City' => 'company_city',
-            'Company State' => 'company_state',
-            'Company Zip' => 'company_zip',
-            'Company Contact Phone' => 'company_contact_phone',
-            'Company Fax' => 'company_fax',
-            'Company Federal Tax ID' => 'company_tax_id',
-            'Preparer ID' => 'preparer_id',
-            'Preparer Name' => 'preparer_name',
-            'Preparer Company Name' => 'preparer_company_name',
-            'Preparer Address' => 'preparer_address',
-            'Preparer City' => 'preparer_city',
-            'Preparer State' => 'preparer_state',
-            'Preparer Zip' => 'preparer_zip',
-            'Preparer Phone' => 'preparer_phone',
-            'Preparer EFIN' => 'preparer_efin',
-            'Preparer PTIN' => 'preparer_ptin',
-            'Preparer NYTPRIN' => 'preparer_nytprin',
-            'Preparer EIN' => 'preparer_ein',
-            'ERO PIN' => 'preparer_ero_pin',
-            'Preparer PIN' => 'preparer_pin'
-        ];
+    $fields = [
+        'Company Contact Name' => 'company_contact_name',
+        'Company Name' => 'company_name',
+        'Company Address' => 'company_address',
+        'Company City' => 'company_city',
+        'Company State' => 'company_state',
+        'Company Zip' => 'company_zip',
+        'Company Contact Phone' => 'company_contact_phone',
+        'Company Fax' => 'company_fax',
+        'Company Federal Tax ID' => 'company_tax_id',
+        'Preparer ID' => 'preparer_id',
+        'Preparer Name' => 'preparer_name',
+        'Preparer Company Name' => 'preparer_company_name',
+        'Preparer Address' => 'preparer_address',
+        'Preparer City' => 'preparer_city',
+        'Preparer State' => 'preparer_state',
+        'Preparer Zip' => 'preparer_zip',
+        'Preparer Phone' => 'preparer_phone',
+        'Preparer EFIN' => 'preparer_efin',
+        'Preparer PTIN' => 'preparer_ptin',
+        'Preparer NYTPRIN' => 'preparer_nytprin',
+        'Preparer EIN' => 'preparer_ein',
+        'ERO PIN' => 'preparer_ero_pin',
+        'Preparer PIN' => 'preparer_pin'
+    ];
 
 
     // Function to create disabled input with value or empty if data is not available
@@ -189,17 +203,20 @@ if (isset($_SESSION['id'])) {
     // Output inputs for each field
     foreach ($fields as $label => $fieldName) {
         echo createInput($label, $fieldName, $data[$fieldName] ?? null);
+
     }
-} else {
-    echo "User ID not found in session.";
-}
-?>
+        echo "<input type='hidden' name='id' value='" . $_SESSION['id'] . "'>";
+
+    } else {
+        echo "User ID not found in session.";
+    }
+    ?>
 
 
-                <button class="btn btn-success my-3" id="saveBtn">Save</button>
-                </form>
-                    
+                <button class="btn btn-success my-3 d-none" id="saveBtn">Save</button>
+                
             </div>
+        </form>
         </div>
 
 
@@ -238,15 +255,10 @@ if (isset($_SESSION['id'])) {
         }
         });
 
-        document.getElementById("saveBtn").addEventListener("click", function() {
-            document.querySelectorAll("input").forEach(function(input) {
-                input.disabled = true;
-            });
-        });
-
         document.getElementById("editBtn").addEventListener("click", function() {
             document.querySelectorAll("input").forEach(function(input) {
                 input.disabled = false;
+                document.getElementById("saveBtn").classList.remove("d-none");
             });
         });
 		
