@@ -94,7 +94,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                             <th>Year</th>
                             <th>EFIN</th>
                             <th>Reg Code</th>
-                            <th>User name</th>
+                            <th>Username</th>
                             <th>Password</th>
                         </tr>
                     </thead>
