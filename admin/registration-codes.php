@@ -13,14 +13,13 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registratio Codes</title>
+    <title>Registration Codes</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="../css/styles.css">
     <style>
     </style>
 </head>
 <body>
-
     <nav class="navbar navbar-expand-lg bg-nav">
         <div class="container-fluid w-75">
             <div class="d-flex flex-column py-1">
@@ -40,9 +39,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                 </ul>
             </div>
         </div>
-        </nav>
-
-
+    </nav>
     
     <nav class="navbar navbar-expand-lg bg-light text-primary border-bottom border-primary">
         <div class="container-fluid">
@@ -85,247 +82,157 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
             </div>
         </div>
     </nav>
-	<div class="container-fluid w-75">
+	<div class="container-fluid w-75 mt-2">
+
+    <?php 
+        if (isset($_GET['msg']) && $_GET['msg'] == 'success') {
+            echo '<div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>Success!</strong> Registration Code added successfully.
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>';
+        }
+        if (isset($_GET['msg']) && $_GET['msg'] == 'error') {
+            echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <strong>Error!</strong> Registration Code not added.
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>';
+        }
+        if (isset($_GET['msg']) && $_GET['msg'] == 'deleted') {
+            echo '<div class="alert alert-warning alert-dismissible fade show" role="alert">
+            <strong>Success!</strong> Registration Code deleted successfully.
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>';
+        }
+    ?>
+
+    <div class="modal fade" id="addModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h1 class="modal-title fs-5" id="staticBackdropLabel">Add Registration Code</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form action="add-registration-code.php" method="post">
+            <div class="modal-body">
+                <label for="year">Year</label>
+                <select name="year" id="year" class="form-select">
+                    <option value="2023">2023</option>
+                    <option value="2024">2024</option>
+                    <option value="2025">2025</option>
+                    <option value="2026">2026</option>
+                    <option value="2027">2027</option>
+                </select>
+                <label for="efin">EFIN</label>
+                <input type="text" class="form-control" name="efin">
+                <label for="regCode">Registration Code</label>
+                <input type="text" class="form-control" name="regCode">
+                <label for="username">User name</label>
+                <select name="user" id="user" class="form-select">
+                    <?php
+                        include_once('../includes/config.php');
+
+                        $stmt = "SELECT * FROM users";
+                        $result = $conn->query($stmt);
+
+                        if ($result->num_rows > 0) {
+                            while($row = $result->fetch_assoc()) {
+                                $id = $row['id'];
+                                $username = $row['name'];
+                                echo "<option value='$id'>$username</option>";
+                            }
+                        }
+
+                    ?>
+                </select>
+                <label for="password">Password</label>
+                <input type="text" class="form-control" name="password">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-success">Save</button>
+            </div>
+        </form>
+        </div>
+    </div>
+    </div>
+
         <div class="row mt-3">
             <div class="col-md-6">
                 <h3>Registration Codes</h3>
             </div>
-            <div class="col-md-12 rounded-4">
+            <div class="col-md-6">
+                <div class="d-flex justify-content-end">
+                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addModal">Add Registration Code</button>
+                </div>
+            </div>
+            <div class="col-md-12 rounded-4 mt-2">
                 <table class="table table-bordered">
                     <thead class="table-info">
-                        <tr>
+                    <tr>
                             <th>Year</th>
                             <th>EFIN</th>
                             <th>Reg Code</th>
                             <th>User name</th>
                             <th>Password</th>
+                            <th>Created at</th>
+                            <th>Updated at</th>
+                            <!-- <th>Edit</th> -->
+                            <th>Delete</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
-                            <td>2022</td>
-                            <td>070743</td>
-                            <td></td>
-                            <td>Admin</td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>2021</td>
-                            <td>070743</td>
-                            <td></td>
-                            <td>Admin</td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>2020</td>
-                            <td>070743</td>
-                            <td>SJJJ-JJJS-6JE2-ISJJ-3NTL</td>
-                            <td>Admin</td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>2019</td>
-                            <td>070743</td>
-                            <td>IKKK-KKK7-DJ4U-RSK9-L4M9</td>
-                            <td>Admin</td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>2018</td>
-                            <td>070743</td>
-                            <td>ACCC-CCCR-SKYE-3TCX-WYHX</td>
-                            <td>Admin</td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>2017</td>
-                            <td>070743</td>
-                            <td>MMMM-MMHZ-B0NJ-QEMK-YXPM</td>
-                            <td>Admin</td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>2016</td>
-                            <td>070743</td>
-                            <td>X555-55KE-PNJ6-GS5L-QBVT</td>
-                            <td>Admin</td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>2015</td>
-                            <td>070743</td>
-                            <td>MMMM-MMSZ-382J-QFMV-GIBW</td>
-                            <td>Admin</td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>2014</td>
-                            <td>070743</td>
-                            <td>TNNN-NNNN-GNAI-5TNN-OH8H</td>
-                            <td>Admin</td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>2013</td>
-                            <td>070743</td>
-                            <td>WVVV-VVVV-2VI8-LWVV-OVLG </td>
-                            <td>Admin</td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>2012</td>
-                            <td>070743</td>
-                            <td>WWWW-WWWW-4WQD-2MWW-XXCZ</td>
-                            <td>Admin</td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>2011</td>
-                            <td>070743</td>
-                            <td>ACCC-CCCC-PCT7-ZACC-Q696</td>
-                            <td>Admin</td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>2010</td>
-                            <td>070743</td>
-                            <td>PPRG-EEEV-PEV8-ZFEE-9272</td>
-                            <td>Admin</td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>2009</td>
-                            <td>070743</td>
-                            <td>UUK9-7778-UEPC-JF77-VRC2</td>
-                            <td>Admin</td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>2008</td>
-                            <td>070743</td>
-                            <td>CSXA-CAAB-YAVG-JBAA-HAN8</td>
-                            <td>Admin</td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>2007</td>
-                            <td>070743</td>
-                            <td>2222-22JN-Q4M8-XT24-7XKV or QQF4-2223-QAM8-EB22-PF2C</td>
-                            <td>Admin</td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>2006</td>
-                            <td>070743</td>
-                            <td>KKEKPMIM</td>
-                            <td>Admin</td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>2005</td>
-                            <td>070743</td>
-                            <td>MUOKNUKS</td>
-                            <td>Admin</td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>2004</td>
-                            <td>070743</td>
-                            <td>DHBNAHNF</td>
-                            <td>Admin</td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>2003</td>
-                            <td>070743</td>
-                            <td>MUOKMTJT</td>
-                            <td>Admin</td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>2002</td>
-                            <td>070743</td>
-                            <td>FRLHKRHR</td>
-                            <td>Admin</td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>2001</td>
-                            <td>070743</td>
-                            <td>LUPZXPPW</td>
-                            <td>Admin</td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>2000</td>
-                            <td>070743</td>
-                            <td>PITNLUUH or HQLVTUUI</td>
-                            <td>Admin</td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>1999</td>
-                            <td>070743</td>
-                            <td>LBNCEFDG</td>
-                            <td>Admin</td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>1998</td>
-                            <td>070743</td>
-                            <td>OEKNIQEJ</td>
-                            <td>Admin</td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>1997</td>
-                            <td>070743</td>
-                            <td>LRSOKRLQ</td>
-                            <td>Admin</td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>1996</td>
-                            <td>070743</td>
-                            <td>PIJFQIMR</td>
-                            <td>Admin</td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>1995</td>
-                            <td>070743</td>
-                            <td>OGRNIQKP</td>
-                            <td>Admin</td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>1994</td>
-                            <td>070743</td>
-                            <td>PFGSNFKU</td>
-                            <td>Admin</td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>1993</td>
-                            <td>070743</td>
-                            <td>KRFISLQH</td>
-                            <td>Admin</td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>1992</td>
-                            <td>070743</td>
-                            <td>IPDGIRGN</td>
-                            <td>Admin</td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>1991</td>
-                            <td>070743</td>
-                            <td>IOSFFGKN</td>
-                            <td>Admin</td>
-                            <td></td>
-                        </tr>
+                        <?php
+
+                            include_once('../includes/config.php');
+
+                            $stmt = "SELECT * FROM registration_codes ORDER BY year DESC";
+                            $result = $conn->query($stmt);
+                            $i = 1;
+
+                            if ($result->num_rows > 0) {
+                                while($row = $result->fetch_assoc()) {
+
+                                    $id = $row['id'];
+                                    $year = $row['year'];
+                                    $efin = $row['efin'];
+                                    $reg_code = $row['reg_code'];
+                                    $username = $row['username'];
+                                    $password = $row['password'];
+                                    $created_at = $row['created_at'];
+                                    $updated_at = $row['updated_at'];
+                                    
+                                        echo "<tr>";
+                                        echo "<td>$year</td>";
+                                        echo "<td>$efin</td>";
+                                        echo "<td>$reg_code</td>";
+                                        echo "<td>$username</td>";
+                                        echo "<td>$password</td>";
+                                        echo "<td>$created_at</td>";
+                                        echo "<td>$updated_at</td>";
+
+                                    if ($_SESSION['role'] == '1') {
+                                        // echo "<td><button class='btn btn-warning edit-btn' data-bs-toggle='modal' data-bs-target='#editModal' data-id='$id' data-data='$username'>Edit</button></td>";
+                                        echo "<td><form action='' method='get'><input type='hidden' name='desigName' value='". $username ."'><input type='hidden' name='year' value='". $year ."'><input type='hidden' name='id' value='". $id ."'><input type='submit' value='Delete' class='btn btn-danger'></form></td>";
+                                    }
+
+                                    echo "</tr>";
+                                }
+                            }
+
+                            if (isset($_GET['id'])) {
+                                $delID = $_GET['id'];
+                                $delName = $_GET['desigName'];
+                                $year = $_GET['year'];
+                                
+                                echo '<script type="text/javascript"> ';  
+                                echo '  if (confirm("Are you sure you want to DELETE registration code for '. $delName .' year '. $year .'?")) {';  
+                                echo '    window.location.href = "del-registration-codes.php?year='. $year .'&delID='. $delID .'";';  
+                                echo '  }';
+                                echo '</script>';  
+                            }
+
+
+                        ?>
+                        
                     </tbody>
                 </table>
             </div>

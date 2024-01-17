@@ -90,7 +90,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
             <div class="col-md-12 rounded-4">
                 <table class="table table-bordered">
                     <thead class="table-info">
-                        <tr>
+                    <tr>
                             <th>Year</th>
                             <th>EFIN</th>
                             <th>Reg Code</th>
@@ -98,231 +98,41 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                             <th>Password</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
-                            <td>2022</td>
-                            <td>070743</td>
-                            <td></td>
-                            <td>Admin</td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>2021</td>
-                            <td>070743</td>
-                            <td></td>
-                            <td>Admin</td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>2020</td>
-                            <td>070743</td>
-                            <td>SJJJ-JJJS-6JE2-ISJJ-3NTL</td>
-                            <td>Admin</td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>2019</td>
-                            <td>070743</td>
-                            <td>IKKK-KKK7-DJ4U-RSK9-L4M9</td>
-                            <td>Admin</td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>2018</td>
-                            <td>070743</td>
-                            <td>ACCC-CCCR-SKYE-3TCX-WYHX</td>
-                            <td>Admin</td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>2017</td>
-                            <td>070743</td>
-                            <td>MMMM-MMHZ-B0NJ-QEMK-YXPM</td>
-                            <td>Admin</td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>2016</td>
-                            <td>070743</td>
-                            <td>X555-55KE-PNJ6-GS5L-QBVT</td>
-                            <td>Admin</td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>2015</td>
-                            <td>070743</td>
-                            <td>MMMM-MMSZ-382J-QFMV-GIBW</td>
-                            <td>Admin</td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>2014</td>
-                            <td>070743</td>
-                            <td>TNNN-NNNN-GNAI-5TNN-OH8H</td>
-                            <td>Admin</td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>2013</td>
-                            <td>070743</td>
-                            <td>WVVV-VVVV-2VI8-LWVV-OVLG </td>
-                            <td>Admin</td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>2012</td>
-                            <td>070743</td>
-                            <td>WWWW-WWWW-4WQD-2MWW-XXCZ</td>
-                            <td>Admin</td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>2011</td>
-                            <td>070743</td>
-                            <td>ACCC-CCCC-PCT7-ZACC-Q696</td>
-                            <td>Admin</td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>2010</td>
-                            <td>070743</td>
-                            <td>PPRG-EEEV-PEV8-ZFEE-9272</td>
-                            <td>Admin</td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>2009</td>
-                            <td>070743</td>
-                            <td>UUK9-7778-UEPC-JF77-VRC2</td>
-                            <td>Admin</td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>2008</td>
-                            <td>070743</td>
-                            <td>CSXA-CAAB-YAVG-JBAA-HAN8</td>
-                            <td>Admin</td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>2007</td>
-                            <td>070743</td>
-                            <td>2222-22JN-Q4M8-XT24-7XKV or QQF4-2223-QAM8-EB22-PF2C</td>
-                            <td>Admin</td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>2006</td>
-                            <td>070743</td>
-                            <td>KKEKPMIM</td>
-                            <td>Admin</td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>2005</td>
-                            <td>070743</td>
-                            <td>MUOKNUKS</td>
-                            <td>Admin</td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>2004</td>
-                            <td>070743</td>
-                            <td>DHBNAHNF</td>
-                            <td>Admin</td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>2003</td>
-                            <td>070743</td>
-                            <td>MUOKMTJT</td>
-                            <td>Admin</td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>2002</td>
-                            <td>070743</td>
-                            <td>FRLHKRHR</td>
-                            <td>Admin</td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>2001</td>
-                            <td>070743</td>
-                            <td>LUPZXPPW</td>
-                            <td>Admin</td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>2000</td>
-                            <td>070743</td>
-                            <td>PITNLUUH or HQLVTUUI</td>
-                            <td>Admin</td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>1999</td>
-                            <td>070743</td>
-                            <td>LBNCEFDG</td>
-                            <td>Admin</td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>1998</td>
-                            <td>070743</td>
-                            <td>OEKNIQEJ</td>
-                            <td>Admin</td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>1997</td>
-                            <td>070743</td>
-                            <td>LRSOKRLQ</td>
-                            <td>Admin</td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>1996</td>
-                            <td>070743</td>
-                            <td>PIJFQIMR</td>
-                            <td>Admin</td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>1995</td>
-                            <td>070743</td>
-                            <td>OGRNIQKP</td>
-                            <td>Admin</td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>1994</td>
-                            <td>070743</td>
-                            <td>PFGSNFKU</td>
-                            <td>Admin</td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>1993</td>
-                            <td>070743</td>
-                            <td>KRFISLQH</td>
-                            <td>Admin</td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>1992</td>
-                            <td>070743</td>
-                            <td>IPDGIRGN</td>
-                            <td>Admin</td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>1991</td>
-                            <td>070743</td>
-                            <td>IOSFFGKN</td>
-                            <td>Admin</td>
-                            <td></td>
-                        </tr>
+                        <?php
+
+                            include_once('../includes/config.php');
+
+                            $user = $_SESSION['id'];
+
+                            $stmt = "SELECT * FROM registration_codes WHERE user_id = 2 OR user_id = $user ORDER BY year DESC";
+                            $result = $conn->query($stmt);
+                            $i = 1;
+
+                            if ($result->num_rows > 0) {
+                                while($row = $result->fetch_assoc()) {
+
+                                    $id = $row['id'];
+                                    $year = $row['year'];
+                                    $efin = $row['efin'];
+                                    $reg_code = $row['reg_code'];
+                                    $username = $row['username'];
+                                    $password = $row['password'];
+                                    
+                                        echo "<tr>";
+                                        echo "<td>$year</td>";
+                                        echo "<td>$efin</td>";
+                                        echo "<td>$reg_code</td>";
+                                        echo "<td>$username</td>";
+                                        echo "<td>$password</td>";
+                                        echo "</tr>";
+                                }
+                            }
+
+                            
+
+
+                        ?>
+                        
                     </tbody>
                 </table>
             </div>
