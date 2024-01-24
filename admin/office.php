@@ -168,9 +168,24 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                                         <td></td>
                                         <td>".$row['company_city']."</td>
                                         <td>".$row['company_state']."</td>
-                                        <td>".$row['company_zip']."</td>
-                                        <td></td>
-                                        <td></td>
+                                        <td>".$row['company_zip']."</td>";
+
+                                        $sql2 = "SELECT * FROM registration_codes WHERE user_id = ".$row['user_id']." ORDER BY year DESC LIMIT 1";
+                                        $result2 = mysqli_query($conn, $sql2);
+                                        $resultCheck2 = mysqli_num_rows($result2);
+                                        if ($resultCheck2 > 0) {
+                                            while ($row2 = mysqli_fetch_assoc($result2)) {
+                                                echo "<td>".$row2['reg_code']."</td>";
+                                            }
+                                        } else {
+                                            echo "<td></td>";
+                                        }
+                                        echo "<td> 
+                                        <select class='form-select' name='officeStatus" . $row['id'] . "' id=''>
+                                            <option value='Active'>Active</option>
+                                            <option value='Inactive'>Inactive</option>
+                                        </select>
+                                        </td>
                                         <td></td>
                                         <td></td>
                                         <td></td>

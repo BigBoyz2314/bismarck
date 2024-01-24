@@ -37,6 +37,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && $_POST['register'] == 'register') {
                             $_SESSION['id'] = $row['id'];
                             $_SESSION['loggedin'] = true;
                             $_SESSION['name'] = $row['name'];
+                            $stmt2 = "INSERT INTO `offices` (`user_id`, `company_contact_name`) VALUES ('".$row['id'].", ".$row['name']."')";
                         header("Location:create-account.php");
                         }
                     }

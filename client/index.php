@@ -17,7 +17,11 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true || $_SESSION[
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="../css/styles.css">
     <style>
-    </style>
+    #error-message {
+      color: red;
+      display: none;
+    }
+  </style>
 </head>
 <body>
 
@@ -212,7 +216,7 @@ if (isset($_SESSION['id'])) {
     }
     ?>
 
-
+                <p id="error-message">EFIN must start with 0</p>
                 <button class="btn btn-success my-3 d-none" id="saveBtn">Save</button>
                 
             </div>
@@ -260,6 +264,22 @@ if (isset($_SESSION['id'])) {
                 input.disabled = false;
                 document.getElementById("saveBtn").classList.remove("d-none");
             });
+        });
+
+        var inputElement = document.getElementById('preparer_efin');
+        var errorMessageElement = document.getElementById('error-message');
+
+        inputElement.addEventListener('input', function() {
+        var inputValue = this.value;
+
+        // Check if the input starts with "0"
+        if (inputValue.length > 0 && inputValue[0] !== '0') {
+            errorMessageElement.style.display = 'block';
+            this.setCustomValidity('EFIN must start with 0');
+        } else {
+            errorMessageElement.style.display = 'none';
+            this.setCustomValidity('');
+        }
         });
 		
 		</script>
