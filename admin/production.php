@@ -147,7 +147,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                     <h6 class="d-inline me-4">Name: ' . $_GET['username'] . '</h6>
                     <h6 class="d-inline me-4">Company: ' . $_GET['company'] . '</h6>
                     <h6 class="d-inline">Year: ' . $_GET['year'] . '</h6>
-                    <form action="">
+                    <form action="add-transmission.php" method="post">
                         <input type="hidden" name="username" id="username" value="' . $_GET['username'] . '">
                         <input type="hidden" name="company" id="company" value="' . $_GET['company'] . '">
                         <input type="hidden" name="year" id="year" value="' . $_GET['year'] . '">
@@ -185,130 +185,272 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
             }
 
         ?>
-        
 
-        <div class="row mt-3">
-            <div class="col-md-12">
-                <table class="table table-bordered">
-                    <thead class="table-warning">
-                        <tr>
-                            <th>Production</th>
-                            <th>2022</th>
-                            <th>2021</th>
-                            <th>2020</th>
-                            <th>Total</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Transmision Taxes Personales - 1040</td>
-                            <td>150</td>
-                            <td>10</td>
-                            <td>2</td>
-                            <td>162</td>
-                        </tr>
-                        <tr>
-                            <td>Transmision Taxes Corporaciones C - 1120</td>
-                            <td>5</td>
-                            <td></td>
-                            <td></td>
-                            <td>5</td>
-                        </tr>
-                        <tr>
-                            <td>Transmision Taxes Corporaciones S - 1120-S</td>
-                            <td>2</td>
-                            <td></td>
-                            <td></td>
-                            <td>2</td>
-                        </tr>
-                        <tr>
-                            <td>Transmision Taxes Partneship - 1165</td>
-                            <td>3</td>
-                            <td></td>
-                            <td></td>
-                            <td>3</td>
-                        </tr>
-                        <tr>
-                            <td>Total Transmisiones</td>
-                            <td>160</td>
-                            <td>10</td>
-                            <td>2</td>
-                            <td>172</td>
-                        </tr>
-                        <tr>
-                            <td>Total Taxes con Fee Collect aprobados.</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td class="bg-danger-subtle">25</td>
-                        </tr>
-                        <tr>
-                            <td>Total Taxes Efile Only transmitidos.</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td class="bg-warning-subtle">147</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div class="col-md-12">
-                <table class="table table-bordered">
-                    <thead class="table-warning">
-                        <tr>
-                            <th>Ganancia (Perdida) </th>
-                            <th></th>
-                            <th></th>
-                            <th>CXC</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Venta del Programa a Cobrar</td>
-                            <td></td>
-                            <td>800</td>
-                            <td>800</td>
-                        </tr>
-                        <tr>
-                            <td>Costo del Programa a pagar a TaxWise</td>
-                            <td></td>
-                            <td>-561</td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>Cargo a la Oficina por el Efile Fee</td>
-                            <td>$4 </td>
-                            <td>588</td>
-                            <td>588</td>
-                        </tr>
-                        <tr>
-                            <td>Costo del Efile Fee a pagar a TaxWise</td>
-                            <td>$3 </td>
-                            <td>-441</td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>Fee Asignado para los Productos Bancarios </td>
-                            <td>$25 </td>
-                            <td>625</td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>Comision por Fee Collect por pagar a la Oficina</td>
-                            <td>$15 </td>
-                            <td>-375</td>
-                            <td>-375</td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td>636</td>
-                            <td>1,013</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
+
+        <?php
+        
+            if (isset($_GET['username']) && isset($_GET['company']) && isset($_GET['year'])) {
+
+                $office = $_GET['company'];
+                $stmt2 = "SELECT * FROM production WHERE office_id = $office";
+                $result2 = $conn->query($stmt2);
+                
+
+                echo '<div class="row mt-3">
+                <div class="col-md-12">
+                <h6 class="d-inline me-4">Name: ' . $_GET['username'] . '</h6>
+                <h6 class="d-inline me-4">Company: ' . $_GET['company'] . '</h6>
+                    <table class="table table-bordered">
+                        <thead class="table-warning">
+                            <tr>
+                                <th>Production</th>
+                                <th>2022</th>
+                                <th>2021</th>
+                                <th>2020</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Transmision Taxes Personales - 1040</td>
+                                <td>150</td>
+                                <td>10</td>
+                                <td>2</td>
+                                <td>162</td>
+                            </tr>
+                            <tr>
+                                <td>Transmision Taxes Corporaciones C - 1120</td>
+                                <td>5</td>
+                                <td></td>
+                                <td></td>
+                                <td>5</td>
+                            </tr>
+                            <tr>
+                                <td>Transmision Taxes Corporaciones S - 1120-S</td>
+                                <td>2</td>
+                                <td></td>
+                                <td></td>
+                                <td>2</td>
+                            </tr>
+                            <tr>
+                                <td>Transmision Taxes Partneship - 1165</td>
+                                <td>3</td>
+                                <td></td>
+                                <td></td>
+                                <td>3</td>
+                            </tr>
+                            <tr>
+                                <td>Total Transmisiones</td>
+                                <td>160</td>
+                                <td>10</td>
+                                <td>2</td>
+                                <td>172</td>
+                            </tr>
+                            <tr>
+                                <td>Total Taxes con Fee Collect aprobados.</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td class="bg-danger-subtle">25</td>
+                            </tr>
+                            <tr>
+                                <td>Total Taxes Efile Only transmitidos.</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td class="bg-warning-subtle">147</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-md-12">
+                    <table class="table table-bordered">
+                        <thead class="table-warning">
+                            <tr>
+                                <th>Ganancia (Perdida) </th>
+                                <th></th>
+                                <th></th>
+                                <th>CXC</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Venta del Programa a Cobrar</td>
+                                <td></td>
+                                <td>800</td>
+                                <td>800</td>
+                            </tr>
+                            <tr>
+                                <td>Costo del Programa a pagar a TaxWise</td>
+                                <td></td>
+                                <td>-561</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>Cargo a la Oficina por el Efile Fee</td>
+                                <td>$4 </td>
+                                <td>588</td>
+                                <td>588</td>
+                            </tr>
+                            <tr>
+                                <td>Costo del Efile Fee a pagar a TaxWise</td>
+                                <td>$3 </td>
+                                <td>-441</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>Fee Asignado para los Productos Bancarios </td>
+                                <td>$25 </td>
+                                <td>625</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>Comision por Fee Collect por pagar a la Oficina</td>
+                                <td>$15 </td>
+                                <td>-375</td>
+                                <td>-375</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td>636</td>
+                                <td>1,013</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>';
+            }
+            else {
+                echo '<div class="row mt-3">
+                <h6>All</h6>
+                <div class="col-md-12">
+                    <table class="table table-bordered">
+                        <thead class="table-warning">
+                            <tr>
+                                <th>Production</th>
+                                <th>2022</th>
+                                <th>2021</th>
+                                <th>2020</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Transmision Taxes Personales - 1040</td>
+                                <td>150</td>
+                                <td>10</td>
+                                <td>2</td>
+                                <td>162</td>
+                            </tr>
+                            <tr>
+                                <td>Transmision Taxes Corporaciones C - 1120</td>
+                                <td>5</td>
+                                <td></td>
+                                <td></td>
+                                <td>5</td>
+                            </tr>
+                            <tr>
+                                <td>Transmision Taxes Corporaciones S - 1120-S</td>
+                                <td>2</td>
+                                <td></td>
+                                <td></td>
+                                <td>2</td>
+                            </tr>
+                            <tr>
+                                <td>Transmision Taxes Partneship - 1165</td>
+                                <td>3</td>
+                                <td></td>
+                                <td></td>
+                                <td>3</td>
+                            </tr>
+                            <tr>
+                                <td>Total Transmisiones</td>
+                                <td>160</td>
+                                <td>10</td>
+                                <td>2</td>
+                                <td>172</td>
+                            </tr>
+                            <tr>
+                                <td>Total Taxes con Fee Collect aprobados.</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td class="bg-danger-subtle">25</td>
+                            </tr>
+                            <tr>
+                                <td>Total Taxes Efile Only transmitidos.</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td class="bg-warning-subtle">147</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-md-12">
+                    <table class="table table-bordered">
+                        <thead class="table-warning">
+                            <tr>
+                                <th>Ganancia (Perdida) </th>
+                                <th></th>
+                                <th></th>
+                                <th>CXC</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Venta del Programa a Cobrar</td>
+                                <td></td>
+                                <td>800</td>
+                                <td>800</td>
+                            </tr>
+                            <tr>
+                                <td>Costo del Programa a pagar a TaxWise</td>
+                                <td></td>
+                                <td>-561</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>Cargo a la Oficina por el Efile Fee</td>
+                                <td>$4 </td>
+                                <td>588</td>
+                                <td>588</td>
+                            </tr>
+                            <tr>
+                                <td>Costo del Efile Fee a pagar a TaxWise</td>
+                                <td>$3 </td>
+                                <td>-441</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>Fee Asignado para los Productos Bancarios </td>
+                                <td>$25 </td>
+                                <td>625</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>Comision por Fee Collect por pagar a la Oficina</td>
+                                <td>$15 </td>
+                                <td>-375</td>
+                                <td>-375</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td>636</td>
+                                <td>1,013</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>';
+            }
+
+        ?>
+
+
+        
 	</div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
