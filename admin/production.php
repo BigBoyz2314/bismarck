@@ -164,6 +164,9 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                     <h6 class="d-inline me-4">Company: ' . $officeName . '</h6>
                     <form action="edit-production.php" method="post">
                         <input type="hidden" name="office_id" value="' . $office . '">
+                        <input type="hidden" name="year1" value="' . $year1 . '">
+                        <input type="hidden" name="year2" value="' . $year2 . '">
+                        <input type="hidden" name="year3" value="' . $year3 . '">
                         <table class="table table-bordered table-responsive text-nowrap">
                             <thead class="table-warning">
                                 <tr>
@@ -245,6 +248,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                                 echo '<td> <input class="form-control" value="0" name="corporate_tax_c-' . $year2 . '"> </td>';
                             }
                             $stmt5 = "SELECT * FROM production WHERE office_id = $office AND year = $year3";
+                            $result5 = $conn->query($stmt5);
                             if ($result5->num_rows > 0) {
                             while($row5 = $result5->fetch_assoc()) {
                                 echo '<td> <input class="form-control" value="' . $row5['corporate_tax_c'] . '" name="corporate_tax_c-' . $row5['year'] . '"> </td>';
@@ -334,6 +338,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                                 echo '<td> <input class="form-control" value="0" name="partnership_tax-' . $year2 . '"> </td>';
                             }
                             $stmt5 = "SELECT * FROM production WHERE office_id = $office AND year = $year3";
+                            $result5 = $conn->query($stmt5);
                             if ($result5->num_rows > 0) {
                             while($row5 = $result5->fetch_assoc()) {
                                 echo '<td> <input class="form-control" value="' . $row5['partnership_tax'] . '" name="partnership_tax-' . $row5['year'] . '"> </td>';
@@ -354,6 +359,53 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                             }
                             
                         echo '</tr>';
+
+                        echo '<tr>
+                            <td>Total Taxes con Fee Collect aprobados.</td>
+                            ';
+                            $stmt3 = "SELECT * FROM production WHERE office_id = $office AND year = $year1";
+                            $result3 = $conn->query($stmt3);
+                            if ($result3->num_rows > 0) {
+                            while($row3 = $result3->fetch_assoc()) {
+                                echo '<td class="bg-danger-subtle"> <input class="form-control" value="' . $row3['to_collect'] . '" name="to_collect-' . $row3['year'] . '"> </td>';
+                            }
+                            }
+                            else {
+                                echo '<td class="bg-danger-subtle"> <input class="form-control" value="0" name="to_collect-' . $year1 . '"> </td>';
+                            }
+                            $stmt4 = "SELECT * FROM production WHERE office_id = $office AND year = $year2";
+                            $result4 = $conn->query($stmt4);
+                            if ($result4->num_rows > 0) {
+                            while($row4 = $result4->fetch_assoc()) {
+                                echo '<td class="bg-danger-subtle"> <input class="form-control" value="' . $row4['to_collect'] . '" name="to_collect-' . $row4['year'] . '"> </td>';
+                            }
+                            }
+                            else {
+                                echo '<td class="bg-danger-subtle"> <input class="form-control" value="0" name="to_collect-' . $year2 . '"> </td>';
+                            }
+                            $stmt5 = "SELECT * FROM production WHERE office_id = $office AND year = $year3";
+                            $result5 = $conn->query($stmt5);
+                            if ($result5->num_rows > 0) {
+                            while($row5 = $result5->fetch_assoc()) {
+                                echo '<td class="bg-danger-subtle"> <input class="form-control" value="' . $row5['to_collect'] . '" name="to_collect-' . $row5['year'] . '"> </td>';
+                            }
+                            }
+                            else {
+                                echo '<td class="bg-danger-subtle"> <input class="form-control" value="0" name="to_collect-' . $year3 . '"> </td>';
+                            }
+                            $stmt6 = "SELECT SUM(to_collect) AS to_collect_total FROM production WHERE office_id = $office AND year = $year1 OR $year2 OR $year3";
+                            $result6 = $conn->query($stmt6);
+                            if ($result6->num_rows > 0) {
+                            while($row6 = $result6->fetch_assoc()) {
+                                    echo '<td class="bg-danger-subtle"> <input class="form-control" disabled value="' . $row6['to_collect_total'] . '"> </td>';
+                                }
+                            }
+                            else {
+                                echo '<td class="bg-danger-subtle"> <input class="form-control" disabled value="0"> </td>';
+                            }
+
+                        echo '</tr>';   
+
                         echo '<tr>
                             <td>Total Transmisiones</td>
                             ';
@@ -396,51 +448,6 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                             }
                             else {
                                 echo '<td> <input class="form-control" sisabled value="0"> </td>';
-                            }
-                            
-                        echo '</tr>';
-
-                        echo '<tr>
-                            <td>Total Taxes con Fee Collect aprobados.</td>
-                            ';
-                            $stmt3 = "SELECT * FROM production WHERE office_id = $office AND year = $year1";
-                            $result3 = $conn->query($stmt3);
-                            if ($result3->num_rows > 0) {
-                            while($row3 = $result3->fetch_assoc()) {
-                                echo '<td class="bg-danger-subtle"> <input class="form-control" value="' . $row3['to_collect'] . '" name="to_collect-' . $row3['year'] . '"> </td>';
-                            }
-                            }
-                            else {
-                                echo '<td class="bg-danger-subtle"> <input class="form-control" value="0" name="to_collect-' . $year1 . '"> </td>';
-                            }
-                            $stmt4 = "SELECT * FROM production WHERE office_id = $office AND year = $year2";
-                            $result4 = $conn->query($stmt4);
-                            if ($result4->num_rows > 0) {
-                            while($row4 = $result4->fetch_assoc()) {
-                                echo '<td class="bg-danger-subtle"> <input class="form-control" value="' . $row4['to_collect'] . '" name="to_collect-' . $row4['year'] . '"> </td>';
-                            }
-                            }
-                            else {
-                                echo '<td class="bg-danger-subtle"> <input class="form-control" value="0" name="to_collect-' . $year2 . '"> </td>';
-                            }
-                            $stmt5 = "SELECT * FROM production WHERE office_id = $office AND year = $year3";
-                            if ($result5->num_rows > 0) {
-                            while($row5 = $result5->fetch_assoc()) {
-                                echo '<td class="bg-danger-subtle"> <input class="form-control" value="' . $row5['to_collect'] . '" name="to_collect-' . $row5['year'] . '"> </td>';
-                            }
-                            }
-                            else {
-                                echo '<td class="bg-danger-subtle"> <input class="form-control" value="0" name="to_collect-' . $year3 . '"> </td>';
-                            }
-                            $stmt6 = "SELECT SUM(to_collect) AS to_collect_total FROM production WHERE office_id = $office AND year = $year1 OR $year2 OR $year3";
-                            $result6 = $conn->query($stmt6);
-                            if ($result6->num_rows > 0) {
-                            while($row6 = $result6->fetch_assoc()) {
-                                    echo '<td class="bg-danger-subtle"> <input class="form-control" disabled value="' . $row6['to_collect_total'] . '"> </td>';
-                                }
-                            }
-                            else {
-                                echo '<td class="bg-danger-subtle"> <input class="form-control" disabled value="0"> </td>';
                             }
                             
                         echo '</tr>
