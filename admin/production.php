@@ -397,11 +397,11 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                             $result6 = $conn->query($stmt6);
                             if ($result6->num_rows > 0) {
                             while($row6 = $result6->fetch_assoc()) {
-                                    echo '<td class="bg-danger-subtle"> <input class="form-control" disabled value="' . $row6['to_collect_total'] . '"> </td>';
+                                    echo '<td class="bg-danger-subtle"> <input class="form-control" id="total-to-collect" disabled value="' . $row6['to_collect_total'] . '"> </td>';
                                 }
                             }
                             else {
-                                echo '<td class="bg-danger-subtle"> <input class="form-control" disabled value="0"> </td>';
+                                echo '<td class="bg-danger-subtle"> <input class="form-control" id="total-to-collect" disabled value="0"> </td>';
                             }
 
                         echo '</tr>';   
@@ -461,11 +461,11 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                             $result6 = $conn->query($stmt6);
                             if ($result6->num_rows > 0) {
                             while($row6 = $result6->fetch_assoc()) {
-                                    echo '<td class="bg-warning-subtle"> <input class="form-control" disabled value="' . $row6['total_transmissions_total'] . '"> </td>';
+                                    echo '<td class="bg-warning-subtle"> <input class="form-control" id="total-efile" disabled value="' . $row6['total_transmissions_total'] . '"> </td>';
                                 }
                             }
                             else {
-                                echo '<td class="bg-warning-subtle"><input type="text" disabled class="form-control" value="0"></td>';
+                                echo '<td class="bg-warning-subtle"><input type="text" id="total-efile" disabled class="form-control" value="0"></td>';
                             }
                             
                         echo '</tr>';
@@ -478,130 +478,218 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                     </div>';
                 }
 
-            //     echo '<div class="row mt-3">
-            //     <div class="col-md-12">
-            //     <h6 class="d-inline me-4">Name: ' . $_GET['username'] . '</h6>
-            //     <h6 class="d-inline me-4">Company: ' . $_GET['company'] . '</h6>
-            //         <table class="table table-bordered">
-            //             <thead class="table-warning">
-            //                 <tr>
-            //                     <th>Production</th>
-            //                     <th>2022</th>
-            //                     <th>2021</th>
-            //                     <th>2020</th>
-            //                     <th>Total</th>
-            //                 </tr>
-            //             </thead>
-            //             <tbody>
-            //                 <tr>
-            //                     <td>Transmision Taxes Personales - 1040</td>
-            //                     <td>150</td>
-            //                     <td>10</td>
-            //                     <td>2</td>
-            //                     <td>162</td>
-            //                 </tr>
-            //                 <tr>
-            //                     <td>Transmision Taxes Corporaciones C - 1120</td>
-            //                     <td>5</td>
-            //                     <td></td>
-            //                     <td></td>
-            //                     <td>5</td>
-            //                 </tr>
-            //                 <tr>
-            //                     <td>Transmision Taxes Corporaciones S - 1120-S</td>
-            //                     <td>2</td>
-            //                     <td></td>
-            //                     <td></td>
-            //                     <td>2</td>
-            //                 </tr>
-            //                 <tr>
-            //                     <td>Transmision Taxes Partneship - 1165</td>
-            //                     <td>3</td>
-            //                     <td></td>
-            //                     <td></td>
-            //                     <td>3</td>
-            //                 </tr>
-            //                 <tr>
-            //                     <td>Total Transmisiones</td>
-            //                     <td>160</td>
-            //                     <td>10</td>
-            //                     <td>2</td>
-            //                     <td>172</td>
-            //                 </tr>
-            //                 <tr>
-            //                     <td>Total Taxes con Fee Collect aprobados.</td>
-            //                     <td></td>
-            //                     <td></td>
-            //                     <td></td>
-            //                     <td class="bg-danger-subtle">25</td>
-            //                 </tr>
-            //                 <tr>
-            //                     <td>Total Taxes Efile Only transmitidos.</td>
-            //                     <td></td>
-            //                     <td></td>
-            //                     <td></td>
-            //                     <td class="bg-warning-subtle">147</td>
-            //                 </tr>
-            //             </tbody>
-            //         </table>
-            //     </div>
-            //     <div class="col-md-12">
-            //         <table class="table table-bordered">
-            //             <thead class="table-warning">
-            //                 <tr>
-            //                     <th>Ganancia (Perdida) </th>
-            //                     <th></th>
-            //                     <th></th>
-            //                     <th>CXC</th>
-            //                 </tr>
-            //             </thead>
-            //             <tbody>
-            //                 <tr>
-            //                     <td>Venta del Programa a Cobrar</td>
-            //                     <td></td>
-            //                     <td>800</td>
-            //                     <td>800</td>
-            //                 </tr>
-            //                 <tr>
-            //                     <td>Costo del Programa a pagar a TaxWise</td>
-            //                     <td></td>
-            //                     <td>-561</td>
-            //                     <td></td>
-            //                 </tr>
-            //                 <tr>
-            //                     <td>Cargo a la Oficina por el Efile Fee</td>
-            //                     <td>$4 </td>
-            //                     <td>588</td>
-            //                     <td>588</td>
-            //                 </tr>
-            //                 <tr>
-            //                     <td>Costo del Efile Fee a pagar a TaxWise</td>
-            //                     <td>$3 </td>
-            //                     <td>-441</td>
-            //                     <td></td>
-            //                 </tr>
-            //                 <tr>
-            //                     <td>Fee Asignado para los Productos Bancarios </td>
-            //                     <td>$25 </td>
-            //                     <td>625</td>
-            //                     <td></td>
-            //                 </tr>
-            //                 <tr>
-            //                     <td>Comision por Fee Collect por pagar a la Oficina</td>
-            //                     <td>$15 </td>
-            //                     <td>-375</td>
-            //                     <td>-375</td>
-            //                 </tr>
-            //                 <tr>
-            //                     <td></td>
-            //                     <td></td>
-            //                     <td>636</td>
-            //                     <td>1,013</td>
-            //                 </tr>
-            //             </tbody>
-            //         </table>
-            //     </div>
-            // </div>';
+                echo '<div class="col-md-12 mt-4">
+                <table class="table table-bordered text-nowrap">
+                    <thead class="table-warning">
+                        <tr>
+                            <th>Ganancia (Perdida) </th>
+                            <th>Unit Cost</th>
+                            <th>Profit</th>
+                            <th>CXC</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Carry on from previous year</td>
+                            <td></td>';
+
+                            $stmt7 = "SELECT prev_year FROM profit WHERE office_id = $office";
+                            $result7 = $conn->query($stmt7);
+                            if ($result7->num_rows > 0) {
+                            while($row7 = $result7->fetch_assoc()) {
+                                    echo '<td> <input type="number" class="form-control" name="prev-year" value="' . $row7['prev_year'] . '"> </td>';
+                                    echo '<td> <input type="number" class="form-control" disabled name="prev-year1" id="prev-year1" value="' . $row7['prev_year'] . '">  </td>';
+                                }
+                            }
+                            else {
+                                echo '<td><input type="number" name="prev-year" id="prev-year" class="form-control" value="0"></td>';
+                                echo '<td> <input type="number" class="form-control" disabled name="prev-year1" id="prev-year1" value="0">  </td>';
+                            }
+                            
+                        echo '</tr>
+                        <tr>
+                            <td>Venta del Programa a Cobrar</td>
+                            <td></td>';
+
+                            $stmt7 = "SELECT sale_program FROM profit WHERE office_id = $office";
+                            $result7 = $conn->query($stmt7);
+                            if ($result7->num_rows > 0) {
+                            while($row7 = $result7->fetch_assoc()) {
+                                    echo '<td> <input type="number" class="form-control" name="sale-program" id="sale-program" value="' . $row7['sale_program'] . '"> </td>';
+                                    echo '<td> <input type="number" class="form-control" disabled name="sale-program" id="sale-program1" value="' . $row7['sale_program'] . '">  </td>';
+                                }
+                            }
+                            else {
+                                echo '<td> <input type="number" name="sale-program" id="sale-program" class="form-control" value="0"> </td>';
+                                echo '<td> <input type="number" class="form-control" disabled name="sale-program" id="sale-program1" value="0">  </td>';
+                            }
+                            
+                        echo '</tr>
+                        <tr>
+                            <td>Costo del Programa a pagar a TaxWise</td>
+                            <td></td>';
+
+                            $stmt7 = "SELECT pay_taxwise FROM profit WHERE office_id = $office";
+                            $result7 = $conn->query($stmt7);
+                            if ($result7->num_rows > 0) {
+                            while($row7 = $result7->fetch_assoc()) {
+                                    echo '<td> <input type="number" class="form-control" name="pay-taxwise" id="pay-taxwise" value="' . $row7['pay_taxwise'] . '"> </td>';
+                                }
+                            }
+                            else {
+                                echo '<td><input type="number" name="pay-taxwise" id="pay-taxwise" class="form-control" value="0"></td>';
+                            }
+                            
+                            echo '<td></td>
+                        </tr>
+                        <tr>
+                            <td>Cargo a la Oficina por el Efile Fee</td>';
+
+                            $stmt7 = "SELECT efile_fee_unit FROM profit WHERE office_id = $office";
+                            $result7 = $conn->query($stmt7);
+                            if ($result7->num_rows > 0) {
+                            while($row7 = $result7->fetch_assoc()) {
+                                    echo '<td> <input type="number" class="form-control" name="efile-fee-unit" id="efile-fee-unit" value="' . $row7['efile_fee_unit'] . '"> </td>';
+                                }
+                            }
+                            else {
+                                echo '<td><input type="number" name="efile-fee-unit" id="efile-fee-unit" class="form-control" value="0"></td>';
+                            }
+                            
+                            
+                            $stmt7 = "SELECT efile_fee FROM profit WHERE office_id = $office";
+                            $result7 = $conn->query($stmt7);
+                            if ($result7->num_rows > 0) {
+                            while($row7 = $result7->fetch_assoc()) {
+                                    echo '<td> <input type="number" class="form-control" disabled name="efile-fee" id="efile-fee" value="' . $row7['efile_fee'] . '"> <input type="number" class="form-control" hidden name="efile-fee" id="efile-fee" value="' . $row7['efile_fee'] . '">  </td>';
+                                    echo '<td> <input type="number" class="form-control" disabled name="efile-fee1" id="efile-fee1" value="' . $row7['efile_fee'] . '">  </td>';
+                                }
+                            }
+                            else {
+                                echo '<td> <input type="number" name="efile-fee" id="efile-fee" disabled class="form-control" value="0"> <input type="number" class="form-control" hidden name="efile-fee" id="efile-fee" value="0">  </td>';
+                                echo '<td> <input type="number" class="form-control" disabled name="efile-fee1" id="efile-fee1" value="0">  </td>';
+                            }
+                            
+                        echo '</tr>
+                        <tr>
+                            <td>Costo del Efile Fee a pagar a TaxWise</td>';
+
+                            $stmt7 = "SELECT efile_taxwise_unit FROM profit WHERE office_id = $office";
+                            $result7 = $conn->query($stmt7);
+                            if ($result7->num_rows > 0) {
+                            while($row7 = $result7->fetch_assoc()) {
+                                    echo '<td> <input type="number" class="form-control" name="efile-taxwise-unit" id="efile-taxwise-unit" value="' . $row7['efile_taxwise_unit'] . '"> </td>';
+                                }
+                            }
+                            else {
+                                echo '<td><input type="number" name="efile-taxwise-unit" id="efile-taxwise-unit" class="form-control" value="0"></td>';
+                            }
+                            
+                            
+                            $stmt7 = "SELECT efile_taxwise FROM profit WHERE office_id = $office";
+                            $result7 = $conn->query($stmt7);
+                            if ($result7->num_rows > 0) {
+                            while($row7 = $result7->fetch_assoc()) {
+                                    echo '<td> <input type="number" class="form-control" disabled name="efile-taxwise" id="efile-taxwise" value="' . $row7['efile_taxwise'] . '"> <input type="number" class="form-control" hidden name="efile-taxwise" id="efile-taxwise" value="' . $row7['efile_taxwise'] . '">  </td>';
+                                }
+                            }
+                            else {
+                                echo '<td> <input type="number" name="efile-taxwise" id="efile-taxwise" disabled class="form-control" value="0"> <input type="number" class="form-control" hidden name="efile-taxwise" id="efile-taxwise" value="0">  </td>';
+                            }
+                            
+                            echo '
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Fee Asignado para los Productos Bancarios</td>';
+
+                            $stmt7 = "SELECT banking_fee_unit FROM profit WHERE office_id = $office";
+                            $result7 = $conn->query($stmt7);
+                            if ($result7->num_rows > 0) {
+                            while($row7 = $result7->fetch_assoc()) {
+                                    echo '<td> <input type="number" class="form-control" name="banking-fee-unit" id="banking-fee-unit" value="' . $row7['banking_fee_unit'] . '"> </td>';
+                                }
+                            }
+                            else {
+                                echo '<td><input type="number" name="banking-fee-unit" id="banking-fee-unit" class="form-control" value="0"></td>';
+                            }
+                            
+                            
+                            $stmt7 = "SELECT banking_fee FROM profit WHERE office_id = $office";
+                            $result7 = $conn->query($stmt7);
+                            if ($result7->num_rows > 0) {
+                            while($row7 = $result7->fetch_assoc()) {
+                                    echo '<td> <input type="number" class="form-control" disabled name="banking-fee" id="banking-fee" value="' . $row7['banking_fee'] . '"> <input type="number" class="form-control" hidden name="banking-fee" id="banking-fee" value="' . $row7['banking_fee'] . '">  </td>';
+                                }
+                            }
+                            else {
+                                echo '<td> <input type="number" name="banking-fee" id="banking-fee" disabled class="form-control" value="0"> <input type="number" class="form-control" hidden name="banking-fee" id="banking-fee" value="0">  </td>';
+                            }
+                            
+                            echo '
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Comision por Fee Collect por pagar a la Oficina</td>';
+
+                            $stmt7 = "SELECT commission_office_unit FROM profit WHERE office_id = $office";
+                            $result7 = $conn->query($stmt7);
+                            if ($result7->num_rows > 0) {
+                            while($row7 = $result7->fetch_assoc()) {
+                                    echo '<td> <input type="number" class="form-control" name="commission-office-unit" id="commission-office-unit" value="' . $row7['commission_office_unit'] . '"> </td>';
+                                }
+                            }
+                            else {
+                                echo '<td><input type="number" name="commission-office-unit" id="commission-office-unit" class="form-control" value="0"></td>';
+                            }
+                            
+                            
+                            $stmt7 = "SELECT commission_office FROM profit WHERE office_id = $office";
+                            $result7 = $conn->query($stmt7);
+                            if ($result7->num_rows > 0) {
+                            while($row7 = $result7->fetch_assoc()) {
+                                    echo '<td> <input type="number" class="form-control" disabled name="commission-office" id="commission-office" value="' . $row7['commission_office'] . '"> <input type="number" class="form-control" hidden name="commission-office" id="commission-office" value="' . $row7['commission_office'] . '">  </td>';
+                                    echo '<td> <input type="number" class="form-control" disabled name="commission-office1" value="0">  </td>';
+                                }
+                            }
+                            else {
+                                echo '<td> <input type="number" name="commission-office" id="commission-office" disabled class="form-control" value="0"> <input type="number" class="form-control" hidden name="commission-office" id="commission-office" value="0">  </td>';
+                                echo '<td> <input type="number" class="form-control" disabled name="commission-office1" value="0">  </td>';
+                            }
+                            
+                            echo '</tr>
+                        <tr>
+                            <td>other commisions or fees</td>
+                            <td></td>';
+
+
+                            $stmt7 = "SELECT other_commission FROM profit WHERE office_id = $office";
+                            $result7 = $conn->query($stmt7);
+                            if ($result7->num_rows > 0) {
+                            while($row7 = $result7->fetch_assoc()) {
+                                    echo '<td> <input type="number" class="form-control" name="other-commission" id="other-commission" value="' . $row7['other_commission'] . '"> </td>';
+                                    echo '<td> <input type="number" class="form-control" disabled name="other-commission1" id="other-commission1" value="0">  </td>';
+                                }
+                            }
+                            else {
+                                echo '<td> <input type="number" name="other-commission" id="other-commission" class="form-control" value="0"> </td>';
+                                echo '<td> <input type="number" class="form-control" disabled name="other-commission1" id="other-commission1" value="0">  </td>';
+                            }
+                            
+                            echo '
+                        </tr>
+                        <tr>
+                            <td>Total</td>
+                            <td></td>
+                            <td> <input type="number" class="form-control" disabled name="total-profit" id="total-profit" value="0">  </td>
+                            <td> <input type="number" class="form-control" disabled name="total-cxc" id="total-cxc" value="0">  </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <button class="btn btn-primary" id="calTotal">Calculate Totals</button>
+            </div>';
+
+                
             }
             else {
                 echo '<div class="row mt-3">
@@ -675,17 +763,23 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                         <thead class="table-warning">
                             <tr>
                                 <th>Ganancia (Perdida) </th>
-                                <th></th>
-                                <th></th>
+                                <th>Unit Cost</th>
+                                <th>Profit</th>
                                 <th>CXC</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
-                                <td>Venta del Programa a Cobrar</td>
+                                <td>Carry on from previous year</td>
                                 <td></td>
                                 <td>800</td>
                                 <td>800</td>
+                            </tr>
+                            <tr>
+                                <td>Venta del Programa a Cobrar</td>
+                                <td></td>
+                                <td>100</td>
+                                <td>100</td>
                             </tr>
                             <tr>
                                 <td>Costo del Programa a pagar a TaxWise</td>
@@ -734,6 +828,80 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 
         
 	</div>
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <script>
+        
+        $("#prev-year").change(function() {
+            var prevYear = $("#prev-year").val();
+            $("#prev-year1").val(prevYear);
+        });
+
+        $("#sale-program").change(function() {
+            var saleProgram = $("#sale-program").val();
+            $("#sale-program1").val(saleProgram);
+        });
+
+        $("#efile-fee-unit").change(function() {
+            var efileFeeUnit = $("#efile-fee-unit").val();
+            var totalEfile = $("#total-efile").val();
+            var totalEfileFee = efileFeeUnit * totalEfile;
+            $("#efile-fee").val(totalEfileFee);
+            $("#efile-fee1").val(totalEfileFee);
+        });
+
+        $("#efile-taxwise-unit").change(function() {
+            var efileTaxwiseUnit = $("#efile-taxwise-unit").val();
+            var totalEfile = $("#total-efile").val();
+            var totalEfileTaxwise = -(efileTaxwiseUnit * totalEfile);
+            $("#efile-taxwise").val(totalEfileTaxwise);
+        });
+
+        $("#banking-fee-unit").change(function() {
+            var bankingFeeUnit = $("#banking-fee-unit").val();
+            var totalToCollect = $("#total-to-collect").val();
+            var totalBankingFee = bankingFeeUnit * totalToCollect;
+            $("#banking-fee").val(totalBankingFee);
+        });
+
+        $("#commission-office-unit").change(function() {
+            var commissionOfficeUnit = $("#commission-office-unit").val();
+            var totalToCollect = $("#total-to-collect").val();
+            var totalCommissionOffice = (commissionOfficeUnit * totalToCollect);
+            $("#commission-office").val(totalCommissionOffice);
+        });
+
+        $("#other-commission").change(function() {
+            var otherCommission = $("#other-commission").val();
+            $("#other-commission1").val(otherCommission);
+        });
+
+        $("#calTotal").click(function() {
+            var prevYear = parseInt($("#prev-year").val()) || 0;
+            var saleProgram = parseInt($("#sale-program").val()) || 0;
+            var payTaxwise = parseInt($("#pay-taxwise").val()) || 0;
+            var efileFee = parseInt($("#efile-fee").val()) || 0;
+            var efileTaxwiseUnit = parseInt($("#efile-taxwise-unit").val()) || 0;
+            var totalEfile = parseInt($("#total-efile").val()) || 0;
+            var totalEfileTaxwise = -(efileTaxwiseUnit * totalEfile);
+            var bankingFee = parseInt($("#banking-fee").val()) || 0;
+            var commissionOffice = parseInt($("#commission-office").val()) || 0;
+            var otherCommission = parseInt($("#other-commission").val()) || 0;
+
+            var totalProfit = prevYear + saleProgram + payTaxwise + efileFee + totalEfileTaxwise + bankingFee + commissionOffice + otherCommission;
+
+            var totalcxc = prevYear + saleProgram + efileFee + otherCommission;
+
+            console.log(totalProfit);
+
+            $("#total-profit").val(totalProfit);
+            $("#total-cxc").val(totalcxc);
+        });
+
+    </script>
+
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 	<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
