@@ -109,7 +109,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                     </select>
                     <!-- <label for="company">Company Name</label> -->
                     <!-- <select name="company" class="form-select" id="company" required>
-                        <option value="">Select</option>
+                        <option value="">Select</option> -->
                         <?php
                         
                             // include '../includes/config.php'; 
@@ -120,8 +120,8 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                             // }
 
                         ?>
-                    </select> -->
-                    <!-- <label for="year">Year</label>
+                    <!-- </select> -->
+                    <label for="year">Year <span class="small">(if applicable)</span></label>
                     <select name="year" id="year" class="form-select">
                         <option value="">Select</option>
                         <option value="2020">2020</option>
@@ -135,7 +135,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                         <option value="2028">2028</option>
                         <option value="2029">2029</option>
                         <option value="2030">2030</option>
-                    </select> -->
+                    </select>
                     <button class="btn btn-primary mt-2" type="submit">Search</button>
                 </form>
             </div>
@@ -145,18 +145,32 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
         <?php
         
             if (isset($_GET['id'])) {
-
                 $office = $_GET['id'];
+
+                $stmt = "SELECT * FROM offices WHERE id = $office";
+                $result = $conn->query($stmt);
+                $row = $result->fetch_assoc();
+                $name = $row["company_contact_name"];
+                $officeName = $row['company_name'];
+
                 // $officeName = $row['company_name'];
                 $stmt2 = "SELECT * FROM production WHERE office_id = $office ORDER BY year DESC";
                 $result2 = $conn->query($stmt2);
-                $year1 = date('Y');
-                $year2 = date('Y')-1;
-                $year3 = date('Y')-2;
+
+                if (isset($_GET['year'])) {
+                    $year1 = $_GET['year'];
+                    $year2 = $_GET['year']-1;
+                    $year3 = $_GET['year']-2;
+                }
+                else {
+                    $year1 = date('Y');
+                    $year2 = date('Y')-1;
+                    $year3 = date('Y')-2;
+                }
                     echo '<div class="row mt-3">
                     <div class="col-md-12">
-                    <h6 class="d-inline me-4">Name: ' . $_GET['id'] . '</h6>
-                    <h6 class="d-inline me-4">Company:</h6>
+                    <h6 class="d-inline me-4">Name: ' . $name . '</h6>
+                    <h6 class="d-inline me-4">Company: ' . $officeName . '</h6>
                     <form action="edit-production.php" method="post">
                         <input type="hidden" name="office_id" value="' . $office . '">
                         <input type="hidden" name="year1" value="' . $year1 . '">
