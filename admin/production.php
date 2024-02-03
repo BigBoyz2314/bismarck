@@ -101,6 +101,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                             $stmt = ("SELECT company_contact_name FROM offices");
                             $result = mysqli_query($conn, $stmt);
                             while($row = mysqli_fetch_array($result)) {
+                                $row['company_contact_name'] = str_replace('_', ' ', $row['company_contact_name']);
                                 echo "<option value='" . $row['company_contact_name'] ."'>" . $row['company_contact_name'] ."</option>";
                             }
 
@@ -146,7 +147,6 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
             if (isset($_GET['username'])) {
 
                 $username = $_GET['username'];
-                $username = str_replace('+', ' ', $username);
                 $stmt = "SELECT * FROM offices WHERE company_contact_name = '$username'";
                 $result = $conn->query($stmt);
                 $row = $result->fetch_assoc();

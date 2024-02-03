@@ -30,6 +30,8 @@
         $preparer_ero_pin = $_POST["preparer_ero_pin"];
         $preparer_pin = $_POST["preparer_pin"];
 
+        $company_contact_name = str_replace(' ', '_', $company_contact_name);
+
         $stmt1 = "SELECT * FROM `offices` WHERE `user_id` = '$id'";
         $result1 = mysqli_query($conn, $stmt1);
         $row1 = mysqli_fetch_assoc($result1);
