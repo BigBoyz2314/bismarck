@@ -158,7 +158,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                 $year2 = date('Y')-1;
                 $year3 = date('Y')-2;
 
-                if ($result2->num_rows > 0) {
+                if ($result2->num_rows) {
                     echo '<div class="row mt-3">
                     <div class="col-md-12">
                     <h6 class="d-inline me-4">Name: ' . $_GET['username'] . '</h6>
