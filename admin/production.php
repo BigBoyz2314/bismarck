@@ -146,6 +146,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
             if (isset($_GET['username'])) {
 
                 $username = $_GET['username'];
+                $username = str_replace('+', ' ', $username);
                 $stmt = "SELECT * FROM offices WHERE company_contact_name = '$username'";
                 $result = $conn->query($stmt);
                 $row = $result->fetch_assoc();
