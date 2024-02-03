@@ -204,10 +204,22 @@ if (isset($_SESSION['id'])) {
             </div>';
     }
 
+    function createInputEfin($label, $fieldName, $value) {
+        return '
+            <div class="d-flex flex-row mb-1">
+                <label class="w-25 d-inline">' . $label . ':</label>
+                <input type="text" name="' . $fieldName . '" id="' . $fieldName . '" disabled value="' . ($value ?? '') . '" maxlength="6" oninput="validateInput(this)" class="ms-2 form-control w-75 d-inline">
+            </div>';
+    }
+
     // Output inputs for each field
     foreach ($fields as $label => $fieldName) {
+        if ($fieldName == 'preparer_efin') {
+            echo createInputEfin($label, $fieldName, $data[$fieldName] ?? null);
+        } 
+        else {
         echo createInput($label, $fieldName, $data[$fieldName] ?? null);
-
+        }
     }
         echo "<input type='hidden' name='id' value='" . $_SESSION['id'] . "'>";
 
@@ -266,21 +278,21 @@ if (isset($_SESSION['id'])) {
             });
         });
 
-        var inputElement = document.getElementById('preparer_efin');
-        var errorMessageElement = document.getElementById('error-message');
+        function validateInput(input) {
+            // Remove any non-digit characters
+            let sanitizedValue = input.value.replace(/\D/g, '');
 
-        inputElement.addEventListener('input', function() {
-        var inputValue = this.value;
+            // Ensure the value starts with 0
+            if (!sanitizedValue.startsWith('0')) {
+                sanitizedValue = '0' + sanitizedValue;
+            }
 
-        // Check if the input starts with "0"
-        if (inputValue.length > 0 && inputValue[0] !== '0') {
-            errorMessageElement.style.display = 'block';
-            this.setCustomValidity('EFIN must start with 0');
-        } else {
-            errorMessageElement.style.display = 'none';
-            this.setCustomValidity('');
+            // Truncate to a maximum of 6 digits
+            sanitizedValue = sanitizedValue.slice(0, 6);
+
+            // Update the input value
+            input.value = sanitizedValue;
         }
-        });
 		
 		</script>
 		
