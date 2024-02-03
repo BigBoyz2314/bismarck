@@ -32,16 +32,24 @@
         $partnership_tax_3 = $_POST["partnership_tax-". $year3 .""];
 
         //To Collect
-        $to_collect_1 = $_POST["to_collect-". $year1 .""];
-        $to_collect_2 = $_POST["to_collect-". $year2 .""];
-        $to_collect_3 = $_POST["to_collect-". $year3 .""];
+        $to_collect = $_POST["to_collect-total"];
 
         //Total Production
-        $total_1 = $personal_tax_1 + $corporate_tax_c_1 + $corporate_tax_s_1 + $partnership_tax_1 - $to_collect_1;
-        $total_2 = $personal_tax_2 + $corporate_tax_c_2 + $corporate_tax_s_2 + $partnership_tax_2 - $to_collect_2;
-        $total_3 = $personal_tax_3 + $corporate_tax_c_3 + $corporate_tax_s_3 + $partnership_tax_3 - $to_collect_3;
+        $total_1 = $personal_tax_1 + $corporate_tax_c_1 + $corporate_tax_s_1 + $partnership_tax_1;
+        $total_2 = $personal_tax_2 + $corporate_tax_c_2 + $corporate_tax_s_2 + $partnership_tax_2;
+        $total_3 = $personal_tax_3 + $corporate_tax_c_3 + $corporate_tax_s_3 + $partnership_tax_3;
 
-
+        $stmt = "SELECT * FROM `to_collect` WHERE `office_id` = '$office_id'";
+        $result = mysqli_query($conn, $stmt);
+        $row = mysqli_fetch_assoc($result);
+        if ($row == 0) {
+            $stmt0 = "INSERT INTO `to_collect` (`office_id`, `to_collect`) VALUES ('$office_id', '$to_collect')";
+            $result0 = mysqli_query($conn, $stmt0);
+        }
+        else {
+            $stmt00 = "UPDATE `to_collect` SET `to_collect` = '$to_collect' WHERE `office_id` = '$office_id'";
+            $result00 = mysqli_query($conn, $stmt00);
+        }
 
         $stmt1 = "SELECT * FROM `production` WHERE `office_id` = '$office_id' AND `year` = '$year1'";
         $result1 = mysqli_query($conn, $stmt1);
