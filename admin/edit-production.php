@@ -36,7 +36,7 @@
         $total = $personal_tax + $corporate_tax_c + $corporate_tax_s + $partnership_tax;
         $total_1 = $personal_tax_1 + $corporate_tax_c_1 + $corporate_tax_s_1 + $partnership_tax_1;
         $total_2 = $personal_tax_2 + $corporate_tax_c_2 + $corporate_tax_s_2 + $partnership_tax_2;
-        $total_all = $personal_tax + $personal_tax_1 + $personal_tax_2 + $corporate_tax_c + $corporate_tax_c_1 + $corporate_tax_c_2 + $corporate_tax_s_1 + $corporate_tax_s_2 + $partnership_tax + $partnership_tax_1 + $partnership_tax_2;
+        $total_all = $total + $total_1 + $total_2;
 
         $stmt = "SELECT * FROM `production` WHERE `office_id` = '$office_id' AND `year` = '$year1'";
         $result = mysqli_query($conn, $stmt);
