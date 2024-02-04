@@ -121,8 +121,8 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 
                         ?>
                     <!-- </select> -->
-                    <label for="year">Year <span class="small">(if applicable)</span></label>
-                    <select name="year" id="year" class="form-select">
+                    <label for="year">Year</label>
+                    <select name="year" id="year" class="form-select" required>
                         <option value="">Select</option>
                         <option value="2020">2020</option>
                         <option value="2021">2021</option>
@@ -157,16 +157,8 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                 $stmt2 = "SELECT * FROM production WHERE office_id = $office ORDER BY year DESC";
                 $result2 = $conn->query($stmt2);
 
-                if (isset($_GET['year'])) {
-                    $year1 = $_GET['year'];
-                    $year2 = $_GET['year']-1;
-                    $year3 = $_GET['year']-2;
-                }
-                else {
-                    $year1 = date('Y');
-                    $year2 = date('Y')-1;
-                    $year3 = date('Y')-2;
-                }
+                $year1 = $_GET['year'];
+
                     echo '<div class="row mt-3">
                     <div class="col-md-12">
                     <h6 class="d-inline me-4">Name: ' . $name . '</h6>
@@ -174,15 +166,13 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                     <form action="edit-production.php" method="post">
                         <input type="hidden" name="office_id" value="' . $office . '">
                         <input type="hidden" name="year1" value="' . $year1 . '">
-                        <input type="hidden" name="year2" value="' . $year2 . '">
-                        <input type="hidden" name="year3" value="' . $year3 . '">
                         <table class="table table-bordered table-responsive text-nowrap">
                             <thead class="table-warning">
                                 <tr>
                                     <th>Production</th>
                                     <th>'. $year1 .'</th>
-                                    <th>'. $year2 .'</th>
-                                    <th>'. $year3 .'</th>
+                                    <th>'. $year1-1 .' for '. $year1 .'</th>
+                                    <th>'. $year1-2 .' for '. $year1 .'</th>
                                     <th>Total</th>
                                 </tr>
                             </thead>
@@ -194,34 +184,34 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                                 $result3 = $conn->query($stmt3);
                                 if ($result3->num_rows > 0) {
                                 while($row3 = $result3->fetch_assoc()) {
-                                    echo '<td> <input class="form-control" value="' . $row3['personal_tax'] . '" name="personal_tax-' . $row3['year'] . '"> </td>';
+                                    echo '<td> <input class="form-control" value="' . $row3['personal_tax'] . '" name="personal_tax"> </td>';
                                 }
                                 }
                                 else {
-                                    echo '<td> <input class="form-control" value="0" name="personal_tax-' . $year1 . '"> </td>';
+                                    echo '<td> <input class="form-control" value="0" name="personal_tax"> </td>';
                                 }
                                 
-                                $stmt4 = "SELECT * FROM production WHERE office_id = $office AND year = $year2";
+                                $stmt4 = "SELECT * FROM production WHERE office_id = $office AND year = $year1";
                                 $result4 = $conn->query($stmt4);
                                 if ($result4->num_rows > 0) {
                                 while($row4 = $result4->fetch_assoc()) {
-                                    echo '<td> <input class="form-control" value="' . $row4['personal_tax'] . '" name="personal_tax-' . $row4['year'] . '"> </td>';
+                                    echo '<td> <input class="form-control" value="' . $row4['personal_tax_1'] . '" name="personal_tax_1"> </td>';
                                 }
                                 }
                                 else {
-                                    echo '<td> <input class="form-control" value="0" name="personal_tax-' . $year2 . '"> </td>';
+                                    echo '<td> <input class="form-control" value="0" name="personal_tax_1"> </td>';
                                 }
-                                $stmt5 = "SELECT * FROM production WHERE office_id = $office AND year = $year3";
+                                $stmt5 = "SELECT * FROM production WHERE office_id = $office AND year = $year1";
                                 $result5 = $conn->query($stmt5);
                                 if ($result5->num_rows > 0) {
                                 while($row5 = $result5->fetch_assoc()) {
-                                        echo '<td> <input class="form-control" value="' . $row5['personal_tax'] . '" name="personal_tax-' . $row5['year'] . '"> </td>';
+                                        echo '<td> <input class="form-control" value="' . $row5['personal_tax_2'] . '" name="personal_tax_2"> </td>';
                                     }
                                 }
                                 else {
-                                    echo '<td> <input class="form-control" value="0" name="personal_tax-' . $year3 . '"> </td>';
+                                    echo '<td> <input class="form-control" value="0" name="personal_tax_2"> </td>';
                                 }
-                                $stmt6 = "SELECT year, SUM(personal_tax) AS personal_total FROM production WHERE office_id = $office AND year IN ($year1, $year2, $year3)";
+                                $stmt6 = "SELECT year, SUM(personal_tax + personal_tax_1 + personal_tax_2) AS personal_total FROM production WHERE office_id = $office AND year IN ($year1)";
                                 $result6 = $conn->query($stmt6);
                                 if ($result6->num_rows > 0) {
                                 while($row6 = $result6->fetch_assoc()) {
@@ -240,33 +230,33 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                             $result3 = $conn->query($stmt3);
                             if ($result3->num_rows > 0) {
                             while($row3 = $result3->fetch_assoc()) {
-                                echo '<td> <input class="form-control" value="' . $row3['corporate_tax_c'] . '" name="corporate_tax_c-' . $row3['year'] . '"> </td>';
+                                echo '<td> <input class="form-control" value="' . $row3['corporate_tax_c'] . '" name="corporate_tax_c"> </td>';
                             }
                             }
                             else {
-                                echo '<td> <input class="form-control" value="0" name="corporate_tax_c-' . $year1 . '"> </td>';
+                                echo '<td> <input class="form-control" value="0" name="corporate_tax_c"> </td>';
                             }
-                            $stmt4 = "SELECT * FROM production WHERE office_id = $office AND year = $year2";
+                            $stmt4 = "SELECT * FROM production WHERE office_id = $office AND year = $year1";
                             $result4 = $conn->query($stmt4);
                             if ($result4->num_rows > 0) {
                             while($row4 = $result4->fetch_assoc()) {
-                                echo '<td> <input class="form-control" value="' . $row4['corporate_tax_c'] . '" name="corporate_tax_c-' . $row4['year'] . '"> </td>';
+                                echo '<td> <input class="form-control" value="' . $row4['corporate_tax_c_1'] . '" name="corporate_tax_c_1"> </td>';
                             }
                             }
                             else {
-                                echo '<td> <input class="form-control" value="0" name="corporate_tax_c-' . $year2 . '"> </td>';
+                                echo '<td> <input class="form-control" value="0" name="corporate_tax_c_1"> </td>';
                             }
-                            $stmt5 = "SELECT * FROM production WHERE office_id = $office AND year = $year3";
+                            $stmt5 = "SELECT * FROM production WHERE office_id = $office AND year = $year1";
                             $result5 = $conn->query($stmt5);
                             if ($result5->num_rows > 0) {
                             while($row5 = $result5->fetch_assoc()) {
-                                echo '<td> <input class="form-control" value="' . $row5['corporate_tax_c'] . '" name="corporate_tax_c-' . $row5['year'] . '"> </td>';
+                                echo '<td> <input class="form-control" value="' . $row5['corporate_tax_c_2'] . '" name="corporate_tax_c_2"> </td>';
                             }
                             }
                             else {
-                                echo '<td> <input class="form-control" value="0" name="corporate_tax_c-' . $year3 . '"> </td>';
+                                echo '<td> <input class="form-control" value="0" name="corporate_tax_c_2"> </td>';
                             }
-                            $stmt6 = "SELECT year, SUM(corporate_tax_c) AS corporate_tax_c_total FROM production WHERE office_id = $office AND year IN ($year1, $year2, $year3)";
+                            $stmt6 = "SELECT year, SUM(corporate_tax_c + corporate_tax_c_1 + corporate_tax_c_2) AS corporate_tax_c_total FROM production WHERE office_id = $office AND year IN ($year1)";
                             $result6 = $conn->query($stmt6);
                             if ($result6->num_rows > 0) {
                             while($row6 = $result6->fetch_assoc()) {
@@ -285,33 +275,33 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                             $result3 = $conn->query($stmt3);
                             if ($result3->num_rows > 0) {
                             while($row3 = $result3->fetch_assoc()) {
-                                echo '<td> <input class="form-control" value="' . $row3['corporate_tax_s'] . '" name="corporate_tax_s-' . $row3['year'] . '"> </td>';
+                                echo '<td> <input class="form-control" value="' . $row3['corporate_tax_s'] . '" name="corporate_tax_s"> </td>';
                             }
                             }
                             else {
-                                echo '<td> <input class="form-control" value="0" name="corporate_tax_s-' . $year1 . '"> </td>';
+                                echo '<td> <input class="form-control" value="0" name="corporate_tax_s"> </td>';
                             }
-                            $stmt4 = "SELECT * FROM production WHERE office_id = $office AND year = $year2";
+                            $stmt4 = "SELECT * FROM production WHERE office_id = $office AND year = $year1";
                             $result4 = $conn->query($stmt4);
                             if ($result4->num_rows > 0) {
                             while($row4 = $result4->fetch_assoc()) {
-                                echo '<td> <input class="form-control" value="' . $row4['corporate_tax_s'] . '" name="corporate_tax_s-' . $row4['year'] . '"> </td>';
+                                echo '<td> <input class="form-control" value="' . $row4['corporate_tax_s_1'] . '" name="corporate_tax_s_1"> </td>';
                             }
                             }
                             else {
-                                echo '<td> <input class="form-control" value="0" name="corporate_tax_s-' . $year2 . '"> </td>';
+                                echo '<td> <input class="form-control" value="0" name="corporate_tax_s_1"> </td>';
                             }
-                            $stmt5 = "SELECT * FROM production WHERE office_id = $office AND year = $year3";
+                            $stmt5 = "SELECT * FROM production WHERE office_id = $office AND year = $year1";
                             $result5 = $conn->query($stmt5);
                             if ($result5->num_rows > 0) {
                             while($row5 = $result5->fetch_assoc()) {
-                                echo '<td> <input class="form-control" value="' . $row5['corporate_tax_s'] . '" name="corporate_tax_s-' . $row5['year'] . '"> </td>';
+                                echo '<td> <input class="form-control" value="' . $row5['corporate_tax_s_2'] . '" name="corporate_tax_s_2"> </td>';
                             }
                             }
                             else {
-                                echo '<td> <input class="form-control" value="0" name="corporate_tax_s-' . $year3 . '"> </td>';
+                                echo '<td> <input class="form-control" value="0" name="corporate_tax_s_2"> </td>';
                             }
-                            $stmt6 = "SELECT year, SUM(corporate_tax_s) AS corporate_tax_s_total FROM production WHERE office_id = $office AND year IN ($year1, $year2, $year3)";
+                            $stmt6 = "SELECT year, SUM(corporate_tax_s + corporate_tax_s_1 + corporate_tax_s_2) AS corporate_tax_s_total FROM production WHERE office_id = $office AND year IN ($year1)";
                             $result6 = $conn->query($stmt6);
                             if ($result6->num_rows > 0) {
                             while($row6 = $result6->fetch_assoc()) {
@@ -330,33 +320,33 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                             $result3 = $conn->query($stmt3);
                             if ($result3->num_rows > 0) {
                             while($row3 = $result3->fetch_assoc()) {
-                                echo '<td> <input class="form-control" value="' . $row3['partnership_tax'] . '" name="partnership_tax-' . $row3['year'] . '"> </td>';
+                                echo '<td> <input class="form-control" value="' . $row3['partnership_tax'] . '" name="partnership_tax"> </td>';
                             }
                             }
                             else {
-                                echo '<td> <input class="form-control" value="0" name="partnership_tax-' . $year1 . '"> </td>';
+                                echo '<td> <input class="form-control" value="0" name="partnership_tax"> </td>';
                             }
-                            $stmt4 = "SELECT * FROM production WHERE office_id = $office AND year = $year2";
+                            $stmt4 = "SELECT * FROM production WHERE office_id = $office AND year = $year1";
                             $result4 = $conn->query($stmt4);
                             if ($result4->num_rows > 0) {
                             while($row4 = $result4->fetch_assoc()) {
-                                echo '<td> <input class="form-control" value="' . $row4['partnership_tax'] . '" name="partnership_tax-' . $row4['year'] . '"> </td>';
+                                echo '<td> <input class="form-control" value="' . $row4['partnership_tax_1'] . '" name="partnership_tax_1"> </td>';
                             }
                             }
                             else {
-                                echo '<td> <input class="form-control" value="0" name="partnership_tax-' . $year2 . '"> </td>';
+                                echo '<td> <input class="form-control" value="0" name="partnership_tax_1"> </td>';
                             }
-                            $stmt5 = "SELECT * FROM production WHERE office_id = $office AND year = $year3";
+                            $stmt5 = "SELECT * FROM production WHERE office_id = $office AND year = $year1";
                             $result5 = $conn->query($stmt5);
                             if ($result5->num_rows > 0) {
                             while($row5 = $result5->fetch_assoc()) {
-                                echo '<td> <input class="form-control" value="' . $row5['partnership_tax'] . '" name="partnership_tax-' . $row5['year'] . '"> </td>';
+                                echo '<td> <input class="form-control" value="' . $row5['partnership_tax_2'] . '" name="partnership_tax_2"> </td>';
                             }
                             }
                             else {
-                                echo '<td> <input class="form-control" value="0" name="partnership_tax-' . $year3 . '"> </td>';
+                                echo '<td> <input class="form-control" value="0" name="partnership_tax_2"> </td>';
                             }
-                            $stmt6 = "SELECT year, SUM(partnership_tax) AS partnership_tax_total FROM production WHERE office_id = $office AND year IN ($year1, $year2, $year3)";
+                            $stmt6 = "SELECT year, SUM(partnership_tax + partnership_tax_1 + partnership_tax_2 ) AS partnership_tax_total FROM production WHERE office_id = $office AND year IN ($year1)";
                             $result6 = $conn->query($stmt6);
                             if ($result6->num_rows > 0) {
                             while($row6 = $result6->fetch_assoc()) {
@@ -380,31 +370,31 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                             else {
                                 echo '<td> <input class="form-control" disabled value="0"> </td>';
                             }
-                            $stmt4 = "SELECT * FROM production WHERE office_id = $office AND year = $year2";
+                            $stmt4 = "SELECT * FROM production WHERE office_id = $office AND year = $year1";
                             $result4 = $conn->query($stmt4);
                             if ($result4->num_rows > 0) {
                                 while($row4 = $result4->fetch_assoc()) {
-                                    echo '<td> <input class="form-control" disabled value="' . $row4['total_transmissions'] . '"> </td>';
+                                    echo '<td> <input class="form-control" disabled value="' . $row4['total_transmissions_1'] . '"> </td>';
                                 }
                             }
                             else {
                                 echo '<td> <input class="form-control" disabled value="0"> </td>';
                             }
-                            $stmt5 = "SELECT * FROM production WHERE office_id = $office AND year = $year3";
+                            $stmt5 = "SELECT * FROM production WHERE office_id = $office AND year = $year1";
                             $result5 = $conn->query($stmt5);
                             if ($result5->num_rows > 0) {
                                 while($row5 = $result5->fetch_assoc()) {
-                                    echo '<td> <input class="form-control" disabled value="' . $row5['total_transmissions'] . '"> </td>';
+                                    echo '<td> <input class="form-control" disabled value="' . $row5['total_transmissions_2'] . '"> </td>';
                                 }
                             }
                             else {
                                 echo '<td> <input class="form-control" disabled value="0"> </td>';
                             }
-                            $stmt6 = "SELECT year, SUM(total_transmissions) AS total_transmissions FROM production WHERE office_id = $office AND year IN ($year1, $year2, $year3)";
+                            $stmt6 = "SELECT total_transmissions_total FROM production WHERE office_id = $office AND year IN ($year1)";
                             $result6 = $conn->query($stmt6);
                             if ($result6->num_rows > 0) {
                                 while($row6 = $result6->fetch_assoc()) {
-                                        echo '<td> <input class="form-control" id="efile" disabled value="' . $row6['total_transmissions'] . '"> </td>';
+                                        echo '<td> <input class="form-control" id="efile" disabled value="' . $row6['total_transmissions_total'] . '"> </td>';
                                     }
                                 }
                                 else {
@@ -419,15 +409,15 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                                     <td></td>
                                     <td></td>';
                                     
-                                    $stmt6 = "SELECT * FROM to_collect WHERE office_id = $office";
+                                    $stmt6 = "SELECT to_collect FROM production WHERE office_id = $office AND year IN ($year1)";
                                     $result6 = $conn->query($stmt6);
                                     if ($result6->num_rows > 0) {
                                     while($row6 = $result6->fetch_assoc()) {
-                                            echo '<td class="bg-danger-subtle"> <input class="form-control" id="total-to-collect" value="' . $row6['to_collect'] . '"> </td>';
+                                            echo '<td class="bg-danger-subtle"> <input class="form-control" id="total-to-collect" name="to_collect" value="' . $row6['to_collect'] . '"> </td>';
                                         }
                                     }
                                     else {
-                                        echo '<td class="bg-danger-subtle"> <input class="form-control" id="total-to-collect" value="0"> </td>';
+                                        echo '<td class="bg-danger-subtle"> <input class="form-control" id="total-to-collect" name="to_collect" value="0"> </td>';
                                     }
         
                                 echo '</tr>';  
@@ -452,7 +442,13 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                     </form>
                     </div>';
 
-                echo '<div class="col-md-12 mt-4">
+                echo '<div class="col-md-12 my-4">
+                    <div class="alert d-none alert-success alert-dismissible fade show" role="alert">
+                        <strong>Success!</strong> Office information added successfully.
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                <input type="hidden" id="office_id" name="office_id" value="' . $office . '">
+                <input type="hidden" id="year1" name="year1" value="' . $year1 . '">
                 <table class="table table-bordered text-nowrap">
                     <thead class="table-warning">
                         <tr>
@@ -471,7 +467,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                             $result7 = $conn->query($stmt7);
                             if ($result7->num_rows > 0) {
                             while($row7 = $result7->fetch_assoc()) {
-                                    echo '<td> <input type="number" class="form-control" name="prev-year" value="' . $row7['prev_year'] . '"> </td>';
+                                    echo '<td> <input type="number" class="form-control" id="prev-year" name="prev-year" value="' . $row7['prev_year'] . '"> </td>';
                                     echo '<td> <input type="number" class="form-control" disabled name="prev-year1" id="prev-year1" value="' . $row7['prev_year'] . '">  </td>';
                                 }
                             }
@@ -535,12 +531,12 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                             $result7 = $conn->query($stmt7);
                             if ($result7->num_rows > 0) {
                             while($row7 = $result7->fetch_assoc()) {
-                                    echo '<td> <input type="number" class="form-control" disabled name="efile-fee" id="efile-fee" value="' . $row7['efile_fee'] . '"> <input type="number" class="form-control" hidden name="efile-fee" id="efile-fee" value="' . $row7['efile_fee'] . '">  </td>';
+                                    echo '<td> <input type="number" class="form-control" disabled name="efile_fee" id="efile_fee" value="' . $row7['efile_fee'] . '"> <input type="number" class="form-control" hidden name="efile-fee" id="efile-fee" value="' . $row7['efile_fee'] . '">  </td>';
                                     echo '<td> <input type="number" class="form-control" disabled name="efile-fee1" id="efile-fee1" value="' . $row7['efile_fee'] . '">  </td>';
                                 }
                             }
                             else {
-                                echo '<td> <input type="number" name="efile-fee" id="efile-fee" disabled class="form-control" value="0"> <input type="number" class="form-control" hidden name="efile-fee" id="efile-fee" value="0">  </td>';
+                                echo '<td> <input type="number" name="efile-fee" id="efile_fee" disabled class="form-control" value="0"> <input type="number" class="form-control" hidden name="efile-fee" id="efile-fee" value="0">  </td>';
                                 echo '<td> <input type="number" class="form-control" disabled name="efile-fee1" id="efile-fee1" value="0">  </td>';
                             }
                             
@@ -599,10 +595,72 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                             else {
                                 echo '<td> <input type="number" name="banking-fee" id="banking-fee" disabled class="form-control" value="0"> <input type="number" class="form-control" hidden name="banking-fee" id="banking-fee" value="0">  </td>';
                             }
+
+                            
                             
                             echo '
                             <td></td>
                         </tr>
+
+                        <tr>
+                            <td>Cargo a la Oficina por el Efile Fee</td>';
+
+                            $stmt7 = "SELECT efile_fee_unit_1 FROM profit WHERE office_id = $office";
+                            $result7 = $conn->query($stmt7);
+                            if ($result7->num_rows > 0) {
+                            while($row7 = $result7->fetch_assoc()) {
+                                    echo '<td> <input type="number" class="form-control" name="efile-fee-unit_1" id="efile-fee-unit_1" value="' . $row7['efile_fee_unit_1'] . '"> </td>';
+                                }
+                            }
+                            else {
+                                echo '<td><input type="number" name="efile-fee-unit_1" id="efile-fee-unit_1" class="form-control" value="0"></td>';
+                            }
+                            
+                            
+                            $stmt7 = "SELECT efile_fee_1 FROM profit WHERE office_id = $office";
+                            $result7 = $conn->query($stmt7);
+                            if ($result7->num_rows > 0) {
+                            while($row7 = $result7->fetch_assoc()) {
+                                    echo '<td> <input type="number" class="form-control" disabled name="efile-fee_1" id="efile-fee_1" value="' . $row7['efile_fee_1'] . '"> <input type="number" class="form-control" hidden name="efile-fee_1" id="efile-fee_1" value="' . $row7['efile_fee_1'] . '">  </td>';
+                                    echo '<td> <input type="number" class="form-control" disabled name="efile-fee1_1" id="efile-fee1_1" value="' . $row7['efile_fee_1'] . '">  </td>';
+                                }
+                            }
+                            else {
+                                echo '<td> <input type="number" name="efile-fee_1" id="efile-fee_1" disabled class="form-control" value="0"> <input type="number" class="form-control" hidden name="efile-fee_1" id="efile-fee_1" value="0">  </td>';
+                                echo '<td> <input type="number" class="form-control" disabled name="efile-fee1_1" id="efile-fee1_1" value="0">  </td>';
+                            }
+                            
+                        echo '</tr>
+                        <tr>
+                            <td>Costo del Efile Fee a pagar a TaxWise</td>';
+
+                            $stmt7 = "SELECT efile_taxwise_unit_1 FROM profit WHERE office_id = $office";
+                            $result7 = $conn->query($stmt7);
+                            if ($result7->num_rows > 0) {
+                            while($row7 = $result7->fetch_assoc()) {
+                                    echo '<td> <input type="number" class="form-control" name="efile-taxwise-unit_1" id="efile-taxwise-unit_1" value="' . $row7['efile_taxwise_unit_1'] . '"> </td>';
+                                }
+                            }
+                            else {
+                                echo '<td><input type="number" name="efile-taxwise-unit_1" id="efile-taxwise-unit_1" class="form-control" value="0"></td>';
+                            }
+                            
+                            
+                            $stmt7 = "SELECT efile_taxwise_1 FROM profit WHERE office_id = $office";
+                            $result7 = $conn->query($stmt7);
+                            if ($result7->num_rows > 0) {
+                            while($row7 = $result7->fetch_assoc()) {
+                                    echo '<td> <input type="number" class="form-control" disabled name="efile-taxwise" id="efile-taxwise_1" value="' . $row7['efile_taxwise_1'] . '"> <input type="number" class="form-control" hidden name="efile-taxwise_1" id="efile-taxwise_1" value="' . $row7['efile_taxwise_1'] . '">  </td>';
+                                }
+                            }
+                            else {
+                                echo '<td> <input type="number" name="efile-taxwise_1" id="efile-taxwise_1" disabled class="form-control" value="0"> <input type="number" class="form-control" hidden name="efile-taxwise_1" id="efile-taxwise_1" value="0">  </td>';
+                            }
+                            
+                            echo '
+                            <td></td>
+                        </tr>
+
                         <tr>
                             <td>Comision por Fee Collect por pagar a la Oficina</td>';
 
@@ -623,7 +681,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                             if ($result7->num_rows > 0) {
                             while($row7 = $result7->fetch_assoc()) {
                                     echo '<td> <input type="number" class="form-control" disabled name="commission-office" id="commission-office" value="' . $row7['commission_office'] . '"> <input type="number" class="form-control" hidden name="commission-office" id="commission-office" value="' . $row7['commission_office'] . '">  </td>';
-                                    echo '<td> <input type="number" class="form-control" disabled name="commission-office1" value="0">  </td>';
+                                    echo '<td> <input type="number" class="form-control" disabled name="commission-office1" value="' . $row7['commission_office'] . '">  </td>';
                                 }
                             }
                             else {
@@ -642,7 +700,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                             if ($result7->num_rows > 0) {
                             while($row7 = $result7->fetch_assoc()) {
                                     echo '<td> <input type="number" class="form-control" name="other-commission" id="other-commission" value="' . $row7['other_commission'] . '"> </td>';
-                                    echo '<td> <input type="number" class="form-control" disabled name="other-commission1" id="other-commission1" value="0">  </td>';
+                                    echo '<td> <input type="number" class="form-control" disabled name="other-commission1" id="other-commission1" value="' . $row7['other_commission'] . '">  </td>';
                                 }
                             }
                             else {
@@ -660,7 +718,8 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                         </tr>
                     </tbody>
                 </table>
-                <button class="btn btn-primary" id="calTotal">Calculate Totals</button>
+                <button class="btn btn-primary" type="button" id="calTotal">Calculate Totals</button>
+                <button class="btn btn-success ms-2" id="submit" type="submit">Save</button>
             </div>';
         }
 
@@ -674,6 +733,11 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
     <script>
+
+        $toCollect = $("#total-to-collect").val();
+        $efile = $("#efile").val();
+        $totalEfile = $efile - $toCollect;
+        $("#total-efile").val($totalEfile);
 
         $("#total-to-collect").change(function() {
             var totalToCollect = $("#total-to-collect").val();
@@ -696,8 +760,17 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
             var efileFeeUnit = $("#efile-fee-unit").val();
             var totalEfile = $("#total-efile").val();
             var totalEfileFee = efileFeeUnit * totalEfile;
-            $("#efile-fee").val(totalEfileFee);
+            $("#efile-fee").val(parseInt(totalEfileFee));
+            $("#efile_fee").val(totalEfileFee);
             $("#efile-fee1").val(totalEfileFee);
+        });
+        
+        $("#efile-fee-unit_1").change(function() {
+            var efileFeeUnit = $("#efile-fee-unit_1").val();
+            var totalEfile = $("#total-efile").val();
+            var totalEfileFee = efileFeeUnit * totalEfile;
+            $("#efile-fee_1").val(totalEfileFee);
+            $("#efile-fee1_1").val(totalEfileFee);
         });
 
         $("#efile-taxwise-unit").change(function() {
@@ -705,6 +778,13 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
             var totalEfile = $("#total-efile").val();
             var totalEfileTaxwise = -(efileTaxwiseUnit * totalEfile);
             $("#efile-taxwise").val(totalEfileTaxwise);
+        });
+
+        $("#efile-taxwise-unit_1").change(function() {
+            var efileTaxwiseUnit = $("#efile-taxwise-unit_1").val();
+            var totalEfile = $("#total-efile").val();
+            var totalEfileTaxwise = -(efileTaxwiseUnit * totalEfile);
+            $("#efile-taxwise_1").val(totalEfileTaxwise);
         });
 
         $("#banking-fee-unit").change(function() {
@@ -730,13 +810,23 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
             var prevYear = parseInt($("#prev-year").val()) || 0;
             var saleProgram = parseInt($("#sale-program").val()) || 0;
             var payTaxwise = parseInt($("#pay-taxwise").val()) || 0;
+            var efileFeeUnit = parseInt($("#efile-fee-unit").val()) || 0;
+            var efileFeeUnit1 = parseInt($("#efile-fee-unit_1").val()) || 0;
             var efileFee = parseInt($("#efile-fee").val()) || 0;
+            var efileFee1 = parseInt($("#efile-fee_1").val()) || 0;
             var efileTaxwiseUnit = parseInt($("#efile-taxwise-unit").val()) || 0;
+            var efileTaxwiseUnit1 = parseInt($("#efile-taxwise-unit_1").val()) || 0;
+            var efileTaxwise = parseInt($("#efile-taxwise").val()) || 0;
+            var efileTaxwise1 = parseInt($("#efile-taxwise_1").val()) || 0;
             var totalEfile = parseInt($("#total-efile").val()) || 0;
             var totalEfileTaxwise = -(efileTaxwiseUnit * totalEfile);
+            var bankingFeeUnit = parseInt($("#banking-fee-unit").val()) || 0;
             var bankingFee = parseInt($("#banking-fee").val()) || 0;
+            var commissionOfficeUnit = parseInt($("#commission-office-unit").val()) || 0;
             var commissionOffice = parseInt($("#commission-office").val()) || 0;
             var otherCommission = parseInt($("#other-commission").val()) || 0;
+            var year = $("#year1").val();
+            var officeId = $("#office_id").val();
 
             var totalProfit = prevYear + saleProgram + payTaxwise + efileFee + totalEfileTaxwise + bankingFee + commissionOffice + otherCommission;
 
@@ -746,6 +836,60 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 
             $("#total-profit").val(totalProfit);
             $("#total-cxc").val(totalcxc);
+
+        });
+
+        $("#submit").click(function() {
+            var prevYear = parseInt($("#prev-year").val()) || 0;
+            var saleProgram = parseInt($("#sale-program").val()) || 0;
+            var payTaxwise = parseInt($("#pay-taxwise").val()) || 0;
+            var efileFeeUnit = parseInt($("#efile-fee-unit").val()) || 0;
+            var efileFeeUnit1 = parseInt($("#efile-fee-unit_1").val()) || 0;
+            var efileFee = parseInt($("#efile-fee").val()) || 0;
+            var efileFee1 = parseInt($("#efile-fee_1").val()) || 0;
+            var efileTaxwiseUnit = parseInt($("#efile-taxwise-unit").val()) || 0;
+            var efileTaxwiseUnit1 = parseInt($("#efile-taxwise-unit_1").val()) || 0;
+            var efileTaxwise = parseInt($("#efile-taxwise").val()) || 0;
+            var efileTaxwise1 = parseInt($("#efile-taxwise_1").val()) || 0;
+            var totalEfile = parseInt($("#total-efile").val()) || 0;
+            var totalEfileTaxwise = -(efileTaxwiseUnit * totalEfile);
+            var bankingFeeUnit = parseInt($("#banking-fee-unit").val()) || 0;
+            var bankingFee = parseInt($("#banking-fee").val()) || 0;
+            var commissionOfficeUnit = parseInt($("#commission-office-unit").val()) || 0;
+            var commissionOffice = parseInt($("#commission-office").val()) || 0;
+            var otherCommission = parseInt($("#other-commission").val()) || 0;
+            var year = $("#year1").val();
+            var officeId = $("#office_id").val();
+
+            $.ajax({
+                type: "POST",
+                url: "edit-profit.php",
+                data: {
+                    officeId: officeId,
+                    year: year,
+                    prevYear: prevYear,
+                    saleProgram: saleProgram,
+                    payTaxwise: payTaxwise,
+                    efileFeeUnit: efileFeeUnit,
+                    efileFeeUnit1: efileFeeUnit1,
+                    efileFee: efileFee,
+                    efileFee1: efileFee1,
+                    efileTaxwiseUnit: efileTaxwiseUnit,
+                    efileTaxwiseUnit1: efileTaxwiseUnit1,
+                    efileTaxwise: efileTaxwise,
+                    efileTaxwise1: efileTaxwise1,
+                    bankingFeeUnit: bankingFeeUnit,
+                    bankingFee: bankingFee,
+                    commissionOfficeUnit: commissionOfficeUnit,
+                    commissionOffice: commissionOffice,
+                    otherCommission: otherCommission,
+                },
+                success: function(data) {
+                    console.log(data);
+                    $(".alert").removeClass("d-none");
+                }
+            });
+
         });
 
     </script>
