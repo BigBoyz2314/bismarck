@@ -402,7 +402,6 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                                 }
 
                                 echo '</tr>';
-
                                 echo '<tr>
                                     <td>Total Taxes con Fee Collect aprobados.</td>
                                     <td></td>
