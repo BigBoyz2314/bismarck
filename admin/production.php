@@ -621,12 +621,12 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                             if ($result7->num_rows > 0) {
                             while($row7 = $result7->fetch_assoc()) {
                                     echo '<td> <input type="number" class="form-control" disabled name="efile-fee_1" id="efile-fee_1" value="' . $row7['efile_fee_1'] . '"> <input type="number" class="form-control" hidden name="efile-fee_1" id="efile-fee_1" value="' . $row7['efile_fee_1'] . '">  </td>';
-                                    echo '<td> <input type="number" class="form-control" disabled name="efile-fee1_1" id="efile-fee1_1" value="' . $row7['efile_fee_1'] . '">  </td>';
+                                    echo '<td></td>';
                                 }
                             }
                             else {
                                 echo '<td> <input type="number" name="efile-fee_1" id="efile-fee_1" disabled class="form-control" value="0"> <input type="number" class="form-control" hidden name="efile-fee_1" id="efile-fee_1" value="0">  </td>';
-                                echo '<td> <input type="number" class="form-control" disabled name="efile-fee1_1" id="efile-fee1_1" value="0">  </td>';
+                                echo '<td></td>';
                             }
                             
                         echo '</tr>
@@ -743,6 +743,40 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
             var efile = $("#efile").val();
             var totalEfile = efile - totalToCollect;
             $("#total-efile").val(totalEfile);
+
+            var efileFeeUnit = $("#efile-fee-unit").val();
+            var totalEfile = $("#total-efile").val();
+            var totalEfileFee = efileFeeUnit * totalEfile;
+            $("#efile-fee").val(parseInt(totalEfileFee));
+            $("#efile_fee").val(totalEfileFee);
+            $("#efile-fee1").val(totalEfileFee);
+
+            var efileFeeUnit = $("#efile-fee-unit_1").val();
+            var totalEfile = $("#total-efile").val();
+            var totalEfileFee = efileFeeUnit * totalEfile;
+            $("#efile-fee_1").val(totalEfileFee);
+            $("#efile-fee1_1").val(totalEfileFee);
+
+            var efileTaxwiseUnit = $("#efile-taxwise-unit").val();
+            var totalEfile = $("#total-efile").val();
+            var totalEfileTaxwise = -(efileTaxwiseUnit * totalEfile);
+            $("#efile-taxwise").val(totalEfileTaxwise);
+
+            var efileTaxwiseUnit = $("#efile-taxwise-unit_1").val();
+            var totalEfile = $("#total-efile").val();
+            var totalEfileTaxwise = -(efileTaxwiseUnit * totalEfile);
+            $("#efile-taxwise_1").val(totalEfileTaxwise);
+
+            var bankingFeeUnit = $("#banking-fee-unit").val();
+            var totalToCollect = $("#total-to-collect").val();
+            var totalBankingFee = bankingFeeUnit * totalToCollect;
+            $("#banking-fee").val(totalBankingFee);
+
+            var commissionOfficeUnit = $("#commission-office-unit").val();
+            var totalToCollect = $("#total-to-collect").val();
+            var totalCommissionOffice = (commissionOfficeUnit * totalToCollect);
+            $("#commission-office").val(totalCommissionOffice);
+
         });
         
         $("#prev-year").change(function() {
