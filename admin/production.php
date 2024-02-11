@@ -462,7 +462,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                             <td>Carry on from previous year</td>
                             <td></td>';
 
-                            $stmt7 = "SELECT prev_year FROM profit WHERE office_id = $office";
+                            $stmt7 = "SELECT prev_year FROM profit WHERE office_id = $office AND year = $year1";
                             $result7 = $conn->query($stmt7);
                             if ($result7->num_rows > 0) {
                             while($row7 = $result7->fetch_assoc()) {
@@ -480,7 +480,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                             <td>Venta del Programa a Cobrar</td>
                             <td></td>';
 
-                            $stmt7 = "SELECT sale_program FROM profit WHERE office_id = $office";
+                            $stmt7 = "SELECT sale_program FROM profit WHERE office_id = $office AND year = $year1";
                             $result7 = $conn->query($stmt7);
                             if ($result7->num_rows > 0) {
                             while($row7 = $result7->fetch_assoc()) {
@@ -498,7 +498,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                             <td>Costo del Programa a pagar a TaxWise</td>
                             <td></td>';
 
-                            $stmt7 = "SELECT pay_taxwise FROM profit WHERE office_id = $office";
+                            $stmt7 = "SELECT pay_taxwise FROM profit WHERE office_id = $office AND year = $year1";
                             $result7 = $conn->query($stmt7);
                             if ($result7->num_rows > 0) {
                             while($row7 = $result7->fetch_assoc()) {
@@ -514,7 +514,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                         <tr>
                             <td>Cargo a la Oficina por el Efile Fee</td>';
 
-                            $stmt7 = "SELECT efile_fee_unit FROM profit WHERE office_id = $office";
+                            $stmt7 = "SELECT efile_fee_unit FROM profit WHERE office_id = $office AND year = $year1";
                             $result7 = $conn->query($stmt7);
                             if ($result7->num_rows > 0) {
                             while($row7 = $result7->fetch_assoc()) {
@@ -526,7 +526,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                             }
                             
                             
-                            $stmt7 = "SELECT efile_fee FROM profit WHERE office_id = $office";
+                            $stmt7 = "SELECT efile_fee FROM profit WHERE office_id = $office AND year = $year1";
                             $result7 = $conn->query($stmt7);
                             if ($result7->num_rows > 0) {
                             while($row7 = $result7->fetch_assoc()) {
@@ -543,7 +543,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                         <tr>
                             <td>Costo del Efile Fee a pagar a TaxWise</td>';
 
-                            $stmt7 = "SELECT efile_taxwise_unit FROM profit WHERE office_id = $office";
+                            $stmt7 = "SELECT efile_taxwise_unit FROM profit WHERE office_id = $office AND year = $year1";
                             $result7 = $conn->query($stmt7);
                             if ($result7->num_rows > 0) {
                             while($row7 = $result7->fetch_assoc()) {
@@ -555,7 +555,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                             }
                             
                             
-                            $stmt7 = "SELECT efile_taxwise FROM profit WHERE office_id = $office";
+                            $stmt7 = "SELECT efile_taxwise FROM profit WHERE office_id = $office AND year = $year1";
                             $result7 = $conn->query($stmt7);
                             if ($result7->num_rows > 0) {
                             while($row7 = $result7->fetch_assoc()) {
@@ -572,7 +572,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                         <tr>
                             <td>Fee Asignado para los Productos Bancarios</td>';
 
-                            $stmt7 = "SELECT banking_fee_unit FROM profit WHERE office_id = $office";
+                            $stmt7 = "SELECT banking_fee_unit FROM profit WHERE office_id = $office AND year = $year1";
                             $result7 = $conn->query($stmt7);
                             if ($result7->num_rows > 0) {
                             while($row7 = $result7->fetch_assoc()) {
@@ -584,7 +584,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                             }
                             
                             
-                            $stmt7 = "SELECT banking_fee FROM profit WHERE office_id = $office";
+                            $stmt7 = "SELECT banking_fee FROM profit WHERE office_id = $office AND year = $year1";
                             $result7 = $conn->query($stmt7);
                             if ($result7->num_rows > 0) {
                             while($row7 = $result7->fetch_assoc()) {
@@ -604,7 +604,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                         <tr>
                             <td>Cargo a la Oficina por el Efile Fee</td>';
 
-                            $stmt7 = "SELECT efile_fee_unit_1 FROM profit WHERE office_id = $office";
+                            $stmt7 = "SELECT efile_fee_unit_1 FROM profit WHERE office_id = $office AND year = $year1";
                             $result7 = $conn->query($stmt7);
                             if ($result7->num_rows > 0) {
                             while($row7 = $result7->fetch_assoc()) {
@@ -616,7 +616,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                             }
                             
                             
-                            $stmt7 = "SELECT efile_fee_1 FROM profit WHERE office_id = $office";
+                            $stmt7 = "SELECT efile_fee_1 FROM profit WHERE office_id = $office AND year = $year1";
                             $result7 = $conn->query($stmt7);
                             if ($result7->num_rows > 0) {
                             while($row7 = $result7->fetch_assoc()) {
@@ -633,7 +633,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                         <tr>
                             <td>Costo del Efile Fee a pagar a TaxWise</td>';
 
-                            $stmt7 = "SELECT efile_taxwise_unit_1 FROM profit WHERE office_id = $office";
+                            $stmt7 = "SELECT efile_taxwise_unit_1 FROM profit WHERE office_id = $office AND year = $year1";
                             $result7 = $conn->query($stmt7);
                             if ($result7->num_rows > 0) {
                             while($row7 = $result7->fetch_assoc()) {
@@ -645,7 +645,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                             }
                             
                             
-                            $stmt7 = "SELECT efile_taxwise_1 FROM profit WHERE office_id = $office";
+                            $stmt7 = "SELECT efile_taxwise_1 FROM profit WHERE office_id = $office AND year = $year1";
                             $result7 = $conn->query($stmt7);
                             if ($result7->num_rows > 0) {
                             while($row7 = $result7->fetch_assoc()) {
@@ -663,7 +663,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                         <tr>
                             <td>Comision por Fee Collect por pagar a la Oficina</td>';
 
-                            $stmt7 = "SELECT commission_office_unit FROM profit WHERE office_id = $office";
+                            $stmt7 = "SELECT commission_office_unit FROM profit WHERE office_id = $office AND year = $year1";
                             $result7 = $conn->query($stmt7);
                             if ($result7->num_rows > 0) {
                             while($row7 = $result7->fetch_assoc()) {
@@ -675,17 +675,17 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                             }
                             
                             
-                            $stmt7 = "SELECT commission_office FROM profit WHERE office_id = $office";
+                            $stmt7 = "SELECT commission_office FROM profit WHERE office_id = $office AND year = $year1";
                             $result7 = $conn->query($stmt7);
                             if ($result7->num_rows > 0) {
                             while($row7 = $result7->fetch_assoc()) {
-                                    echo '<td> <input type="number" class="form-control" disabled name="commission-office" id="commission-office" value="' . $row7['commission_office'] . '"> <input type="number" class="form-control" hidden name="commission-office" id="commission-office" value="' . $row7['commission_office'] . '">  </td>';
-                                    echo '<td> <input type="number" class="form-control" disabled name="commission-office1" value="' . $row7['commission_office'] . '">  </td>';
+                                    echo '<td> <input type="number" class="form-control" disabled name="commission-offic" id="commission-office" value="' . $row7['commission_office'] . '"> <input type="number" class="form-control" hidden name="commission-office" id="commission-office" value="' . $row7['commission_office'] . '">  </td>';
+                                    echo '<td> <input type="number" class="form-control" disabled name="commission-office1" id="commission-office1" value="' . $row7['commission_office'] . '">  </td>';
                                 }
                             }
                             else {
                                 echo '<td> <input type="number" name="commission-office" id="commission-office" disabled class="form-control" value="0"> <input type="number" class="form-control" hidden name="commission-office" id="commission-office" value="0">  </td>';
-                                echo '<td> <input type="number" class="form-control" disabled name="commission-office1" value="0">  </td>';
+                                echo '<td> <input type="number" class="form-control" disabled name="commission-office1" id="commission-office1" value="0">  </td>';
                             }
                             
                             echo '</tr>
@@ -694,7 +694,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                             <td></td>';
 
 
-                            $stmt7 = "SELECT other_commission FROM profit WHERE office_id = $office";
+                            $stmt7 = "SELECT other_commission FROM profit WHERE office_id = $office AND year = $year1";
                             $result7 = $conn->query($stmt7);
                             if ($result7->num_rows > 0) {
                             while($row7 = $result7->fetch_assoc()) {
@@ -751,11 +751,10 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
             $("#efile_fee").val(totalEfileFee);
             $("#efile-fee1").val(totalEfileFee);
 
-            var efileFeeUnit = $("#efile-fee-unit_1").val();
-            var totalEfile = $("#total-efile").val();
-            var totalEfileFee = efileFeeUnit * totalEfile;
-            $("#efile-fee_1").val(totalEfileFee);
-            $("#efile-fee1_1").val(totalEfileFee);
+            var efileFeeUnit1 = $("#efile-fee-unit_1").val();
+            var totalEfile1 = $("#total-to-collect").val();
+            var totalEfileFee1 = (efileFeeUnit1 * totalEfile1);
+            $("#efile-fee_1").val(totalEfileFee1);
 
             var efileTaxwiseUnit = $("#efile-taxwise-unit").val();
             var totalEfile = $("#total-efile").val();
@@ -763,7 +762,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
             $("#efile-taxwise").val(totalEfileTaxwise);
 
             var efileTaxwiseUnit = $("#efile-taxwise-unit_1").val();
-            var totalEfile = $("#total-efile").val();
+            var totalEfile = $("#total-to-collect").val();
             var totalEfileTaxwise = -(efileTaxwiseUnit * totalEfile);
             $("#efile-taxwise_1").val(totalEfileTaxwise);
 
@@ -799,11 +798,10 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
         });
         
         $("#efile-fee-unit_1").change(function() {
-            var efileFeeUnit = $("#efile-fee-unit_1").val();
-            var totalEfile = $("#total-efile").val();
-            var totalEfileFee = efileFeeUnit * totalEfile;
-            $("#efile-fee_1").val(totalEfileFee);
-            $("#efile-fee1_1").val(totalEfileFee);
+            var efileFeeUnit1 = $("#efile-fee-unit_1").val();
+            var totalEfile1 = $("#total-to-collect").val();
+            var totalEfileFee1 = (efileFeeUnit1 * totalEfile1);
+            $("#efile-fee_1").val(totalEfileFee1);
         });
 
         $("#efile-taxwise-unit").change(function() {
@@ -815,7 +813,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 
         $("#efile-taxwise-unit_1").change(function() {
             var efileTaxwiseUnit = $("#efile-taxwise-unit_1").val();
-            var totalEfile = $("#total-efile").val();
+            var totalEfile = $("#total-to-collect").val();
             var totalEfileTaxwise = -(efileTaxwiseUnit * totalEfile);
             $("#efile-taxwise_1").val(totalEfileTaxwise);
         });
@@ -832,6 +830,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
             var totalToCollect = $("#total-to-collect").val();
             var totalCommissionOffice = (commissionOfficeUnit * totalToCollect);
             $("#commission-office").val(totalCommissionOffice);
+            $("#commission-office1").val(totalCommissionOffice);
         });
 
         $("#other-commission").change(function() {

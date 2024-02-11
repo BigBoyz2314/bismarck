@@ -16,8 +16,8 @@
         $efile_taxwise = $_POST["efileTaxwise"];
         $efile_fee_unit_1 = $_POST["efileFeeUnit1"];
         $efile_fee_1 = $_POST["efileFee1"];
-        $efile_taxwise_unit_1 = $_POST["efileTaxwiseUnit"];
-        $efile_taxwise_1 = $_POST["efileTaxwise"];
+        $efile_taxwise_unit_1 = $_POST["efileTaxwiseUnit1"];
+        $efile_taxwise_1 = $_POST["efileTaxwise1"];
         $banking_fee_unit = $_POST["bankingFeeUnit"];
         $banking_fee = $_POST["bankingFee"];
         $commission_office_unit = $_POST["commissionOfficeUnit"];
