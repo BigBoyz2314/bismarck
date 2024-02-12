@@ -717,8 +717,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                         </tr>
                     </tbody>
                 </table>
-                <button class="btn btn-primary" type="button" id="calTotal">Calculate Totals</button>
-                <button class="btn btn-success ms-2" id="submit" type="submit">Save</button>
+                <button class="btn btn-primary" type="button" id="calTotal">Calculate Totals / Save</button>
             </div>';
         }
 
@@ -773,7 +772,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 
             var commissionOfficeUnit = $("#commission-office-unit").val();
             var totalToCollect = $("#total-to-collect").val();
-            var totalCommissionOffice = (commissionOfficeUnit * totalToCollect);
+            var totalCommissionOffice = -(commissionOfficeUnit * totalToCollect);
             $("#commission-office").val(totalCommissionOffice);
 
         });
@@ -828,7 +827,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
         $("#commission-office-unit").change(function() {
             var commissionOfficeUnit = $("#commission-office-unit").val();
             var totalToCollect = $("#total-to-collect").val();
-            var totalCommissionOffice = (commissionOfficeUnit * totalToCollect);
+            var totalCommissionOffice = -(commissionOfficeUnit * totalToCollect);
             $("#commission-office").val(totalCommissionOffice);
             $("#commission-office1").val(totalCommissionOffice);
         });
@@ -869,9 +868,6 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
             $("#total-profit").val(totalProfit);
             $("#total-cxc").val(totalcxc);
 
-        });
-
-        $("#submit").click(function() {
             var prevYear = parseInt($("#prev-year").val()) || 0;
             var saleProgram = parseInt($("#sale-program").val()) || 0;
             var payTaxwise = parseInt($("#pay-taxwise").val()) || 0;
@@ -923,6 +919,59 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
             });
 
         });
+
+        // $("#submit").click(function() {
+        //     var prevYear = parseInt($("#prev-year").val()) || 0;
+        //     var saleProgram = parseInt($("#sale-program").val()) || 0;
+        //     var payTaxwise = parseInt($("#pay-taxwise").val()) || 0;
+        //     var efileFeeUnit = parseInt($("#efile-fee-unit").val()) || 0;
+        //     var efileFeeUnit1 = parseInt($("#efile-fee-unit_1").val()) || 0;
+        //     var efileFee = parseInt($("#efile-fee").val()) || 0;
+        //     var efileFee1 = parseInt($("#efile-fee_1").val()) || 0;
+        //     var efileTaxwiseUnit = parseInt($("#efile-taxwise-unit").val()) || 0;
+        //     var efileTaxwiseUnit1 = parseInt($("#efile-taxwise-unit_1").val()) || 0;
+        //     var efileTaxwise = parseInt($("#efile-taxwise").val()) || 0;
+        //     var efileTaxwise1 = parseInt($("#efile-taxwise_1").val()) || 0;
+        //     var totalEfile = parseInt($("#total-efile").val()) || 0;
+        //     var totalEfileTaxwise = -(efileTaxwiseUnit * totalEfile);
+        //     var bankingFeeUnit = parseInt($("#banking-fee-unit").val()) || 0;
+        //     var bankingFee = parseInt($("#banking-fee").val()) || 0;
+        //     var commissionOfficeUnit = parseInt($("#commission-office-unit").val()) || 0;
+        //     var commissionOffice = parseInt($("#commission-office").val()) || 0;
+        //     var otherCommission = parseInt($("#other-commission").val()) || 0;
+        //     var year = $("#year1").val();
+        //     var officeId = $("#office_id").val();
+
+        //     $.ajax({
+        //         type: "POST",
+        //         url: "edit-profit.php",
+        //         data: {
+        //             officeId: officeId,
+        //             year: year,
+        //             prevYear: prevYear,
+        //             saleProgram: saleProgram,
+        //             payTaxwise: payTaxwise,
+        //             efileFeeUnit: efileFeeUnit,
+        //             efileFeeUnit1: efileFeeUnit1,
+        //             efileFee: efileFee,
+        //             efileFee1: efileFee1,
+        //             efileTaxwiseUnit: efileTaxwiseUnit,
+        //             efileTaxwiseUnit1: efileTaxwiseUnit1,
+        //             efileTaxwise: efileTaxwise,
+        //             efileTaxwise1: efileTaxwise1,
+        //             bankingFeeUnit: bankingFeeUnit,
+        //             bankingFee: bankingFee,
+        //             commissionOfficeUnit: commissionOfficeUnit,
+        //             commissionOffice: commissionOffice,
+        //             otherCommission: otherCommission,
+        //         },
+        //         success: function(data) {
+        //             console.log(data);
+        //             $(".alert").removeClass("d-none");
+        //         }
+        //     });
+
+        // });
 
     </script>
 
