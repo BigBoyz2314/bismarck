@@ -163,7 +163,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                     <div class="col-md-12">
                     <h6 class="d-inline me-4">Name: ' . $name . '</h6>
                     <h6 class="d-inline me-4">Company: ' . $officeName . '</h6>
-                    <form action="edit-production.php" method="post">
+                    <form action="edit-production.php" id="productionForm" method="post">
                         <input type="hidden" name="office_id" value="' . $office . '">
                         <input type="hidden" name="year1" value="' . $year1 . '">
                         <table class="table table-bordered table-responsive text-nowrap">
@@ -437,7 +437,6 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 
                     echo '</tbody>
                         </table>
-                        <button class="btn btn-success mt-2" type="submit">Save</button>
                     </form>
                     </div>';
 
@@ -717,7 +716,8 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                         </tr>
                     </tbody>
                 </table>
-                <button class="btn btn-primary" type="button" id="calTotal">Calculate Totals / Save</button>
+                <button class="btn btn-primary" type="button" id="calTotal">Calculate Totals</button>
+                <button class="btn btn-success" type="button" id="saveProfit">Save</button>
             </div>';
         }
 
@@ -850,7 +850,6 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
             var efileTaxwise = parseInt($("#efile-taxwise").val()) || 0;
             var efileTaxwise1 = parseInt($("#efile-taxwise_1").val()) || 0;
             var totalEfile = parseInt($("#total-efile").val()) || 0;
-            var totalEfileTaxwise = -(efileTaxwiseUnit * totalEfile);
             var bankingFeeUnit = parseInt($("#banking-fee-unit").val()) || 0;
             var bankingFee = parseInt($("#banking-fee").val()) || 0;
             var commissionOfficeUnit = parseInt($("#commission-office-unit").val()) || 0;
@@ -859,7 +858,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
             var year = $("#year1").val();
             var officeId = $("#office_id").val();
 
-            var totalProfit = prevYear + saleProgram + payTaxwise + efileFee + totalEfileTaxwise + bankingFee + commissionOffice + otherCommission;
+            var totalProfit = prevYear + saleProgram + payTaxwise + efileFee + efileTaxwise + bankingFee + efileFee1 + efileTaxwise1 + commissionOffice + otherCommission;
 
             var totalcxc = prevYear + saleProgram + efileFee + otherCommission;
 
@@ -868,6 +867,60 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
             $("#total-profit").val(totalProfit);
             $("#total-cxc").val(totalcxc);
 
+            // var prevYear = parseInt($("#prev-year").val()) || 0;
+            // var saleProgram = parseInt($("#sale-program").val()) || 0;
+            // var payTaxwise = parseInt($("#pay-taxwise").val()) || 0;
+            // var efileFeeUnit = parseInt($("#efile-fee-unit").val()) || 0;
+            // var efileFeeUnit1 = parseInt($("#efile-fee-unit_1").val()) || 0;
+            // var efileFee = parseInt($("#efile-fee").val()) || 0;
+            // var efileFee1 = parseInt($("#efile-fee_1").val()) || 0;
+            // var efileTaxwiseUnit = parseInt($("#efile-taxwise-unit").val()) || 0;
+            // var efileTaxwiseUnit1 = parseInt($("#efile-taxwise-unit_1").val()) || 0;
+            // var efileTaxwise = parseInt($("#efile-taxwise").val()) || 0;
+            // var efileTaxwise1 = parseInt($("#efile-taxwise_1").val()) || 0;
+            // var totalEfile = parseInt($("#total-efile").val()) || 0;
+            // var totalEfileTaxwise = -(efileTaxwiseUnit * totalEfile);
+            // var bankingFeeUnit = parseInt($("#banking-fee-unit").val()) || 0;
+            // var bankingFee = parseInt($("#banking-fee").val()) || 0;
+            // var commissionOfficeUnit = parseInt($("#commission-office-unit").val()) || 0;
+            // var commissionOffice = parseInt($("#commission-office").val()) || 0;
+            // var otherCommission = parseInt($("#other-commission").val()) || 0;
+            // var year = $("#year1").val();
+            // var officeId = $("#office_id").val();
+
+            // $.ajax({
+            //     type: "POST",
+            //     url: "edit-profit.php",
+            //     data: {
+            //         officeId: officeId,
+            //         year: year,
+            //         prevYear: prevYear,
+            //         saleProgram: saleProgram,
+            //         payTaxwise: payTaxwise,
+            //         efileFeeUnit: efileFeeUnit,
+            //         efileFeeUnit1: efileFeeUnit1,
+            //         efileFee: efileFee,
+            //         efileFee1: efileFee1,
+            //         efileTaxwiseUnit: efileTaxwiseUnit,
+            //         efileTaxwiseUnit1: efileTaxwiseUnit1,
+            //         efileTaxwise: efileTaxwise,
+            //         efileTaxwise1: efileTaxwise1,
+            //         bankingFeeUnit: bankingFeeUnit,
+            //         bankingFee: bankingFee,
+            //         commissionOfficeUnit: commissionOfficeUnit,
+            //         commissionOffice: commissionOffice,
+            //         otherCommission: otherCommission,
+            //     },
+            //     success: function(data) {
+            //         console.log(data);
+            //         $(".alert").removeClass("d-none");
+            //         $("#productionForm").submit();
+            //     }
+            // });
+
+        });
+
+        $("#saveProfit").click(function() {
             var prevYear = parseInt($("#prev-year").val()) || 0;
             var saleProgram = parseInt($("#sale-program").val()) || 0;
             var payTaxwise = parseInt($("#pay-taxwise").val()) || 0;
@@ -915,63 +968,11 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                 success: function(data) {
                     console.log(data);
                     $(".alert").removeClass("d-none");
+                    $("#productionForm").submit();
                 }
             });
 
         });
-
-        // $("#submit").click(function() {
-        //     var prevYear = parseInt($("#prev-year").val()) || 0;
-        //     var saleProgram = parseInt($("#sale-program").val()) || 0;
-        //     var payTaxwise = parseInt($("#pay-taxwise").val()) || 0;
-        //     var efileFeeUnit = parseInt($("#efile-fee-unit").val()) || 0;
-        //     var efileFeeUnit1 = parseInt($("#efile-fee-unit_1").val()) || 0;
-        //     var efileFee = parseInt($("#efile-fee").val()) || 0;
-        //     var efileFee1 = parseInt($("#efile-fee_1").val()) || 0;
-        //     var efileTaxwiseUnit = parseInt($("#efile-taxwise-unit").val()) || 0;
-        //     var efileTaxwiseUnit1 = parseInt($("#efile-taxwise-unit_1").val()) || 0;
-        //     var efileTaxwise = parseInt($("#efile-taxwise").val()) || 0;
-        //     var efileTaxwise1 = parseInt($("#efile-taxwise_1").val()) || 0;
-        //     var totalEfile = parseInt($("#total-efile").val()) || 0;
-        //     var totalEfileTaxwise = -(efileTaxwiseUnit * totalEfile);
-        //     var bankingFeeUnit = parseInt($("#banking-fee-unit").val()) || 0;
-        //     var bankingFee = parseInt($("#banking-fee").val()) || 0;
-        //     var commissionOfficeUnit = parseInt($("#commission-office-unit").val()) || 0;
-        //     var commissionOffice = parseInt($("#commission-office").val()) || 0;
-        //     var otherCommission = parseInt($("#other-commission").val()) || 0;
-        //     var year = $("#year1").val();
-        //     var officeId = $("#office_id").val();
-
-        //     $.ajax({
-        //         type: "POST",
-        //         url: "edit-profit.php",
-        //         data: {
-        //             officeId: officeId,
-        //             year: year,
-        //             prevYear: prevYear,
-        //             saleProgram: saleProgram,
-        //             payTaxwise: payTaxwise,
-        //             efileFeeUnit: efileFeeUnit,
-        //             efileFeeUnit1: efileFeeUnit1,
-        //             efileFee: efileFee,
-        //             efileFee1: efileFee1,
-        //             efileTaxwiseUnit: efileTaxwiseUnit,
-        //             efileTaxwiseUnit1: efileTaxwiseUnit1,
-        //             efileTaxwise: efileTaxwise,
-        //             efileTaxwise1: efileTaxwise1,
-        //             bankingFeeUnit: bankingFeeUnit,
-        //             bankingFee: bankingFee,
-        //             commissionOfficeUnit: commissionOfficeUnit,
-        //             commissionOffice: commissionOffice,
-        //             otherCommission: otherCommission,
-        //         },
-        //         success: function(data) {
-        //             console.log(data);
-        //             $(".alert").removeClass("d-none");
-        //         }
-        //     });
-
-        // });
 
     </script>
 
