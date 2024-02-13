@@ -364,7 +364,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                             $result3 = $conn->query($stmt3);
                             if ($result3->num_rows > 0) {
                                 while($row3 = $result3->fetch_assoc()) {
-                                        echo '<td> <input class="form-control" type="number" disabled value="' . $row3['total_transmissions'] . '"> </td>';
+                                        echo '<td> <input class="form-control" type="number" name="transmissions" disabled value="' . $row3['total_transmissions'] . '"> </td>';
                                     }
                             }
                             else {
@@ -374,7 +374,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                             $result4 = $conn->query($stmt4);
                             if ($result4->num_rows > 0) {
                                 while($row4 = $result4->fetch_assoc()) {
-                                    echo '<td> <input class="form-control" type="number" disabled value="' . $row4['total_transmissions_1'] . '"> </td>';
+                                    echo '<td> <input class="form-control" type="number" name="transmissions1" disabled value="' . $row4['total_transmissions_1'] . '"> </td>';
                                 }
                             }
                             else {
@@ -384,7 +384,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                             $result5 = $conn->query($stmt5);
                             if ($result5->num_rows > 0) {
                                 while($row5 = $result5->fetch_assoc()) {
-                                    echo '<td> <input class="form-control" type="number" disabled value="' . $row5['total_transmissions_2'] . '"> </td>';
+                                    echo '<td> <input class="form-control" type="number" name="transmissions2" disabled value="' . $row5['total_transmissions_2'] . '"> </td>';
                                 }
                             }
                             else {
@@ -866,6 +866,36 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 
             $("#total-profit").val(totalProfit);
             $("#total-cxc").val(totalcxc);
+
+            //Transmissions
+            var personalTax = parseInt($("input[name='personal_tax']").val());
+            var corporateTaxC = parseInt($("input[name='corporate_tax_c']").val());
+            var corporateTaxS = parseInt($("input[name='corporate_tax_s']").val());
+            var PartnershipTax = parseInt($("input[name='partnership_tax']").val());
+            var transmissions = $("input[name='transmissions']");
+            
+            transmissions.val(personalTax + corporateTaxC + corporateTaxS + PartnershipTax);
+            
+            //Transmissions 1
+            var personalTax1 = parseInt($("input[name='personal_tax_1']").val());
+            var corporateTaxC1 = parseInt($("input[name='corporate_tax_c_1']").val());
+            var corporateTaxS1 = parseInt($("input[name='corporate_tax_s_1']").val());
+            var PartnershipTax1 = parseInt($("input[name='partnership_tax_1']").val());
+            var transmissions1 = $("input[name='transmissions1']");
+
+            transmissions1.val(personalTax1 + corporateTaxC1 + corporateTaxS1 + PartnershipTax1);
+            
+            //Transmissions 2
+            var personalTax2 = parseInt($("input[name='personal_tax_2']").val());
+            var corporateTaxC2 = parseInt($("input[name='corporate_tax_c_2']").val());
+            var corporateTaxS2 = parseInt($("input[name='corporate_tax_s_2']").val());
+            var PartnershipTax2 = parseInt($("input[name='partnership_tax_2']").val());
+            var transmissions2 = $("input[name='transmissions2']");
+
+            transmissions2.val(personalTax2 + corporateTaxC2 + corporateTaxS2 + PartnershipTax2);
+
+
+
 
             // var prevYear = parseInt($("#prev-year").val()) || 0;
             // var saleProgram = parseInt($("#sale-program").val()) || 0;
