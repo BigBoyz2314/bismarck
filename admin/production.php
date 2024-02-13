@@ -215,11 +215,11 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                                 $result6 = $conn->query($stmt6);
                                 if ($result6->num_rows > 0) {
                                 while($row6 = $result6->fetch_assoc()) {
-                                        echo '<td> <input class="form-control" type="number" disabled value="' . $row6['personal_total'] . '"> </td>';
+                                        echo '<td> <input class="form-control" type="number" name="personal_tax_total" disabled value="' . $row6['personal_total'] . '"> </td>';
                                     }
                                 }
                                 else {
-                                    echo '<td> <input class="form-control" type="number" disabled value="0"> </td>';
+                                    echo '<td> <input class="form-control" type="number" name="personal_tax_total" disabled value="0"> </td>';
                                 }
                                 
                             echo '</tr>';
@@ -260,11 +260,11 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                             $result6 = $conn->query($stmt6);
                             if ($result6->num_rows > 0) {
                             while($row6 = $result6->fetch_assoc()) {
-                                    echo '<td> <input class="form-control" type="number" disabled value="' . $row6['corporate_tax_c_total'] . '"> </td>';
+                                    echo '<td> <input class="form-control" type="number" disabled name="corporate_tax_c_total" value="' . $row6['corporate_tax_c_total'] . '"> </td>';
                                 }
                             }
                             else {
-                                echo '<td> <input class="form-control" type="number" disabled value="0"> </td>';
+                                echo '<td> <input class="form-control" type="number" name="corporate_tax_c_total" disabled value="0"> </td>';
                             }
                             
                         echo '</tr>';
@@ -305,11 +305,11 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                             $result6 = $conn->query($stmt6);
                             if ($result6->num_rows > 0) {
                             while($row6 = $result6->fetch_assoc()) {
-                                    echo '<td> <input class="form-control" type="number" disabled value="' . $row6['corporate_tax_s_total'] . '"> </td>';
+                                    echo '<td> <input class="form-control" type="number" name="corporate_tax_s_total" disabled value="' . $row6['corporate_tax_s_total'] . '"> </td>';
                                 }
                             }
                             else {
-                                echo '<td> <input class="form-control" type="number" disabled value="0"> </td>';
+                                echo '<td> <input class="form-control" type="number" name="corporate_tax_s_total" disabled value="0"> </td>';
                             }
                             
                         echo '</tr>';
@@ -350,11 +350,11 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                             $result6 = $conn->query($stmt6);
                             if ($result6->num_rows > 0) {
                             while($row6 = $result6->fetch_assoc()) {
-                                    echo '<td> <input class="form-control" type="number" disabled value="' . $row6['partnership_tax_total'] . '"> </td>';
+                                    echo '<td> <input class="form-control" type="number" disabled name="partnership_tax_total" value="' . $row6['partnership_tax_total'] . '"> </td>';
                                 }
                             }
                             else {
-                                echo '<td> <input class="form-control" type="number" disabled value="0"> </td>';
+                                echo '<td> <input class="form-control" type="number" name="partnership_tax_total" disabled value="0"> </td>';
                             } 
 
                         echo '<tr>
@@ -394,11 +394,11 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                             $result6 = $conn->query($stmt6);
                             if ($result6->num_rows > 0) {
                                 while($row6 = $result6->fetch_assoc()) {
-                                        echo '<td> <input class="form-control" type="number" id="efile" disabled value="' . $row6['total_transmissions_total'] . '"> </td>';
+                                        echo '<td> <input class="form-control" type="number" id="efile" disabled name="transmissions_total" value="' . $row6['total_transmissions_total'] . '"> </td>';
                                     }
                                 }
                                 else {
-                                    echo '<td> <input class="form-control" type="number" disabled value="0"> </td>';
+                                    echo '<td> <input class="form-control" type="number" disabled name="transmissions_total" value="0"> </td>';
                                 }
 
                                 echo '</tr>';
@@ -893,6 +893,21 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
             var transmissions2 = $("input[name='transmissions2']");
 
             transmissions2.val(personalTax2 + corporateTaxC2 + corporateTaxS2 + PartnershipTax2);
+
+            //Totals
+            var personalTaxTotal = $("input[name='personal_tax_total']");
+            var corporateTaxCTotal = $("input[name='corporate_tax_c_total']");
+            var corporateTaxSTotal = $("input[name='corporate_tax_s_total']");
+            var PartnershipTaxTotal = $("input[name='partnership_tax_total']");
+            var transmissionsTotal = $("input[name='transmissions_total']");
+
+            personalTaxTotal.val(personalTax + personalTax1 + personalTax2);
+            corporateTaxCTotal.val(corporateTaxC + corporateTaxC1 + corporateTaxC2);
+            corporateTaxSTotal.val(corporateTaxS + corporateTaxS1 + corporateTaxS2);
+            PartnershipTaxTotal.val(PartnershipTax + PartnershipTax1 + PartnershipTax2);
+            transmissionsTotal.val(parseInt(personalTaxTotal.val()) + parseInt(corporateTaxCTotal.val()) + parseInt(corporateTaxSTotal.val()) + parseInt(PartnershipTaxTotal.val()));
+            
+
 
 
 
