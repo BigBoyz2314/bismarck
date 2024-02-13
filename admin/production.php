@@ -368,7 +368,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                                     }
                             }
                             else {
-                                echo '<td> <input class="form-control" type="number" disabled value="0"> </td>';
+                                echo '<td> <input class="form-control" type="number" name="transmissions" disabled value="0"> </td>';
                             }
                             $stmt4 = "SELECT * FROM production WHERE office_id = $office AND year = $year1";
                             $result4 = $conn->query($stmt4);
@@ -378,7 +378,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                                 }
                             }
                             else {
-                                echo '<td> <input class="form-control" type="number" disabled value="0"> </td>';
+                                echo '<td> <input class="form-control" type="number" name="transmissions1" disabled value="0"> </td>';
                             }
                             $stmt5 = "SELECT * FROM production WHERE office_id = $office AND year = $year1";
                             $result5 = $conn->query($stmt5);
@@ -388,7 +388,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                                 }
                             }
                             else {
-                                echo '<td> <input class="form-control" type="number" disabled value="0"> </td>';
+                                echo '<td> <input class="form-control" type="number" name="transmissions2" disabled value="0"> </td>';
                             }
                             $stmt6 = "SELECT total_transmissions_total FROM production WHERE office_id = $office AND year IN ($year1)";
                             $result6 = $conn->query($stmt6);
