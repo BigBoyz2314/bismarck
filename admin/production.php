@@ -902,18 +902,15 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
             var PartnershipTaxTotal = $("input[name='partnership_tax_total']");
             var transmissionsTotal = $("input[name='transmissions_total']");
 
-            $toCollect = $("#total-to-collect").val() || 0;
-            $efile = $("#efile").val() || 0;
-            $totalEfile = $efile - $toCollect;
-            $("#total-efile").val($totalEfile);
-
             personalTaxTotal.val(personalTax + personalTax1 + personalTax2);
             corporateTaxCTotal.val(corporateTaxC + corporateTaxC1 + corporateTaxC2);
             corporateTaxSTotal.val(corporateTaxS + corporateTaxS1 + corporateTaxS2);
             PartnershipTaxTotal.val(PartnershipTax + PartnershipTax1 + PartnershipTax2);
             transmissionsTotal.val(parseInt(personalTaxTotal.val()) + parseInt(corporateTaxCTotal.val()) + parseInt(corporateTaxSTotal.val()) + parseInt(PartnershipTaxTotal.val()));
             
-
+            var toCollect = $("#total-to-collect").val();
+            var totalEfile = transmissionsTotal - toCollect;
+            $("#total-efile").val($totalEfile);
 
 
 
