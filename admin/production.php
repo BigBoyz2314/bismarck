@@ -774,6 +774,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
             var totalToCollect = $("#total-to-collect").val();
             var totalCommissionOffice = -(commissionOfficeUnit * totalToCollect);
             $("#commission-office").val(totalCommissionOffice);
+            $("#commission-office1").val(totalCommissionOffice);
 
         });
         
@@ -900,6 +901,11 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
             var corporateTaxSTotal = $("input[name='corporate_tax_s_total']");
             var PartnershipTaxTotal = $("input[name='partnership_tax_total']");
             var transmissionsTotal = $("input[name='transmissions_total']");
+
+            $toCollect = $("#total-to-collect").val() || 0;
+            $efile = $("#efile").val() || 0;
+            $totalEfile = $efile - $toCollect;
+            $("#total-efile").val($totalEfile);
 
             personalTaxTotal.val(personalTax + personalTax1 + personalTax2);
             corporateTaxCTotal.val(corporateTaxC + corporateTaxC1 + corporateTaxC2);
