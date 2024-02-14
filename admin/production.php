@@ -398,7 +398,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                                     }
                                 }
                                 else {
-                                    echo '<td> <input class="form-control" type="number" disabled name="transmissions_total" value="0"> </td>';
+                                    echo '<td> <input class="form-control" type="number" id="efile" disabled name="transmissions_total" value="0"> </td>';
                                 }
 
                                 echo '</tr>';
@@ -908,9 +908,12 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
             PartnershipTaxTotal.val(PartnershipTax + PartnershipTax1 + PartnershipTax2);
             transmissionsTotal.val(parseInt(personalTaxTotal.val()) + parseInt(corporateTaxCTotal.val()) + parseInt(corporateTaxSTotal.val()) + parseInt(PartnershipTaxTotal.val()));
             
+            var totalTrans = parseInt(personalTaxTotal.val()) + parseInt(corporateTaxCTotal.val()) + parseInt(corporateTaxSTotal.val()) + parseInt(PartnershipTaxTotal.val())
             var toCollect = $("#total-to-collect").val();
-            var totalEfile = transmissionsTotal - toCollect;
-            $("#total-efile").val($totalEfile);
+            var totalEfile = totalTrans - toCollect;
+            $("#total-efile").val(totalEfile);
+
+            console.log(totalEfile);
 
 
 
