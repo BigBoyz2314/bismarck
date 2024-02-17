@@ -844,34 +844,6 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
         });
 
         $("#calTotal").click(function() {
-            var prevYear = parseInt($("#prev-year").val()) || 0;
-            var saleProgram = parseInt($("#sale-program").val()) || 0;
-            var payTaxwise = parseInt($("#pay-taxwise").val()) || 0;
-            var efileFeeUnit = parseInt($("#efile-fee-unit").val()) || 0;
-            var efileFeeUnit1 = parseInt($("#efile-fee-unit_1").val()) || 0;
-            var efileFee = parseInt($("#efile-fee").val()) || 0;
-            var efileFee1 = parseInt($("#efile-fee_1").val()) || 0;
-            var efileTaxwiseUnit = parseInt($("#efile-taxwise-unit").val()) || 0;
-            var efileTaxwiseUnit1 = parseInt($("#efile-taxwise-unit_1").val()) || 0;
-            var efileTaxwise = parseInt($("#efile-taxwise").val()) || 0;
-            var efileTaxwise1 = parseInt($("#efile-taxwise_1").val()) || 0;
-            var totalEfile = parseInt($("#total-efile").val()) || 0;
-            var bankingFeeUnit = parseInt($("#banking-fee-unit").val()) || 0;
-            var bankingFee = parseInt($("#banking-fee").val()) || 0;
-            var commissionOfficeUnit = parseInt($("#commission-office-unit").val()) || 0;
-            var commissionOffice = parseInt($("#commission-office").val()) || 0;
-            var otherCommission = parseInt($("#other-commission").val()) || 0;
-            var year = $("#year1").val();
-            var officeId = $("#office_id").val();
-
-            var totalProfit = prevYear + saleProgram + payTaxwise + efileFee + efileTaxwise + bankingFee + efileFee1 + efileTaxwise1 + commissionOffice + otherCommission;
-
-            var totalcxc = prevYear + saleProgram + efileFee + otherCommission;
-
-            console.log(totalProfit);
-
-            $("#total-profit").val(totalProfit);
-            $("#total-cxc").val(totalcxc);
 
             //Transmissions
             var personalTax = parseInt($("input[name='personal_tax']").val());
@@ -921,6 +893,73 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
             console.log(totalEfile);
 
 
+
+            var totalToCollect = $("#total-to-collect").val();
+            var efile = $("#efile").val();
+            var totalEfile = efile - totalToCollect;
+            $("#total-efile").val(totalEfile);
+
+            var efileFeeUnit = $("#efile-fee-unit").val();
+            var totalEfile = $("#total-efile").val();
+            var totalEfileFee = efileFeeUnit * totalEfile;
+            $("#efile-fee").val(parseInt(totalEfileFee));
+            $("#efile_fee").val(totalEfileFee);
+            $("#efile-fee1").val(totalEfileFee);
+
+            var efileFeeUnit1 = $("#efile-fee-unit_1").val();
+            var totalEfile1 = $("#total-to-collect").val();
+            var totalEfileFee1 = (efileFeeUnit1 * totalEfile1);
+            $("#efile-fee_1").val(totalEfileFee1);
+
+            var efileTaxwiseUnit = $("#efile-taxwise-unit").val();
+            var totalEfile = $("#total-efile").val();
+            var totalEfileTaxwise = -(efileTaxwiseUnit * totalEfile);
+            $("#efile-taxwise").val(totalEfileTaxwise);
+
+            var efileTaxwiseUnit = $("#efile-taxwise-unit_1").val();
+            var totalEfile = $("#total-to-collect").val();
+            var totalEfileTaxwise = -(efileTaxwiseUnit * totalEfile);
+            $("#efile-taxwise_1").val(totalEfileTaxwise);
+
+            var bankingFeeUnit = $("#banking-fee-unit").val();
+            var totalToCollect = $("#total-to-collect").val();
+            var totalBankingFee = bankingFeeUnit * totalToCollect;
+            $("#banking-fee").val(totalBankingFee);
+
+            var commissionOfficeUnit = $("#commission-office-unit").val();
+            var totalToCollect = $("#total-to-collect").val();
+            var totalCommissionOffice = -(commissionOfficeUnit * totalToCollect);
+            $("#commission-office").val(totalCommissionOffice);
+            $("#commission-office1").val(totalCommissionOffice);
+
+            var prevYear = parseInt($("#prev-year").val()) || 0;
+            var saleProgram = parseInt($("#sale-program").val()) || 0;
+            var payTaxwise = parseInt($("#pay-taxwise").val()) || 0;
+            var efileFeeUnit = parseInt($("#efile-fee-unit").val()) || 0;
+            var efileFeeUnit1 = parseInt($("#efile-fee-unit_1").val()) || 0;
+            var efileFee = parseInt($("#efile-fee").val()) || 0;
+            var efileFee1 = parseInt($("#efile-fee_1").val()) || 0;
+            var efileTaxwiseUnit = parseInt($("#efile-taxwise-unit").val()) || 0;
+            var efileTaxwiseUnit1 = parseInt($("#efile-taxwise-unit_1").val()) || 0;
+            var efileTaxwise = parseInt($("#efile-taxwise").val()) || 0;
+            var efileTaxwise1 = parseInt($("#efile-taxwise_1").val()) || 0;
+            var totalEfile = parseInt($("#total-efile").val()) || 0;
+            var bankingFeeUnit = parseInt($("#banking-fee-unit").val()) || 0;
+            var bankingFee = parseInt($("#banking-fee").val()) || 0;
+            var commissionOfficeUnit = parseInt($("#commission-office-unit").val()) || 0;
+            var commissionOffice = parseInt($("#commission-office").val()) || 0;
+            var otherCommission = parseInt($("#other-commission").val()) || 0;
+            var year = $("#year1").val();
+            var officeId = $("#office_id").val();
+
+            var totalProfit = prevYear + saleProgram + payTaxwise + efileFee + efileTaxwise + bankingFee + efileFee1 + efileTaxwise1 + commissionOffice + otherCommission;
+
+            var totalcxc = prevYear + saleProgram + efileFee + otherCommission;
+
+            console.log(totalProfit);
+
+            $("#total-profit").val(totalProfit);
+            $("#total-cxc").val(totalcxc);
 
 
             // var prevYear = parseInt($("#prev-year").val()) || 0;
@@ -977,6 +1016,48 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
         });
 
         $("#total-to-collect").change(function() {
+            var totalToCollect = $("#total-to-collect").val();
+            var efile = $("#efile").val();
+            var totalEfile = efile - totalToCollect;
+            $("#total-efile").val(totalEfile);
+
+            var efileFeeUnit = $("#efile-fee-unit").val();
+            var totalEfile = $("#total-efile").val();
+            var totalEfileFee = efileFeeUnit * totalEfile;
+            $("#efile-fee").val(parseInt(totalEfileFee));
+            $("#efile_fee").val(totalEfileFee);
+            $("#efile-fee1").val(totalEfileFee);
+
+            var efileFeeUnit1 = $("#efile-fee-unit_1").val();
+            var totalEfile1 = $("#total-to-collect").val();
+            var totalEfileFee1 = (efileFeeUnit1 * totalEfile1);
+            $("#efile-fee_1").val(totalEfileFee1);
+
+            var efileTaxwiseUnit = $("#efile-taxwise-unit").val();
+            var totalEfile = $("#total-efile").val();
+            var totalEfileTaxwise = -(efileTaxwiseUnit * totalEfile);
+            $("#efile-taxwise").val(totalEfileTaxwise);
+
+            var efileTaxwiseUnit = $("#efile-taxwise-unit_1").val();
+            var totalEfile = $("#total-to-collect").val();
+            var totalEfileTaxwise = -(efileTaxwiseUnit * totalEfile);
+            $("#efile-taxwise_1").val(totalEfileTaxwise);
+
+            var bankingFeeUnit = $("#banking-fee-unit").val();
+            var totalToCollect = $("#total-to-collect").val();
+            var totalBankingFee = bankingFeeUnit * totalToCollect;
+            $("#banking-fee").val(totalBankingFee);
+
+            var commissionOfficeUnit = $("#commission-office-unit").val();
+            var totalToCollect = $("#total-to-collect").val();
+            var totalCommissionOffice = -(commissionOfficeUnit * totalToCollect);
+            $("#commission-office").val(totalCommissionOffice);
+            $("#commission-office1").val(totalCommissionOffice);
+
+        });
+
+
+        $("#total-efile").change(function() {
             var totalToCollect = $("#total-to-collect").val();
             var efile = $("#efile").val();
             var totalEfile = efile - totalToCollect;
