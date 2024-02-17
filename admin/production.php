@@ -742,6 +742,47 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
         var totalEfile = efile - toCollect;
         $("#total-efile").val(totalEfile);
         
+        $("#total-to-collect").keyup(function() {
+            var totalToCollect = $("#total-to-collect").val();
+            var efile = $("#efile").val();
+            var totalEfile = efile - totalToCollect;
+            $("#total-efile").val(totalEfile);
+
+            var efileFeeUnit = $("#efile-fee-unit").val();
+            var totalEfile = $("#total-efile").val();
+            var totalEfileFee = efileFeeUnit * totalEfile;
+            $("#efile-fee").val(parseInt(totalEfileFee));
+            $("#efile_fee").val(totalEfileFee);
+            $("#efile-fee1").val(totalEfileFee);
+
+            var efileFeeUnit1 = $("#efile-fee-unit_1").val();
+            var totalEfile1 = $("#total-to-collect").val();
+            var totalEfileFee1 = (efileFeeUnit1 * totalEfile1);
+            $("#efile-fee_1").val(totalEfileFee1);
+
+            var efileTaxwiseUnit = $("#efile-taxwise-unit").val();
+            var totalEfile = $("#total-efile").val();
+            var totalEfileTaxwise = -(efileTaxwiseUnit * totalEfile);
+            $("#efile-taxwise").val(totalEfileTaxwise);
+
+            var efileTaxwiseUnit = $("#efile-taxwise-unit_1").val();
+            var totalEfile = $("#total-to-collect").val();
+            var totalEfileTaxwise = -(efileTaxwiseUnit * totalEfile);
+            $("#efile-taxwise_1").val(totalEfileTaxwise);
+
+            var bankingFeeUnit = $("#banking-fee-unit").val();
+            var totalToCollect = $("#total-to-collect").val();
+            var totalBankingFee = bankingFeeUnit * totalToCollect;
+            $("#banking-fee").val(totalBankingFee);
+
+            var commissionOfficeUnit = $("#commission-office-unit").val();
+            var totalToCollect = $("#total-to-collect").val();
+            var totalCommissionOffice = -(commissionOfficeUnit * totalToCollect);
+            $("#commission-office").val(totalCommissionOffice);
+            $("#commission-office1").val(totalCommissionOffice);
+
+        });
+        
         $("#total-to-collect").change(function() {
             var totalToCollect = $("#total-to-collect").val();
             var efile = $("#efile").val();
