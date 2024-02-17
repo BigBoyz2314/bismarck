@@ -732,10 +732,15 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 
     <script>
 
-        $toCollect = $("#total-to-collect").val() || 0;
-        $efile = $("#efile").val() || 0;
-        $totalEfile = $efile - $toCollect;
-        $("#total-efile").val($totalEfile);
+        // $toCollect = $("#total-to-collect").val() || 0;
+        // $efile = $("#efile").val() || 0;
+        // $totalEfile = $efile - $toCollect;
+        // $("#total-efile").val($totalEfile);
+
+        var toCollect = $("#total-to-collect").val();
+        var efile = $("#efile").val() || 0;
+        var totalEfile = efile - toCollect;
+        $("#total-efile").val(totalEfile);
         
         $("#total-to-collect").change(function() {
             var totalToCollect = $("#total-to-collect").val();
