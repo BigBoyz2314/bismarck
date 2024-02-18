@@ -954,7 +954,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 
             var totalProfit = prevYear + saleProgram + payTaxwise + efileFee + efileTaxwise + bankingFee + efileFee1 + efileTaxwise1 + commissionOffice + otherCommission;
 
-            var totalcxc = prevYear + saleProgram + efileFee + otherCommission;
+            var totalcxc = prevYear + saleProgram + efileFee + commissionOffice + otherCommission;
 
             console.log(totalProfit);
 
