@@ -1,4 +1,17 @@
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+var_dump($_POST);
+$file_path = 'edit-prod-var-dump-file.txt';
+
+// Open the file in write mode (creates the file if it doesn't exist)
+$file_handle = fopen($file_path, 'w');
+
+// Dump the contents of $_POST array to the file
+fwrite($file_handle, print_r($_POST, true));
+
+// Close the file handle
+fclose($file_handle);
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
@@ -37,15 +50,31 @@
         $total_1 = $personal_tax_1 + $corporate_tax_c_1 + $corporate_tax_s_1 + $partnership_tax_1;
         $total_2 = $personal_tax_2 + $corporate_tax_c_2 + $corporate_tax_s_2 + $partnership_tax_2;
         $total_all = $total + $total_1 + $total_2;
-
+		
+        $prev_year = $_POST["prev-year"];
+        $sale_program = $_POST["sale-program"];
+        $pay_taxwise = $_POST["pay-taxwise"];
+        $efile_fee_unit = $_POST["efile-fee-unit"];
+        $efile_taxwise_unit = $_POST["efile-taxwise-unit"];
+        $efile_fee_unit_1 = $_POST["efile-fee-unit_1"];
+        $efile_taxwise_unit_1 = $_POST["efile-taxwise-unit_1"];
+        $banking_fee_unit = $_POST["banking-fee-unit"];
+        $commission_office_unit = $_POST["commission-office-unit"];
+        $other_commission = $_POST["other-commission"];
+		
         $stmt = "SELECT * FROM `production` WHERE `office_id` = '$office_id' AND `year` = '$year1'";
         $result = mysqli_query($conn, $stmt);
         $row = mysqli_fetch_assoc($result);
         if ($row == 0) {
             $stmt0 = "INSERT INTO `production` 
-            (`office_id`, `year`, `personal_tax`, `personal_tax_1`, `personal_tax_2`, `corporate_tax_c`, `corporate_tax_c_1`, `corporate_tax_c_2`, `corporate_tax_s`, `corporate_tax_s_1`, `corporate_tax_s_2`, `partnership_tax`, `partnership_tax_1`, `partnership_tax_2`, `to_collect`, `total_transmissions`, `total_transmissions_1`, `total_transmissions_2`, `total_transmissions_total`) 
+            (`office_id`, `year`, `personal_tax`   , `personal_tax_1`  , `personal_tax_2` , `corporate_tax_c`, `corporate_tax_c_1` , `corporate_tax_c_2`, 
+			`corporate_tax_s`, `corporate_tax_s_1`, `corporate_tax_s_2`, `partnership_tax`, `partnership_tax_1`, `partnership_tax_2`, `to_collect`, `total_transmissions`, `total_transmissions_1`
+			, `total_transmissions_2`, `total_transmissions_total`,
+             `prev_year`, `sale_program`, `pay_taxwise`, `efile_fee_unit`, `efile_taxwise_unit`, `efile_fee_unit_1`, `efile_taxwise_unit_1`, `banking_fee_unit`, `commission_office_unit`, `other_commission`			)
             VALUES 
-            ('$office_id', '$year1', '$personal_tax', '$personal_tax_1', '$personal_tax_2', '$corporate_tax_c', '$corporate_tax_c_1', '$corporate_tax_c_2', '$corporate_tax_s', '$corporate_tax_s_1', '$corporate_tax_s_2', '$partnership_tax', '$partnership_tax_1', '$partnership_tax_2', '$to_collect', '$total', '$total_1', '$total_2', '$total_all')";
+            ('$office_id', '$year1', '$personal_tax', '$personal_tax_1', '$personal_tax_2', '$corporate_tax_c', '$corporate_tax_c_1', '$corporate_tax_c_2',
+			'$corporate_tax_s', '$corporate_tax_s_1', '$corporate_tax_s_2', '$partnership_tax', '$partnership_tax_1', '$partnership_tax_2', '$to_collect', '$total', '$total_1', '$total_2', '$total_all' ,
+			'$prev_year', '$sale_program', '$pay_taxwise', '$efile_fee_unit', '$efile_taxwise_unit',  '$efile_fee_unit_1',  '$efile_taxwise_unit_1',  '$banking_fee_unit',  '$commission_office_unit',  '$other_commission')";
             $result0 = mysqli_query($conn, $stmt0);
             echo "Production information added successfully";
             header("Location:production.php?production=added");
@@ -68,7 +97,17 @@
             `total_transmissions` = '$total',
             `total_transmissions_1` = '$total_1',
             `total_transmissions_2` = '$total_2',
-            `total_transmissions_total` = '$total_all'
+            `total_transmissions_total` = '$total_all',
+			`prev_year` = '$prev_year', 
+            `sale_program` = '$sale_program', 
+            `pay_taxwise` = '$pay_taxwise', 
+            `efile_fee_unit` = '$efile_fee_unit', 
+            `efile_taxwise_unit` = '$efile_taxwise_unit', 
+            `efile_fee_unit_1` = '$efile_fee_unit_1', 
+            `efile_taxwise_unit_1` = '$efile_taxwise_unit_1', 
+            `banking_fee_unit` = '$banking_fee_unit', 
+            `commission_office_unit` = '$commission_office_unit', 
+            `other_commission` = '$other_commission' 
             WHERE `office_id` = '$office_id' AND `year` = '$year1'";
             $result00 = mysqli_query($conn, $stmt00);
             echo "Production information updated successfully";

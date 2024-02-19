@@ -30,7 +30,21 @@ if ($conn->query($sqlDelete) === TRUE) {
     $conn->close();
 
     // Send a response back to the client
-    echo "Data saved successfully";
+    $sum = 0;
+    foreach ($_POST['entries'] as $entry) {
+        $sum += floatval($entry['amount']);
+    }
+
+    // Prepare the response
+    $response = [
+        'status' => 'success',
+        'message' => 'Data saved successfully',
+        'sum' => $sum
+    ];
+
+    // Send the response as JSON
+    header('Content-Type: application/json');
+    echo json_encode($response);
 } else {
     echo "Error: " . $sqlDelete . "<br>" . $conn->error;
 }
