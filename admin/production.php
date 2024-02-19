@@ -164,8 +164,8 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                     <h6 class="d-inline me-4">Name: ' . $name . '</h6>
                     <h6 class="d-inline me-4">Company: ' . $officeName . '</h6>
                     <form action="edit-production.php" id="productionForm" method="post">
-                        <input type="hidden" name="office_id" value="' . $office . '">
-                        <input type="hidden" name="year1" value="' . $year1 . '">
+                        <input type="hidden" name="office_id" id="office_id" value="' . $office . '">
+                        <input type="hidden" name="year1" id="year1" value="' . $year1 . '">
                         <table class="table table-bordered table-responsive text-nowrap">
                             <thead class="table-warning">
                                 <tr>
@@ -719,6 +719,33 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                 <button class="btn btn-primary" type="button" id="calTotal">Calculate Totals</button>
                 <button class="btn btn-success" type="button" id="saveProfit">Save</button>
             </div>';
+
+            echo '<div class="col-md-12 mb-4">
+                <div class="alert d-none alert-success alert-dismissible fade show" role="alert">
+                    <strong>Success!</strong> Office information added successfully.
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                <button class="btn btn-primary float-end mb-2" type="button" id="addEntry">Add Entry</button>
+            <input type="hidden" id="office_id" name="office_id" value="' . $office . '">
+            <input type="hidden" id="year1" name="year1" value="' . $year1 . '">
+            <table class="table table-bordered text-nowrap">
+                <thead class="table-warning">
+                    <tr>
+                        <th colspan="5" class="text-center">CxP</th>
+                    </tr>
+                    <tr>
+                        <th>Sr.</th>
+                        <th>Amount</th>
+                        <th>Receipt #</th>
+                        <th>Date</th>
+                        <th>Notes</th>
+                    </tr>
+                </thead>
+                <tbody id="cxpTable">
+                </tbody>
+            </table>
+            <button class="btn btn-success" type="button" id="saveCxp">Save</button>
+            </div>';
         }
 
         ?>
@@ -731,11 +758,6 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
     <script>
-
-        // $toCollect = $("#total-to-collect").val() || 0;
-        // $efile = $("#efile").val() || 0;
-        // $totalEfile = $efile - $toCollect;
-        // $("#total-efile").val($totalEfile);
 
         var toCollect = $("#total-to-collect").val();
         var efile = $("#efile").val() || 0;
@@ -845,7 +867,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 
         $("#calTotal").click(function() {
 
-            //Transmissions
+            // Transmissions
             var personalTax = parseInt($("input[name='personal_tax']").val());
             var corporateTaxC = parseInt($("input[name='corporate_tax_c']").val());
             var corporateTaxS = parseInt($("input[name='corporate_tax_s']").val());
@@ -892,46 +914,6 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 
             console.log(totalEfile);
 
-
-
-            var totalToCollect = $("#total-to-collect").val();
-            var efile = $("#efile").val();
-            var totalEfile = efile - totalToCollect;
-            $("#total-efile").val(totalEfile);
-
-            var efileFeeUnit = $("#efile-fee-unit").val();
-            var totalEfile = $("#total-efile").val();
-            var totalEfileFee = efileFeeUnit * totalEfile;
-            $("#efile-fee").val(parseInt(totalEfileFee));
-            $("#efile_fee").val(totalEfileFee);
-            $("#efile-fee1").val(totalEfileFee);
-
-            var efileFeeUnit1 = $("#efile-fee-unit_1").val();
-            var totalEfile1 = $("#total-to-collect").val();
-            var totalEfileFee1 = (efileFeeUnit1 * totalEfile1);
-            $("#efile-fee_1").val(totalEfileFee1);
-
-            var efileTaxwiseUnit = $("#efile-taxwise-unit").val();
-            var totalEfile = $("#total-efile").val();
-            var totalEfileTaxwise = -(efileTaxwiseUnit * totalEfile);
-            $("#efile-taxwise").val(totalEfileTaxwise);
-
-            var efileTaxwiseUnit = $("#efile-taxwise-unit_1").val();
-            var totalEfile = $("#total-to-collect").val();
-            var totalEfileTaxwise = -(efileTaxwiseUnit * totalEfile);
-            $("#efile-taxwise_1").val(totalEfileTaxwise);
-
-            var bankingFeeUnit = $("#banking-fee-unit").val();
-            var totalToCollect = $("#total-to-collect").val();
-            var totalBankingFee = bankingFeeUnit * totalToCollect;
-            $("#banking-fee").val(totalBankingFee);
-
-            var commissionOfficeUnit = $("#commission-office-unit").val();
-            var totalToCollect = $("#total-to-collect").val();
-            var totalCommissionOffice = -(commissionOfficeUnit * totalToCollect);
-            $("#commission-office").val(totalCommissionOffice);
-            $("#commission-office1").val(totalCommissionOffice);
-
             var prevYear = parseInt($("#prev-year").val()) || 0;
             var saleProgram = parseInt($("#sale-program").val()) || 0;
             var payTaxwise = parseInt($("#pay-taxwise").val()) || 0;
@@ -961,103 +943,9 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
             $("#total-profit").val(totalProfit);
             $("#total-cxc").val(totalcxc);
 
-
-            // var prevYear = parseInt($("#prev-year").val()) || 0;
-            // var saleProgram = parseInt($("#sale-program").val()) || 0;
-            // var payTaxwise = parseInt($("#pay-taxwise").val()) || 0;
-            // var efileFeeUnit = parseInt($("#efile-fee-unit").val()) || 0;
-            // var efileFeeUnit1 = parseInt($("#efile-fee-unit_1").val()) || 0;
-            // var efileFee = parseInt($("#efile-fee").val()) || 0;
-            // var efileFee1 = parseInt($("#efile-fee_1").val()) || 0;
-            // var efileTaxwiseUnit = parseInt($("#efile-taxwise-unit").val()) || 0;
-            // var efileTaxwiseUnit1 = parseInt($("#efile-taxwise-unit_1").val()) || 0;
-            // var efileTaxwise = parseInt($("#efile-taxwise").val()) || 0;
-            // var efileTaxwise1 = parseInt($("#efile-taxwise_1").val()) || 0;
-            // var totalEfile = parseInt($("#total-efile").val()) || 0;
-            // var totalEfileTaxwise = -(efileTaxwiseUnit * totalEfile);
-            // var bankingFeeUnit = parseInt($("#banking-fee-unit").val()) || 0;
-            // var bankingFee = parseInt($("#banking-fee").val()) || 0;
-            // var commissionOfficeUnit = parseInt($("#commission-office-unit").val()) || 0;
-            // var commissionOffice = parseInt($("#commission-office").val()) || 0;
-            // var otherCommission = parseInt($("#other-commission").val()) || 0;
-            // var year = $("#year1").val();
-            // var officeId = $("#office_id").val();
-
-            // $.ajax({
-            //     type: "POST",
-            //     url: "edit-profit.php",
-            //     data: {
-            //         officeId: officeId,
-            //         year: year,
-            //         prevYear: prevYear,
-            //         saleProgram: saleProgram,
-            //         payTaxwise: payTaxwise,
-            //         efileFeeUnit: efileFeeUnit,
-            //         efileFeeUnit1: efileFeeUnit1,
-            //         efileFee: efileFee,
-            //         efileFee1: efileFee1,
-            //         efileTaxwiseUnit: efileTaxwiseUnit,
-            //         efileTaxwiseUnit1: efileTaxwiseUnit1,
-            //         efileTaxwise: efileTaxwise,
-            //         efileTaxwise1: efileTaxwise1,
-            //         bankingFeeUnit: bankingFeeUnit,
-            //         bankingFee: bankingFee,
-            //         commissionOfficeUnit: commissionOfficeUnit,
-            //         commissionOffice: commissionOffice,
-            //         otherCommission: otherCommission,
-            //     },
-            //     success: function(data) {
-            //         console.log(data);
-            //         $(".alert").removeClass("d-none");
-            //         $("#productionForm").submit();
-            //     }
-            // });
-
         });
 
         $("#total-to-collect").change(function() {
-            var totalToCollect = $("#total-to-collect").val();
-            var efile = $("#efile").val();
-            var totalEfile = efile - totalToCollect;
-            $("#total-efile").val(totalEfile);
-
-            var efileFeeUnit = $("#efile-fee-unit").val();
-            var totalEfile = $("#total-efile").val();
-            var totalEfileFee = efileFeeUnit * totalEfile;
-            $("#efile-fee").val(parseInt(totalEfileFee));
-            $("#efile_fee").val(totalEfileFee);
-            $("#efile-fee1").val(totalEfileFee);
-
-            var efileFeeUnit1 = $("#efile-fee-unit_1").val();
-            var totalEfile1 = $("#total-to-collect").val();
-            var totalEfileFee1 = (efileFeeUnit1 * totalEfile1);
-            $("#efile-fee_1").val(totalEfileFee1);
-
-            var efileTaxwiseUnit = $("#efile-taxwise-unit").val();
-            var totalEfile = $("#total-efile").val();
-            var totalEfileTaxwise = -(efileTaxwiseUnit * totalEfile);
-            $("#efile-taxwise").val(totalEfileTaxwise);
-
-            var efileTaxwiseUnit = $("#efile-taxwise-unit_1").val();
-            var totalEfile = $("#total-to-collect").val();
-            var totalEfileTaxwise = -(efileTaxwiseUnit * totalEfile);
-            $("#efile-taxwise_1").val(totalEfileTaxwise);
-
-            var bankingFeeUnit = $("#banking-fee-unit").val();
-            var totalToCollect = $("#total-to-collect").val();
-            var totalBankingFee = bankingFeeUnit * totalToCollect;
-            $("#banking-fee").val(totalBankingFee);
-
-            var commissionOfficeUnit = $("#commission-office-unit").val();
-            var totalToCollect = $("#total-to-collect").val();
-            var totalCommissionOffice = -(commissionOfficeUnit * totalToCollect);
-            $("#commission-office").val(totalCommissionOffice);
-            $("#commission-office1").val(totalCommissionOffice);
-
-        });
-
-
-        $("#total-efile").change(function() {
             var totalToCollect = $("#total-to-collect").val();
             var efile = $("#efile").val();
             var totalEfile = efile - totalToCollect;
@@ -1119,6 +1007,21 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
             var otherCommission = parseInt($("#other-commission").val()) || 0;
             var year = $("#year1").val();
             var officeId = $("#office_id").val();
+            var personalTax = parseInt($("input[name='personal_tax']").val());
+            var corporateTaxC = parseInt($("input[name='corporate_tax_c']").val());
+            var corporateTaxS = parseInt($("input[name='corporate_tax_s']").val());
+            var PartnershipTax = parseInt($("input[name='partnership_tax']").val());
+            var transmissions = $("input[name='transmissions']");
+            var personalTax1 = parseInt($("input[name='personal_tax_1']").val());
+            var corporateTaxC1 = parseInt($("input[name='corporate_tax_c_1']").val());
+            var corporateTaxS1 = parseInt($("input[name='corporate_tax_s_1']").val());
+            var PartnershipTax1 = parseInt($("input[name='partnership_tax_1']").val());
+            var transmissions1 = $("input[name='transmissions1']");
+            var personalTax2 = parseInt($("input[name='personal_tax_2']").val());
+            var corporateTaxC2 = parseInt($("input[name='corporate_tax_c_2']").val());
+            var corporateTaxS2 = parseInt($("input[name='corporate_tax_s_2']").val());
+            var PartnershipTax2 = parseInt($("input[name='partnership_tax_2']").val());
+            var transmissions2 = $("input[name='transmissions2']");
 
             $.ajax({
                 type: "POST",
@@ -1150,6 +1053,99 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                 }
             });
 
+        });
+
+        function loadExistingData() {
+            // Retrieve existing data from the server using AJAX
+            $.ajax({
+                type: 'POST',
+                url: 'load-cxp.php', // Change this to the actual path of your PHP script for loading data
+                data: {
+                    office_id: $('#office_id').val(),
+                    year1: $('#year1').val(),
+                },
+                dataType: 'json',
+                success: function(response) {
+                    // Populate the table with existing data
+                    $.each(response, function(index, entry) {
+                        var newRow = '<tr id="row' + (index + 1) + '">' +
+                            '<td>' + (index + 1) + '</td>' +
+                            '<td><input type="text" class="form-control" name="amount[]" value="' + entry.amount + '" /></td>' +
+                            '<td><input type="text" class="form-control" name="receipt[]" value="' + entry.receipt + '" /></td>' +
+                            '<td><input type="date" class="form-control" name="date[]" value="' + entry.date + '" /></td>' +
+                            '<td><input type="text" class="form-control" name="notes[]" value="' + entry.notes + '" /></td>' +
+                            '</tr>';
+
+                        $('#cxpTable').append(newRow);
+                    });
+                },
+                error: function(error) {
+                    console.error(error);
+                }
+            });
+        }
+
+        // Load existing data when the page is initially loaded
+        loadExistingData();
+
+        // Counter for tracking the number of rows
+        var rowCount = 0;
+
+        // Add Entry button click event
+        $('#addEntry').on('click', function() {
+            // Increment the row count
+            rowCount++;
+
+            // Add a new row to the table
+            var newRow = '<tr id="row' + rowCount + '">' +
+                '<td>' + rowCount + '</td>' +
+                '<td><input type="text" class="form-control" name="amount[]" /></td>' +
+                '<td><input type="text" class="form-control" name="receipt[]" /></td>' +
+                '<td><input type="date" class="form-control" name="date[]" /></td>' + // Use type "date"
+                '<td><input type="text" class="form-control" name="notes[]" /></td>' +
+                '</tr>';
+
+            $('#cxpTable').append(newRow);
+        });
+
+        // Save Data button click event
+        $('#saveCxp').on('click', function() {
+            // Prepare data to be sent to the server
+            var formData = {
+                office_id: $('#office_id').val(),
+                year1: $('#year1').val(),
+                entries: []
+            };
+
+            // Loop through each row and collect data
+            $('#cxpTable tr').each(function(index, row) {
+                var entry = {
+                    amount: $(row).find('input[name="amount[]"]').val(),
+                    receipt: $(row).find('input[name="receipt[]"]').val(),
+                    date: $(row).find('input[name="date[]"]').val(),
+                    notes: $(row).find('input[name="notes[]"]').val()
+                };
+
+                formData.entries.push(entry);
+            });
+
+            // Send data to the server using AJAX
+            $.ajax({
+                type: 'POST',
+                url: 'save-cxp.php', // Change this to the actual path of your PHP script
+                data: formData,
+                success: function(response) {
+                    // Handle the response from the server (e.g., show success message)
+                    console.log(response);
+
+                    // Optionally, reload the existing data after saving
+                    $('#cxpTable').empty(); // Clear the existing table
+                    loadExistingData(); // Load existing data again
+                },
+                error: function(error) {
+                    console.error(error);
+                }
+            });
         });
 
     </script>
