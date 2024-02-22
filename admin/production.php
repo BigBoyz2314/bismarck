@@ -155,7 +155,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                 $stmt2 = "SELECT * FROM production WHERE office_id = $office ORDER BY year DESC";
                 $result2 = $conn->query($stmt2);
 
-            $year1 = $_GET['year'];
+                $year1 = $_GET['year'];
 
                 echo '<div class="row mt-3">
                     <div class="col-md-12">

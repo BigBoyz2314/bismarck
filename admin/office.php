@@ -186,9 +186,21 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                                             <option value='Inactive'>Inactive</option>
                                         </select>
                                         </td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
+                                        <td></td>";
+                                        $sql3 = "SELECT * FROM production WHERE office_id = ".$row['user_id']."";
+                                        $sql4 = "SELECT SUM(amount) as amount FROM cxp WHERE office_id = ".$row['id']."";
+                                        $result3 = mysqli_query($conn, $sql3);
+                                        $resultCheck3 = mysqli_num_rows($result3);
+                                        $result4 = mysqli_query($conn, $sql4);
+                                        $resultCheck4 = mysqli_num_rows($result4);
+                                        if ($resultCheck4 > 0) {
+                                            while ($row4 = mysqli_fetch_assoc($result4)) {
+                                                echo "<td>".$row4['amount']."</td>";
+                                            }
+                                        } else {
+                                            echo "<td></td>";
+                                        }
+                                        echo "<td></td>
                                         <td></td>
                                         <td></td>
                                         <td></td>
