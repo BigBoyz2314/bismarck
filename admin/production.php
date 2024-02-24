@@ -18,7 +18,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     <link rel="stylesheet" href="../css/styles.css">
     <style>
         .negative {
-            background-color: #ff0000;
+            color: #ff0000;
         }
     </style>
 </head>
@@ -616,6 +616,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
      	$("#calTotal").click(calculateAll);
         calculateAll(); 
         $("input").change(calculateAll);
+        negative();
 
 		
 		function calculateAll() {
@@ -742,6 +743,8 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
             var balance = totalcxc - sum;
             $("#balance").text(balance);
 
+            negative();
+
         };
 
         // Add Entry button click event
@@ -800,7 +803,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
             });
         });
 
-        window.onload = function() {
+        function negative() {
         // Get all input elements with the class 'negativeInput'
         var inputs = $("input");
 
@@ -828,7 +831,6 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
             // Remove the 'negative' class if the value is not negative
             inputElement.classList.remove("negative");
         }
-    }
     }
 		
 
