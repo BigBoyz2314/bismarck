@@ -17,6 +17,9 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="../css/styles.css">
     <style>
+        .negative {
+            background-color: #ff0000;
+        }
     </style>
 </head>
 <body>
@@ -525,31 +528,31 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                     </div>';
 
                     echo '<div class="col-md-12 mb-4">
-                    <div class="alert d-none alert-success alert-dismissible fade show" role="alert">
-                        <strong>Success!</strong> Office information added successfully.
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
-                    <p class="float-start fw-semibold">Balance: <span id="balance"></span></p>
-                    <button class="btn btn-primary float-end mb-2" type="button" id="addEntry">Add Entry</button>
-                    <input type="hidden" id="office_id" name="office_id" value="' . $office . '">
-                    <input type="hidden" id="year1" name="year1" value="' . $year1 . '">
-                    <table class="table table-bordered text-nowrap">
-                        <thead class="table-warning">
-                            <tr>
-                                <th colspan="5" class="text-center">CxP</th>
-                            </tr>
-                            <tr>
-                                <th>Sr.</th>
-                                <th>Amount</th>
-                                <th>Receipt #</th>
-                                <th>Date</th>
-                                <th>Notes</th>
-                            </tr>
-                        </thead>
-                        <tbody id="cxpTable">
-                        </tbody>
-                    </table>
-                    <button class="btn btn-success" type="button" id="saveCxp">Update</button>
+                        <div class="alert d-none alert-success alert-dismissible fade show" role="alert">
+                            <strong>Success!</strong> Office information added successfully.
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                        <p class="float-start text-lg fw-semibold">Balance: <span id="balance"></span></p>
+                        <button class="btn btn-primary float-end mb-2" type="button" id="addEntry">Add Entry</button>
+                        <input type="hidden" id="office_id" name="office_id" value="' . $office . '">
+                        <input type="hidden" id="year1" name="year1" value="' . $year1 . '">
+                            <table class="table table-bordered text-nowrap">
+                                <thead class="table-warning">
+                                    <tr>
+                                        <th colspan="5" class="text-center">CxP</th>
+                                    </tr>
+                                    <tr>
+                                        <th>Sr.</th>
+                                        <th>Amount</th>
+                                        <th>Receipt #</th>
+                                        <th>Date</th>
+                                        <th>Notes</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="cxpTable">
+                                </tbody>
+                            </table>
+                        <button class="btn btn-success" type="button" id="saveCxp">Update</button>
                     </div>';
 
             }                               
@@ -796,6 +799,37 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                 }
             });
         });
+
+        window.onload = function() {
+        // Get all input elements with the class 'negativeInput'
+        var inputs = $("input");
+
+        // Loop through each input element
+        for (var i = 0; i < inputs.length; i++) {
+            // Call the updateColor function initially to set the initial color
+            updateColor(inputs[i]);
+
+            // Add an event listener for the 'input' event on each input
+            inputs[i].addEventListener("input", function() {
+                updateColor(this);
+            });
+        }
+    };
+
+    function updateColor(inputElement) {
+        // Get the input value and convert it to a number
+        var inputValue = parseFloat(inputElement.value);
+
+        // Check if the value is negative
+        if (inputValue < 0) {
+            // Apply the 'negative' class to change color to red
+            inputElement.classList.add("negative");
+        } else {
+            // Remove the 'negative' class if the value is not negative
+            inputElement.classList.remove("negative");
+        }
+    }
+    }
 		
 
     </script>
