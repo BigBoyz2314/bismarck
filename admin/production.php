@@ -20,6 +20,10 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
         .negative {
             color: #ff0000;
         }
+
+        .balance {
+            font-size: 1.2em;
+        }
     </style>
 </head>
 <body>
@@ -359,7 +363,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                             <strong>Success!</strong> Office information added successfully.
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
-                        <p class="float-start fw-semibold">Balance: <span id="balance"></span></p>
+                        <p class="float-start fw-semibold balance">Balance: <span id="balance"></span></p>
                         <button class="btn btn-primary float-end mb-2" type="button" id="addEntry">Add Entry</button>
                         <input type="hidden" id="office_id" name="office_id" value="' . $office . '">
                         <input type="hidden" id="year1" name="year1" value="' . $year1 . '">
@@ -532,7 +536,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                             <strong>Success!</strong> Office information added successfully.
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
-                        <p class="float-start text-lg fw-semibold">Balance: <span id="balance"></span></p>
+                        <p class="float-start fw-semibold balance">Balance: <span id="balance"></span></p>
                         <button class="btn btn-primary float-end mb-2" type="button" id="addEntry">Add Entry</button>
                         <input type="hidden" id="office_id" name="office_id" value="' . $office . '">
                         <input type="hidden" id="year1" name="year1" value="' . $year1 . '">
