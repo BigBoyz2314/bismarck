@@ -127,10 +127,9 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                             <option value="Balance Pending">Balance Pending</option>
                         </select>
                     </div>
-                    <div class="col-md-5 mt-1 mb-2">
-                    <input type="text" name="search" id="search" class="form-control mt-4" placeholder="Search...">
-                    <br>
+                    <div class="col-md-5 mb-2">
                     <form action="" method="get">
+                        <h6>Year</h6>
                         <select name="year" id="year" class="form-select" required>
                             <option value="">Select</option>
                             <option value="2020">2020</option>
@@ -147,7 +146,8 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                         </select>
                         <button class="btn btn-primary mt-2" type="submit">Search</button>
                     </form>
-                    </div>
+                    <input type="text" name="search" id="search" class="form-control mt-4" placeholder="Search...">
+                </div>
 
                 </div>
             </div>
