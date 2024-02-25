@@ -89,6 +89,12 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
         <div class="row mt-3">
             <div class="col-md-6">
                 <h3>Offices</h3>
+                <br><br>
+                <?php
+                    if (isset($_GET['year'])) {
+                        echo "<h4>Year: ".$_GET['year']."</h4>";
+                    }
+                ?>
             </div>
             <div class="col-md-6">
                 <div class="row">
@@ -121,9 +127,28 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                             <option value="Balance Pending">Balance Pending</option>
                         </select>
                     </div>
-                    <div class="col-md-5 mt-1">
+                    <div class="col-md-5 mt-1 mb-2">
                     <input type="text" name="search" id="search" class="form-control mt-4" placeholder="Search...">
+                    <br>
+                    <form action="" method="get">
+                        <select name="year" id="year" class="form-select" required>
+                            <option value="">Select</option>
+                            <option value="2020">2020</option>
+                            <option value="2021">2021</option>
+                            <option value="2022">2022</option>
+                            <option value="2023">2023</option>
+                            <option value="2024">2024</option>
+                            <option value="2025">2025</option>
+                            <option value="2026">2026</option>
+                            <option value="2027">2027</option>
+                            <option value="2028">2028</option>
+                            <option value="2029">2029</option>
+                            <option value="2030">2030</option>
+                        </select>
+                        <button class="btn btn-primary mt-2" type="submit">Search</button>
+                    </form>
                     </div>
+
                 </div>
             </div>
         </div>
@@ -187,18 +212,33 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                                         </select>
                                         </td>
                                         <td></td>";
-                                        $sql3 = "SELECT * FROM production WHERE office_id = ".$row['user_id']."";
-                                        $sql4 = "SELECT SUM(amount) as amount FROM cxp WHERE office_id = ".$row['id']."";
-                                        $result3 = mysqli_query($conn, $sql3);
-                                        $resultCheck3 = mysqli_num_rows($result3);
-                                        $result4 = mysqli_query($conn, $sql4);
-                                        $resultCheck4 = mysqli_num_rows($result4);
-                                        if ($resultCheck4 > 0) {
-                                            while ($row4 = mysqli_fetch_assoc($result4)) {
-                                                echo "<td>".$row4['amount']."</td>";
+
+                                        if (isset($_GET['year'])) {
+                                            $year = $_GET['year'];
+                                            $sql3 = "SELECT * FROM cxp WHERE office_id = ".$row['id']." AND year1 = ".$year."";
+                                            $result3 = mysqli_query($conn, $sql3);
+                                            $resultCheck3 = mysqli_num_rows($result3);
+                                            if ($resultCheck3 > 0) {
+                                                while ($row3 = mysqli_fetch_assoc($result3)) {
+                                                    echo "<td>".$row3['amount']."</td>";
+                                                }
+                                            } else {
+                                                echo "<td></td>";
                                             }
                                         } else {
-                                            echo "<td></td>";
+                                            $sql3 = "SELECT * FROM production WHERE office_id = ".$row['user_id']."";
+                                            $sql4 = "SELECT SUM(amount) as amount FROM cxp WHERE office_id = ".$row['id']."";
+                                            $result3 = mysqli_query($conn, $sql3);
+                                            $resultCheck3 = mysqli_num_rows($result3);
+                                            $result4 = mysqli_query($conn, $sql4);
+                                            $resultCheck4 = mysqli_num_rows($result4);
+                                            if ($resultCheck4 > 0) {
+                                                while ($row4 = mysqli_fetch_assoc($result4)) {
+                                                    echo "<td>".$row4['amount']."</td>";
+                                                }
+                                            } else {
+                                                echo "<td></td>";
+                                            }
                                         }
                                         echo "<td></td>
                                         <td></td>

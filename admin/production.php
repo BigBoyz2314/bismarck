@@ -24,6 +24,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
         .balance {
             font-size: 1.2em;
         }
+        
     </style>
 </head>
 <body>
