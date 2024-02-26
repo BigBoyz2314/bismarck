@@ -225,6 +225,51 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                                             } else {
                                                 echo "<td></td>";
                                             }
+
+                                            $sql3 = "SELECT * FROM profit WHERE office_id = ".$row['id']." AND year = ".$year."";
+                                            $result3 = mysqli_query($conn, $sql3);
+                                            $resultCheck3 = mysqli_num_rows($result3);
+                                            if ($resultCheck3 > 0) {
+                                                while ($row3 = mysqli_fetch_assoc($result3)) {
+                                                    echo "<td>".$row3['sale_program']."</td>";
+                                                }
+                                            } else {
+                                                echo "<td></td>";
+                                            }
+
+                                            $sql3 = "SELECT * FROM profit WHERE office_id = ".$row['id']." AND year = ".$year."";
+                                            $result3 = mysqli_query($conn, $sql3);
+                                            $resultCheck3 = mysqli_num_rows($result3);
+                                            if ($resultCheck3 > 0) {
+                                                while ($row3 = mysqli_fetch_assoc($result3)) {
+                                                    echo "<td>".$row3['efile_fee']."</td>";
+                                                }
+                                            } else {
+                                                echo "<td></td>";
+                                            }
+
+                                            $sql3 = "SELECT * FROM profit WHERE office_id = ".$row['id']." AND year = ".$year."";
+                                            $result3 = mysqli_query($conn, $sql3);
+                                            $resultCheck3 = mysqli_num_rows($result3);
+                                            if ($resultCheck3 > 0) {
+                                                while ($row3 = mysqli_fetch_assoc($result3)) {
+                                                    echo "<td>".$row3['banking_fee']."</td>";
+                                                }
+                                            } else {
+                                                echo "<td></td>";
+                                            }
+
+                                            $sql3 = "SELECT * FROM profit WHERE office_id = ".$row['id']." AND year = ".$year."";
+                                            $result3 = mysqli_query($conn, $sql3);
+                                            $resultCheck3 = mysqli_num_rows($result3);
+                                            if ($resultCheck3 > 0) {
+                                                while ($row3 = mysqli_fetch_assoc($result3)) {
+                                                    echo "<td>".$row3['commission_office']."</td>";
+                                                }
+                                            } else {
+                                                echo "<td></td>";
+                                            }
+
                                         } else {
                                             $sql4 = "SELECT SUM(balance) as balance FROM production WHERE office_id = ".$row['id']."";
                                             $result4 = $conn->query($sql4);
@@ -238,21 +283,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                                             } else {
                                                 echo "<td></td>";
                                             }
-                                        }
 
-                                        if (isset($_GET['year'])) {
-                                            $year = $_GET['year'];
-                                            $sql3 = "SELECT * FROM profit WHERE office_id = ".$row['id']." AND year = ".$year."";
-                                            $result3 = mysqli_query($conn, $sql3);
-                                            $resultCheck3 = mysqli_num_rows($result3);
-                                            if ($resultCheck3 > 0) {
-                                                while ($row3 = mysqli_fetch_assoc($result3)) {
-                                                    echo "<td>".$row3['sale_program']."</td>";
-                                                }
-                                            } else {
-                                                echo "<td></td>";
-                                            }
-                                        } else {
                                             $sql4 = "SELECT SUM(sale_program) as sale_program FROM profit WHERE office_id = ".$row['id']."";
                                             $result4 = $conn->query($sql4);
                                             if (!$result4) {
@@ -265,21 +296,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                                             } else {
                                                 echo "<td></td>";
                                             }
-                                        }
 
-                                        if (isset($_GET['year'])) {
-                                            $year = $_GET['year'];
-                                            $sql3 = "SELECT * FROM profit WHERE office_id = ".$row['id']." AND year = ".$year."";
-                                            $result3 = mysqli_query($conn, $sql3);
-                                            $resultCheck3 = mysqli_num_rows($result3);
-                                            if ($resultCheck3 > 0) {
-                                                while ($row3 = mysqli_fetch_assoc($result3)) {
-                                                    echo "<td>".$row3['efile_fee']."</td>";
-                                                }
-                                            } else {
-                                                echo "<td></td>";
-                                            }
-                                        } else {
                                             $sql4 = "SELECT SUM(efile_fee) as efile_fee FROM profit WHERE office_id = ".$row['id']."";
                                             $result4 = $conn->query($sql4);
                                             if (!$result4) {
@@ -292,21 +309,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                                             } else {
                                                 echo "<td></td>";
                                             }
-                                        }
 
-                                        if (isset($_GET['year'])) {
-                                            $year = $_GET['year'];
-                                            $sql3 = "SELECT * FROM profit WHERE office_id = ".$row['id']." AND year = ".$year."";
-                                            $result3 = mysqli_query($conn, $sql3);
-                                            $resultCheck3 = mysqli_num_rows($result3);
-                                            if ($resultCheck3 > 0) {
-                                                while ($row3 = mysqli_fetch_assoc($result3)) {
-                                                    echo "<td>".$row3['banking_fee']."</td>";
-                                                }
-                                            } else {
-                                                echo "<td></td>";
-                                            }
-                                        } else {
                                             $sql4 = "SELECT SUM(banking_fee) as banking_fee FROM profit WHERE office_id = ".$row['id']."";
                                             $result4 = $conn->query($sql4);
                                             if (!$result4) {
@@ -319,21 +322,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                                             } else {
                                                 echo "<td></td>";
                                             }
-                                        }
 
-                                        if (isset($_GET['year'])) {
-                                            $year = $_GET['year'];
-                                            $sql3 = "SELECT * FROM profit WHERE office_id = ".$row['id']." AND year = ".$year."";
-                                            $result3 = mysqli_query($conn, $sql3);
-                                            $resultCheck3 = mysqli_num_rows($result3);
-                                            if ($resultCheck3 > 0) {
-                                                while ($row3 = mysqli_fetch_assoc($result3)) {
-                                                    echo "<td>".$row3['commission_office']."</td>";
-                                                }
-                                            } else {
-                                                echo "<td></td>";
-                                            }
-                                        } else {
                                             $sql4 = "SELECT SUM(commission_office) as commission_office FROM profit WHERE office_id = ".$row['id']."";
                                             $result4 = $conn->query($sql4);
                                             if (!$result4) {
