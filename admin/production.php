@@ -364,7 +364,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                             <strong>Success!</strong> Office information added successfully.
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
-                        <p class="float-start fw-semibold balance">Balance: <span id="balance"></span></p>
+                        <p class="float-start fw-semibold balance">Balance: $<span id="balance"></span></p>
                         <button class="btn btn-primary float-end mb-2" type="button" id="addEntry">Add Entry</button>
                         <input type="hidden" id="office_id" name="office_id" value="' . $office . '">
                         <input type="hidden" id="year1" name="year1" value="' . $year1 . '">
@@ -537,7 +537,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                             <strong>Success!</strong> Office information added successfully.
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
-                        <p class="float-start fw-semibold balance">Balance: <span id="balance"></span></p>
+                        <p class="float-start fw-semibold balance">Balance: $<span id="balance"></span></p>
                         <button class="btn btn-primary float-end mb-2" type="button" id="addEntry">Add Entry</button>
                         <input type="hidden" id="office_id" name="office_id" value="' . $office . '">
                         <input type="hidden" id="year1" name="year1" value="' . $year1 . '">
@@ -597,7 +597,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                     var sum = calculateSum(response);
                     // console.log('Sum of existing data: ' + sum);
                     var cxc = $("#total-cxc").val();
-                    $("#balance").text(`$${cxc - sum}`);
+                    $("#balance").text(`${cxc - sum}`);
                 },
                 error: function(error) {
                     console.error(error);
@@ -728,6 +728,31 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
             var year = $("#year1").val();
             var officeId = $("#office_id").val();
 
+            $.ajax({
+                type: 'POST',
+                url: 'edit-profit.php',
+                data: {
+                    office_id: officeId,
+                    year1: year,
+                    prevYear: prevYear,
+                    saleProgram: saleProgram,
+                    payTaxwise: payTaxwise,
+                    efileFee: efileFee,
+                    efileTaxwise: efileTaxwise,
+                    bankingFee: bankingFee,
+                    efileFee1: efileFee1,
+                    efileTaxwise1: efileTaxwise1,
+                    commissionOffice: commissionOffice,
+                    otherCommission: otherCommission,
+                },
+                success: function(response) {
+                    // console.log(response);
+                },
+                error: function(error) {
+                    console.error(error);
+                }
+            });
+
             var totalProfit = prevYear + saleProgram + payTaxwise + efileFee + efileTaxwise + bankingFee + efileFee1 + efileTaxwise1 + commissionOffice + otherCommission;
 
             var totalcxc = prevYear + saleProgram + efileFee + commissionOffice + otherCommission;
@@ -774,6 +799,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
             var formData = {
                 office_id: $('#office_id').val(),
                 year1: $('#year1').val(),
+                balance: $('#balance').text(),
                 entries: []
             };
 

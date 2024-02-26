@@ -5,6 +5,7 @@ require_once('../includes/config.php');
 // Retrieve data from the AJAX request
 $office_id = $_POST['office_id'];
 $year1 = $_POST['year1'];
+$balance = $_POST['balance'];
 $entries = $_POST['entries'];
 
 
@@ -25,6 +26,12 @@ if ($conn->query($sqlDelete) === TRUE) {
             exit; // Terminate the script if an error occurs
         }
     }
+
+    $sql = "UPDATE production SET balance = '$balance' WHERE office_id = '$office_id' AND year = '$year1'";
+    if ($conn->query($sql) !== TRUE) {
+        echo "Error: " . $sql . "<br>" . $conn->error;
+        exit; // Terminate the script if an error occurs
+    }   
 
     // Close the database connection
     $conn->close();

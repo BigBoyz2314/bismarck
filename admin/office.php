@@ -215,36 +215,140 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 
                                         if (isset($_GET['year'])) {
                                             $year = $_GET['year'];
-                                            $sql3 = "SELECT * FROM cxp WHERE office_id = ".$row['id']." AND year1 = ".$year."";
+                                            $sql3 = "SELECT balance FROM production WHERE office_id = ".$row['id']." AND year = ".$year."";
                                             $result3 = mysqli_query($conn, $sql3);
                                             $resultCheck3 = mysqli_num_rows($result3);
                                             if ($resultCheck3 > 0) {
                                                 while ($row3 = mysqli_fetch_assoc($result3)) {
-                                                    echo "<td>".$row3['amount']."</td>";
+                                                    echo "<td>".$row3['balance']."</td>";
                                                 }
                                             } else {
                                                 echo "<td></td>";
                                             }
                                         } else {
-                                            $sql3 = "SELECT * FROM production WHERE office_id = ".$row['user_id']."";
-                                            $sql4 = "SELECT SUM(amount) as amount FROM cxp WHERE office_id = ".$row['id']."";
-                                            $result3 = mysqli_query($conn, $sql3);
-                                            $resultCheck3 = mysqli_num_rows($result3);
-                                            $result4 = mysqli_query($conn, $sql4);
-                                            $resultCheck4 = mysqli_num_rows($result4);
-                                            if ($resultCheck4 > 0) {
-                                                while ($row4 = mysqli_fetch_assoc($result4)) {
-                                                    echo "<td>".$row4['amount']."</td>";
+                                            $sql4 = "SELECT SUM(balance) as balance FROM production WHERE office_id = ".$row['id']."";
+                                            $result4 = $conn->query($sql4);
+                                            if (!$result4) {
+                                                // Check for errors in the query
+                                                echo "Error: " . $conn->error;
+                                            } elseif ($result4->num_rows > 0) {
+                                                while ($row4 = $result4->fetch_assoc()) {
+                                                    echo "<td>".$row4['balance']."</td>";
                                                 }
                                             } else {
                                                 echo "<td></td>";
                                             }
                                         }
-                                        echo "<td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>";
+
+                                        if (isset($_GET['year'])) {
+                                            $year = $_GET['year'];
+                                            $sql3 = "SELECT * FROM profit WHERE office_id = ".$row['id']." AND year = ".$year."";
+                                            $result3 = mysqli_query($conn, $sql3);
+                                            $resultCheck3 = mysqli_num_rows($result3);
+                                            if ($resultCheck3 > 0) {
+                                                while ($row3 = mysqli_fetch_assoc($result3)) {
+                                                    echo "<td>".$row3['sale_program']."</td>";
+                                                }
+                                            } else {
+                                                echo "<td></td>";
+                                            }
+                                        } else {
+                                            $sql4 = "SELECT SUM(sale_program) as sale_program FROM profit WHERE office_id = ".$row['id']."";
+                                            $result4 = $conn->query($sql4);
+                                            if (!$result4) {
+                                                // Check for errors in the query
+                                                echo "Error: " . $conn->error;
+                                            } elseif ($result4->num_rows > 0) {
+                                                while ($row4 = $result4->fetch_assoc()) {
+                                                    echo "<td>".$row4['sale_program']."</td>";
+                                                }
+                                            } else {
+                                                echo "<td></td>";
+                                            }
+                                        }
+
+                                        if (isset($_GET['year'])) {
+                                            $year = $_GET['year'];
+                                            $sql3 = "SELECT * FROM profit WHERE office_id = ".$row['id']." AND year = ".$year."";
+                                            $result3 = mysqli_query($conn, $sql3);
+                                            $resultCheck3 = mysqli_num_rows($result3);
+                                            if ($resultCheck3 > 0) {
+                                                while ($row3 = mysqli_fetch_assoc($result3)) {
+                                                    echo "<td>".$row3['efile_fee']."</td>";
+                                                }
+                                            } else {
+                                                echo "<td></td>";
+                                            }
+                                        } else {
+                                            $sql4 = "SELECT SUM(efile_fee) as efile_fee FROM profit WHERE office_id = ".$row['id']."";
+                                            $result4 = $conn->query($sql4);
+                                            if (!$result4) {
+                                                // Check for errors in the query
+                                                echo "Error: " . $conn->error;
+                                            } elseif ($result4->num_rows > 0) {
+                                                while ($row4 = $result4->fetch_assoc()) {
+                                                    echo "<td>".$row4['efile_fee']."</td>";
+                                                }
+                                            } else {
+                                                echo "<td></td>";
+                                            }
+                                        }
+
+                                        if (isset($_GET['year'])) {
+                                            $year = $_GET['year'];
+                                            $sql3 = "SELECT * FROM profit WHERE office_id = ".$row['id']." AND year = ".$year."";
+                                            $result3 = mysqli_query($conn, $sql3);
+                                            $resultCheck3 = mysqli_num_rows($result3);
+                                            if ($resultCheck3 > 0) {
+                                                while ($row3 = mysqli_fetch_assoc($result3)) {
+                                                    echo "<td>".$row3['banking_fee']."</td>";
+                                                }
+                                            } else {
+                                                echo "<td></td>";
+                                            }
+                                        } else {
+                                            $sql4 = "SELECT SUM(banking_fee) as banking_fee FROM profit WHERE office_id = ".$row['id']."";
+                                            $result4 = $conn->query($sql4);
+                                            if (!$result4) {
+                                                // Check for errors in the query
+                                                echo "Error: " . $conn->error;
+                                            } elseif ($result4->num_rows > 0) {
+                                                while ($row4 = $result4->fetch_assoc()) {
+                                                    echo "<td>".$row4['banking_fee']."</td>";
+                                                }
+                                            } else {
+                                                echo "<td></td>";
+                                            }
+                                        }
+
+                                        if (isset($_GET['year'])) {
+                                            $year = $_GET['year'];
+                                            $sql3 = "SELECT * FROM profit WHERE office_id = ".$row['id']." AND year = ".$year."";
+                                            $result3 = mysqli_query($conn, $sql3);
+                                            $resultCheck3 = mysqli_num_rows($result3);
+                                            if ($resultCheck3 > 0) {
+                                                while ($row3 = mysqli_fetch_assoc($result3)) {
+                                                    echo "<td>".$row3['commission_office']."</td>";
+                                                }
+                                            } else {
+                                                echo "<td></td>";
+                                            }
+                                        } else {
+                                            $sql4 = "SELECT SUM(commission_office) as commission_office FROM profit WHERE office_id = ".$row['id']."";
+                                            $result4 = $conn->query($sql4);
+                                            if (!$result4) {
+                                                // Check for errors in the query
+                                                echo "Error: " . $conn->error;
+                                            } elseif ($result4->num_rows > 0) {
+                                                while ($row4 = $result4->fetch_assoc()) {
+                                                    echo "<td>".$row4['commission_office']."</td>";
+                                                }
+                                            } else {
+                                                echo "<td></td>";
+                                            }
+                                        }
+                                        
+                                    echo "</tr>";
                             }
                             echo "</tbody>";
                         }
