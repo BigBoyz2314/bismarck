@@ -214,7 +214,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                                         </td>
                                         <td></td>";
 
-                                        if (isset($_GET['year'])) {
+                                        if (isset($_GET['year']) && $_GET['year'] != "All") {
                                             $year = $_GET['year'];
                                             $sql3 = "SELECT balance FROM production WHERE office_id = ".$row['id']." AND year = ".$year."";
                                             $result3 = mysqli_query($conn, $sql3);
