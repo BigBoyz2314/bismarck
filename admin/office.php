@@ -155,7 +155,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
         </div>
         <div class="row">
             <div class="col-md-12">
-                <table class="table table-responsive table-bordered office-table" id="table">
+                <table class="table table-responsive d-block w-100 table-bordered office-table" id="table">
                     <?php
                         include_once '../includes/config.php';
                         $sql = "SELECT * FROM offices";
@@ -165,6 +165,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                             echo "<thead>
                                     <tr class='text-center'>
                                         <th>EFIN</th>
+                                        <th>Client ID</th>
                                         <th>PID</th>
                                         <th>Office Name</th>
                                         <th>Contact Name</th>
@@ -187,8 +188,9 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                             while ($row = mysqli_fetch_assoc($result)) {
                                 echo "<tr class='text-center'>
                                         <td>".$row['preparer_efin']."</td>
+                                        <td>".$row['preparer_efin']."</td>
                                         <td>".$row['preparer_ptin']."</td>
-                                        <td>".$row['company_name']."</td>
+                                        <td><a href='office-info.php?name=".$row['company_name']."' class='text-decoration-none'>".$row['company_name']."</a></td>
                                         <td>".$row['company_contact_name']."</td>
                                         <td>".$row['company_contact_phone']."</td>
                                         <td></td>
