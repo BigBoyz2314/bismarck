@@ -7,6 +7,9 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     header("location: login.php");
     exit;
 }
+
+$currentYear = date("Y");
+$defaultYear = $currentYear - 1;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -55,7 +58,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                     <a class="nav-link text-primary" href="index.php">Overview</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" href="office.php">Offices</a>
+                    <a class="nav-link active" href="office.php?year=<?php echo "$defaultYear"; ?> ">Offices</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link text-primary" href="#">Clients by States</a>
@@ -107,7 +110,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
             ?>
                 <h5 class="pt-3 pb-1 d-inline px-4">Office/Contact Info</h5>
                 <button class="btn btn-warning float-end" id="editBtn">Edit</button>
-                <form action="/client/update.php" method="post">
+                <form action="office-info-update.php" method="post">
                 <div class="client-info px-4 d-flex flex-column mt-4">
                 <?php
                     // Assuming you have a database connection established
@@ -117,9 +120,8 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                     // Check if the user is logged in and the session contains the user's ID
                     if (isset($_GET['name'])) {
                         $userId = $_GET['name'];
-
                         // Select data from the offices table based on user_id
-                        $query = "SELECT * FROM offices WHERE company_name = ?";
+                        $query = "SELECT * FROM offices WHERE `user_id` = ? ";
                         
                         // Prepare the SQL statement
                         $stmt = $conn->prepare($query);
@@ -146,7 +148,8 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                         $stmt->close();
 
                         // Array of field names and labels
-                        $fields = [
+                        $fields_company = [
+                            'Company ClientID' => 'office_ClientID',
                             'Company Contact Name' => 'company_contact_name',
                             'Company Name' => 'company_name',
                             'Company Address' => 'company_address',
@@ -155,7 +158,9 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                             'Company Zip' => 'company_zip',
                             'Company Contact Phone' => 'company_contact_phone',
                             'Company Fax' => 'company_fax',
-                            'Company Federal Tax ID' => 'company_tax_id',
+                            'Company Contact Email' => 'company_contact_email',
+                            'Company Federal Tax ID' => 'company_tax_id'];
+                        $fields_preparer = [	
                             'Preparer ID' => 'preparer_id',
                             'Preparer Name' => 'preparer_name',
                             'Preparer Company Name' => 'preparer_company_name',
@@ -170,6 +175,16 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                             'Preparer EIN' => 'preparer_ein',
                             'ERO PIN' => 'preparer_ero_pin',
                             'Preparer PIN' => 'preparer_pin'
+                        ];
+                        $fields_software = [
+                            'Soft Installation Type' => 'instalation_type',
+                            'Server Name' => 'server_name',
+                            'Installation Type' => 'server_type',
+                            'IP Addres' => 'ip_address',
+                            'Wndows Type' => 'os_version',
+                            'Number of Sttaions' => 'num_stations',
+                            'Number of Virtual PC' => 'num_vpc',
+                            'Printer IP Address' => 'printer_ip_address'
                         ];
 
 
@@ -191,7 +206,18 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                         }
 
                         // Output inputs for each field
-                        foreach ($fields as $label => $fieldName) {
+                       
+
+
+                        foreach ($fields_company as $label => $fieldName) {
+      
+                            echo createInput($label, $fieldName, $data[$fieldName] ?? null);
+                            
+                        }
+                        
+                        echo  '<p><h5 class="pt-3 pb-1 d-inline">Preparer Information </h5>' ;
+                        //echo createInput( "userid" , "userid" , $userId  ?? null );
+                        foreach ($fields_preparer as $label => $fieldName) {
                             if ($fieldName == 'preparer_efin') {
                                 echo createInputEfin($label, $fieldName, $data[$fieldName] ?? null);
                             } 
@@ -199,14 +225,26 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                             echo createInput($label, $fieldName, $data[$fieldName] ?? null);
                             }
                         }
-                            echo "<input type='hidden' name='id' value='" . $_SESSION['id'] . "'>";
+                               
+                        echo  '<p><h5 class="pt-3 pb-1 d-inline">Software and Network Information </h5>' ;
+                        
+                          foreach ($fields_software as $label => $fieldName) {
+                                   echo createInput($label, $fieldName, $data[$fieldName] ?? null);
+                            }
+
+
+
+
+
+
+                            echo "<input type='hidden' name='id' value='" . $userId . "'>";
 
                         } else {
                             echo "User ID not found in session.";
                         }
                     ?>
 
-                    <p id="error-message">EFIN must start with 0</p>
+                    
                     <button class="btn btn-success my-3 d-none" id="saveBtn">Save</button>
                     
                 </div>

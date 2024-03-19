@@ -52,15 +52,15 @@ fclose($file_handle);
         $total_all = $total + $total_1 + $total_2;
 		
         $prev_year = $_POST["prev-year"];
-        $sale_program = $_POST["sale-program"];
-        $pay_taxwise = $_POST["pay-taxwise"];
-        $efile_fee_unit = $_POST["efile-fee-unit"];
-        $efile_taxwise_unit = $_POST["efile-taxwise-unit"];
-        $efile_fee_unit_1 = $_POST["efile-fee-unit_1"];
-        $efile_taxwise_unit_1 = $_POST["efile-taxwise-unit_1"];
-        $banking_fee_unit = $_POST["banking-fee-unit"];
-        $commission_office_unit = $_POST["commission-office-unit"];
-        $other_commission = $_POST["other-commission"];
+        $sale_program = $_POST["saleProgram"];
+        $pay_taxwise = $_POST["payTaxwise"];
+        $efile_fee_unit = $_POST["efileFeeUnit"];
+        $efile_taxwise_unit = $_POST["efileTaxwiseUnit"];
+        $efile_fee_unit_1 = $_POST["efileFeeUnit1"];
+        $efile_taxwise_unit_1 = $_POST["efileTaxwiseUnit1"];
+        $banking_fee_unit = $_POST["bankingFeeUnit"];
+        $commission_office_unit = $_POST["commissionOfficeUnit"];
+        $other_commission = $_POST["otherCommission"];
 		
         $stmt = "SELECT * FROM `production` WHERE `office_id` = '$office_id' AND `year` = '$year1'";
         $result = mysqli_query($conn, $stmt);
@@ -77,7 +77,7 @@ fclose($file_handle);
 			'$prev_year', '$sale_program', '$pay_taxwise', '$efile_fee_unit', '$efile_taxwise_unit',  '$efile_fee_unit_1',  '$efile_taxwise_unit_1',  '$banking_fee_unit',  '$commission_office_unit',  '$other_commission')";
             $result0 = mysqli_query($conn, $stmt0);
             echo "Production information added successfully";
-            header("Location:production.php?production=added");
+            header("Location:production_v1.php?production=added");
         }
         else {
             $stmt00 = "UPDATE `production` SET 
@@ -111,7 +111,7 @@ fclose($file_handle);
             WHERE `office_id` = '$office_id' AND `year` = '$year1'";
             $result00 = mysqli_query($conn, $stmt00);
             echo "Production information updated successfully";
-            header("Location:production.php?production=updated");
+            header("Location:production_v1.php?production=updated");
         }
     }
 

@@ -6,9 +6,11 @@ session_start();
 if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     header("location: login.php");
     exit;
+   }
+    $currentYear = date("Y");
+    $defaultYear = $currentYear - 1;
 
 
-}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -57,7 +59,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                     <a class="nav-link text-primary" href="index.php">Overview</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-primary" href="office.php">Offices</a>
+                    <a class="nav-link text-primary" href="office.php?year=<?php echo "$defaultYear"; ?> ">Offices</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link text-primary" href="#">Clients by States</a>

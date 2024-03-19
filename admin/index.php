@@ -1,4 +1,6 @@
 <?php
+require_once('../includes/config.php');
+
 // Initialize the session
 session_start();
 
@@ -7,7 +9,57 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true || $_SESSION[
     header("location: login.php");
     exit;
 }
+
+
+
+$currentYear = date("Y");
+$defaultYear = $currentYear - 1;
+$year1=$defaultYear;
+
+
+
+
+
+           // Construct the SQL query to fetch all necessary data in one go
+           $stmt = "SELECT 
+           SUM(personal_tax) AS total_personal_tax,
+           SUM(corporate_tax_c) AS total_corporate_tax_c,
+           SUM(corporate_tax_s) AS total_corporate_tax_s,
+           SUM(partnership_tax) AS total_partnership_tax,
+           SUM(personal_tax_1) AS total_personal_tax_1,
+           SUM(corporate_tax_c_1) AS total_corporate_tax_c_1,
+           SUM(corporate_tax_s_1) AS total_corporate_tax_s_1,
+           SUM(partnership_tax_1) AS total_partnership_tax_1,
+           SUM(personal_tax_2) AS total_personal_tax_2,
+           SUM(corporate_tax_c_2) AS total_corporate_tax_c_2,
+           SUM(corporate_tax_s_2) AS total_corporate_tax_s_2,
+           SUM(partnership_tax_2) AS total_partnership_tax_2,
+           SUM(balance) AS balance
+       FROM production
+       WHERE year = $year1";
+
+// Execute the query
+$result = $conn->query($stmt);
+
+// Check if there are rows returned
+if ($result->num_rows > 0) {
+   // Fetch the first row
+   $row = $result->fetch_assoc();
+
+   // Total sums for each column
+   $total_transmissions_0 = $row['total_personal_tax'] + $row['total_corporate_tax_c'] + $row['total_corporate_tax_s'] + $row['total_partnership_tax'];
+   $total_transmissions_1 = $row['total_personal_tax_1'] + $row['total_corporate_tax_c_1'] + $row['total_corporate_tax_s_1'] + $row['total_partnership_tax_1'];
+   $total_transmissions_2 = $row['total_personal_tax_2'] + $row['total_corporate_tax_c_2'] + $row['total_corporate_tax_s_2'] + $row['total_partnership_tax_2'];
+   $balance = $row['balance'];
+}
+
+
+
 ?>
+
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -55,7 +107,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true || $_SESSION[
                     <a class="nav-link active" href="#">Overview</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-primary" href="office.php">Offices</a>
+                    <a class="nav-link text-primary" href="office.php?year=<?php echo "$defaultYear"; ?> ">Offices</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link text-primary" href="#">Clients by States</a>
@@ -101,6 +153,10 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true || $_SESSION[
             <div class="col-md-4">
                 <div class="d-flex flex-column align-items-center border p-3 rounded-4">
                     <canvas id="myChart" height="200px"></canvas>
+                    <div class="d-flex mt-4">
+    <h5 class="m-0">Balances owned 
+    <input type="text" name="balance" id="balance" disabled  class="balance bold borderless " value="$<?php echo $balance; ?>"></h5>
+</div>
                     <div class="w-100 text-center">
                         <label for="officeType">Office Type:</label>
                         <select name="officeType" id="officetype" class="d-inline form-select w-50">
@@ -177,8 +233,22 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true || $_SESSION[
 		  new google.translate.TranslateElement({pageLanguage: 'en', includedLanguages: 'es', layout: google.translate.TranslateElement.InlineLayout.SIMPLE, autoDisplay: false}, 'google_translate_element');
 		}
 
-        var xValues = ["2023", "2022", "2021"];
-        var yValues = [60, 49, 44,];
+        var year1 = "<?php echo $year1 ;?>";
+var balance = "<?php echo $balance ;?>";
+
+var total_transmissions_0 = "<?php echo $total_transmissions_0; ?>";
+var total_transmissions_1 = "<?php echo $total_transmissions_1; ?>";
+var total_transmissions_2 = "<?php echo $total_transmissions_2; ?>";
+
+calculateAll();
+function calculateAll(){
+//$("#balance").val(44);
+}
+
+
+
+        var xValues = [year1, year1-1, year1-2];
+        var yValues = [total_transmissions_0, total_transmissions_1, total_transmissions_2 ];
         var barColors = ["red", "green","blue","orange","brown"];
 
         new Chart("myChart", {

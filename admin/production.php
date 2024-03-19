@@ -7,6 +7,8 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     header("location: login.php");
     exit;
 }
+$currentYear = date("Y");
+$defaultYear = $currentYear - 1;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -20,11 +22,21 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
         .negative {
             color: #ff0000;
         }
-
+   
         .balance {
             font-size: 1.2em;
         }
         
+		.borderless {
+        border: none; /* Removes border */
+		outline : none ;
+               }
+
+        .bold-font {
+        font-weight: bold; /* Makes the font bold */
+          }
+
+		 
     </style>
 </head>
 <body>
@@ -63,7 +75,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                     <a class="nav-link text-primary" href="index.php">Overview</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-primary" href="office.php">Offices</a>
+                    <a class="nav-link text-primary" href="office.php?year=<?php echo "$defaultYear"; ?> ">Offices</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link text-primary" href="#">Clients by States</a>
@@ -100,7 +112,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
             </div>
             <div class="col-md-6">
                 <form action="" method="get">
-                    <label for="username">Username</label>
+                    <label for="id">Username</label>
                     <select name="id" class="form-select" id="id" required>
                         <option value="">Select</option>
                         <?php
@@ -115,34 +127,21 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 
                         ?>
                     </select>
-                    <!-- <label for="company">Company Name</label> -->
-                    <!-- <select name="company" class="form-select" id="company" required>
-                        <option value="">Select</option> -->
-                        <?php
-                        
-                            // include '../includes/config.php'; 
-                            // $stmt = ("SELECT id, company_name FROM offices");
-                            // $result = mysqli_query($conn, $stmt);
-                            // while($row = mysqli_fetch_array($result)) {
-                            //     echo "<option value='" . $row['id'] ."'>" . $row['company_name'] ."</option>";
-                            // }
-
-                        ?>
-                    <!-- </select> -->
+                  
+      
                     <label for="year">Year</label>
                     <select name="year" id="year" class="form-select" required>
                         <option value="">Select</option>
-                        <option value="2020">2020</option>
-                        <option value="2021">2021</option>
-                        <option value="2022">2022</option>
-                        <option value="2023">2023</option>
-                        <option value="2024">2024</option>
-                        <option value="2025">2025</option>
-                        <option value="2026">2026</option>
-                        <option value="2027">2027</option>
-                        <option value="2028">2028</option>
-                        <option value="2029">2029</option>
-                        <option value="2030">2030</option>
+                        <?php
+                        $currentYear = date("Y");
+                        $defaultYear = $currentYear - 1;
+
+                        // Loop to generate options
+                        for ($year = 2020; $year <= 2030; $year++) {
+                            $selected = ($year == $defaultYear) ? "selected" : ""; // Add "selected" attribute if it's the default year
+                            echo "<option value='$year' $selected>$year</option>";
+                        }
+                        ?>
                     </select>
                     <button class="btn btn-primary mt-2" type="submit">Search</button>
                 </form>
@@ -167,7 +166,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 
                 echo '<div class="row mt-3">
                     <div class="col-md-12">
-                    <h6 class="d-inline me-4">Name: ' . $name . '</h6>
+                    <h6 class="d-inline me-4">Name: ' . $name .  '</h6>
                     <h6 class="d-inline me-4">Company: ' . $officeName . '</h6>
                     <form action="edit-production.php" id="productionForm" method="post">
                         <input type="hidden" name="office_id" value="' . $office . '">
@@ -259,7 +258,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                                         <td></td>
                                         <td></td>
                                         <td></td>
-                                        <td><input class="form-control" type="number" id="total-efile" value="' . ($total_transmissions - $row['to_collect']) . '" disabled></td>
+                                        <td><input class="form-control" type="number" readonly id="total_efile"  name="total_efile" value="' . ($total_transmissions - $row['to_collect']) . '" ></td>
                                         </tr>
                                 </tbody>
                             </table>
@@ -301,51 +300,45 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                                     </tr>
                                     <tr>
                                         <td>Cargo a la Oficina por el Efile Fee</td>
-                                        <td> <input type="number" class="form-control" name="efile-fee-unit" id="efile-fee-unit" value="' . $row['efile_fee_unit'] . '"> </td>
-                                        <td> <input type="number" class="form-control" disabled name="efile-fee" id="efile-fee" value="' . ($row['efile_fee_unit'] * ($total_transmissions - $row['to_collect'] )) . '"> 
-                                        <input type="number" class="form-control" hidden name="efile-fee" id="efile-fee" value="' . ($row['efile_fee_unit'] * ($total_transmissions - $row['to_collect'] )) . '">  </td>
-                                        <td> <input type="number" class="form-control" disabled name="efile-fee-cxc" id="efile-fee-cxc" value="' . ($row['efile_fee_unit'] * ($total_transmissions - $row['to_collect'] )) . '">  </td>
+                                        <td> <input type="number" class="form-control" name="efile_fee_unit" id="efile_fee_unit" value="' . $row['efile_fee_unit'] . '"> </td>
+                                        <td> <input type="number" class="form-control" readonly name="efile_fee" id="efile_fee" value="' . ($row['efile_fee_unit'] * ($total_transmissions - $row['to_collect'] )) . '">  </td>
+                                        <td> <input type="number" class="form-control" disabled name="efile_fee_cxc" id="efile_fee_cxc" value="' . ($row['efile_fee_unit'] * ($total_transmissions - $row['to_collect'] )) . '">  </td>
                                     </tr>
                                     <tr>
                                         <td>Costo del Efile Fee a pagar a TaxWise</td>
                                         <td> <input type="number" class="form-control" name="efile-taxwise-unit" id="efile-taxwise-unit" value="' . $row['efile_taxwise_unit'] . '"> </td>
-                                        <td> <input type="number" class="form-control" disabled name="efile-taxwise" id="efile-taxwise" value="' . (-1 * $row['efile_taxwise_unit']* ($total_transmissions - $row['to_collect'] )) . '"> 
-                                        <input type="number" class="form-control" hidden name="efile-taxwise" id="efile-taxwise" value="' . ( -1 * $row['efile_taxwise_unit']* ($total_transmissions - $row['to_collect'] )) . '">  </td>
+                                        <td> <input type="number" class="form-control" readonly name="efile-taxwise" id="efile-taxwise" value="' . (-1 * $row['efile_taxwise_unit']* ($total_transmissions - $row['to_collect'] )) . '">   </td>
                                         <td></td>
                                     </tr>
                                     <tr>
                                         <td>Fee Asignado para los Productos Bancarios</td>
                                         <td> <input type="number" class="form-control" name="banking-fee-unit" id="banking-fee-unit" value="' . $row['banking_fee_unit'] . '"> </td>
-                                        <td> <input type="number" class="form-control" disabled name="banking-fee" id="banking-fee" value="' . ($row['banking_fee_unit'] * $row['to_collect'] ) . '"> 
-                                        <input type="number" class="form-control" hidden name="banking-fee" id="banking-fee" value="' . ($row['banking_fee_unit'] * $row['to_collect'] ) . '">  </td>
+                                        <td> <input type="number" class="form-control" readonly name="banking-fee" id="banking-fee" value="' . ($row['banking_fee_unit'] * $row['to_collect'] ) . '">  </td>
                                         <td></td>
                                     </tr>
                                     <tr>
                                         <td>Cargo a la Oficina por el Efile Fee</td>
-                                        <td> <input type="number" class="form-control" name="efile-fee-unit_1" id="efile-fee-unit_1" value="' . $row['efile_fee_unit_1'] . '"> </td>
-                                        <td> <input type="number" class="form-control" disabled name="efile-fee_1" id="efile-fee_1" value="' . ($row['efile_fee_unit_1']* $row['to_collect'] ) . '"> 
-                                        <input type="number" class="form-control" hidden name="efile-fee_1" id="efile-fee_1" value="' . ($row['efile_fee_unit_1']* $row['to_collect'] ) . '">  </td>
+                                        <td> <input type="number" class="form-control" name="efile_fee_unit_1" id="efile_fee_unit_1" value="' . $row['efile_fee_unit_1'] . '"> </td>
+                                        <td> <input type="number" class="form-control" readonly name="efile_fee_1" id="efile_fee_1" value="' . ($row['efile_fee_unit_1']* $row['to_collect'] ) . '">  </td>
                                         <td></td>
                                     </tr>
                                     <tr>
                                         <td>Costo del Efile Fee a pagar a TaxWise</td>
                                         <td> <input type="number" class="form-control" name="efile-taxwise-unit_1" id="efile-taxwise-unit_1" value="' . $row['efile_taxwise_unit_1'] . '"> </td>
-                                        <td> <input type="number" class="form-control" disabled name="efile-taxwise" id="efile-taxwise_1" value="' . (-1 * $row['efile_taxwise_unit_1']* $row['to_collect'] )  . '"> 
-                                        <input type="number" class="form-control" hidden name="efile-taxwise_1" id="efile-taxwise_1" value="' . (-1 * $row['efile_taxwise_unit_1']* $row['to_collect'] ) . '">  </td>
+                                        <td> <input type="number" class="form-control" readonly name="efile-taxwise_1" id="efile-taxwise_1" value="' . (-1 * $row['efile_taxwise_unit_1']* $row['to_collect'] ) . '"> </td>
                                         <td></td>
                                     </tr>
                                     <tr>
                                         <td>Comision por Fee Collect por pagar a la Oficina</td>
                                         <td> <input type="number" class="form-control" name="commission-office-unit" id="commission-office-unit" value="' . $row['commission_office_unit'] . '"> </td>
-                                        <td> <input type="number" class="form-control" disabled name="commission-offic" id="commission-office" value="' . (-1 * $row['commission_office_unit']* $row['to_collect'] ) . '"> 
-                                        <input type="number" class="form-control" hidden name="commission-office" id="commission-office" value="' . (-1 * $row['commission_office_unit']* $row['to_collect'] ) . '">  </td>
+                                        <td> <input type="number" class="form-control" readonly name="commission-office" id="commission-office" value="' . (-1 * $row['commission_office_unit']* $row['to_collect'] ) . '"> </td>
                                         <td> <input type="number" class="form-control" disabled name="commission-office-cxc" id="commission-office-cxc" value="' . (-1 * $row['commission_office_unit']* $row['to_collect'] ) . '">  </td>	
                                     </tr>
                                     <tr>
                                         <td>other commisions or fees</td>
                                         <td></td>
-                                        <td> <input type="number" class="form-control" name="other-commission" id="other-commission" value="' . $row['other_commission'] . '"> </td>
-                                        <td> <input type="number" class="form-control" disabled name="other-commission1" id="other-commission1" value="' . $row['other_commission'] . '">  </td>
+                                        <td> <input readonly type="number" class="form-control" name="other-commission" id="other-commission" value="' . $row['other_commission'] . '"> </td>
+                                        <td> <input readonly type="number" class="form-control" disabled name="other-commission1" id="other-commission1" value="' . $row['other_commission'] . '">  </td>
                                     </tr>
                                     <tr>
                                         <td>Total</td>
@@ -353,25 +346,27 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                                         <td> <input type="number" class="form-control" disabled name="total-profit" id="total-profit" value="0">  </td>
                                         <td> <input type="number" class="form-control" disabled name="total-cxc" id="total-cxc" value="0">  </td>
                                     </tr>
+									
                                 </tbody>
                             </table>
                             <button class="btn btn-primary" type="button" id="calTotal">Calculate Totals</button>
                             <button class="btn btn-success" type="submit" id="saveProfit">Save</button>
+							
                         </div>';
-
                         echo '<div class="col-md-12 mb-4">
                         <div class="alert d-none alert-success alert-dismissible fade show" role="alert">
                             <strong>Success!</strong> Office information added successfully.
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
-                        <p class="float-start fw-semibold balance">Balance: $<span id="balance"></span></p>
+                        <p class="float-start balance">Total Paid: $<input type="number" class="balance borderless" readonly  id="total_paid" name="total_paid" ></p>
+                        <p class="float-start fw-semibold balance">Balance: $<input type="number" readonly class="fw-semibold balance borderless"  class="fw-semibold balance borderless"  id="balance" name="balance" ></p>
                         <button class="btn btn-primary float-end mb-2" type="button" id="addEntry">Add Entry</button>
                         <input type="hidden" id="office_id" name="office_id" value="' . $office . '">
                         <input type="hidden" id="year1" name="year1" value="' . $year1 . '">
                         <table class="table table-bordered text-nowrap">
                             <thead class="table-warning">
                                 <tr>
-                                    <th colspan="5" class="text-center">CxP</th>
+                                    <th colspan="5" class="text-center">CxP  ( Paid ) </th>
                                 </tr>
                                 <tr>
                                     <th>Sr.</th>
@@ -385,6 +380,29 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                             </tbody>
                         </table>
                         <button class="btn btn-success" type="button" id="saveCxp">Update</button>
+                        <p> <p> Other fees and Commissions , Total : $<input type="number" class="balance borderless" readonly  id="total_other" name="total_other" >
+                        <button class="btn btn-primary float-end mb-2" type="button" id="addOtherEntry">Add Other Entry</button>
+                        <input type="hidden" id="office_id" name="office_id" value="' . $office . '">
+                        <input type="hidden" id="year1" name="year1" value="' . $year1 . '">
+                        <table class="table table-bordered text-nowrap">
+                            <thead class="table-warning">
+                                <tr>
+                                    <th colspan="5" class="text-center"> Other fees and commisions </th>
+                                </tr>
+                                <tr>
+                                    <th>Sr.</th>
+                                    <th>Amount</th>
+                                    <th>Receipt #</th>
+                                    <th>Date</th>
+                                    <th>Notes</th>
+                                </tr>
+                            </thead>
+                            <tbody id="otherTable">
+                            </tbody>
+                        </table>
+                        <button class="btn btn-success" type="button" id="saveOther">Update</button>
+
+
                         </div>';
 
                         
@@ -418,7 +436,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                             <td> <input class="form-control" type="number" name="partnership_tax_total" disabled value="0"> </td>
                             </tr>
                             <tr>
-                            td>Total Transmisiones</td><td> <input class="form-control" type="number" value="0" disabled name="transmissions"> </td>
+                            <td>Total Transmisiones</td><td> <input class="form-control" type="number" value="0" disabled name="transmissions"> </td>
                             <td> <input class="form-control" type="number" value="0" disabled name="transmissions1"> </td>
                             <td> <input class="form-control" type="number" value="0" disabled name="transmissions2"> </td>
                             <td> <input class="form-control" type="number" id="transmissions_total" name="transmissions_total" disabled value="0"> </td>
@@ -435,7 +453,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                             <td></td>
                             <td></td>
                             <td></td>
-                            <td><input class="form-control" type="number" id="total-efile"  name="total-efile" value="0" disabled></td>
+                            <td><input class="form-control" type="number" id="total_efile"  name="total_efile" value="0" disabled></td>
                             </tr>
                             </tbody>
                             </table>';
@@ -478,45 +496,51 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                                     </tr>
                                     <tr>
                                         <td>Cargo a la Oficina por el Efile Fee</td>
-                                        <td><input type="number" name="efile-fee-unit" id="efile-fee-unit" class="form-control" value="0"></td>
-                                        <td> <input type="number" name="efile-fee" id="efile-fee" disabled class="form-control" value="0"> <input type="number" class="form-control" hidden name="efile-fee" id="efile-fee" value="0">  </td>
-                                        <td> <input type="number" class="form-control" disabled name="efile-fee-cxc" id="efile-fee-cxc" value="0">  </td>
+                                        <td><input type="number" name="efile_fee_unit" id="efile_fee_unit" class="form-control" value="0"></td>
+                                        <td> <input type="number" name="efile_fee" id="efile_fee" disabled class="form-control" value="0"> 
+										<input type="number" class="form-control" hidden name="efile_fee" id="efile_fee" value="0">  </td>
+                                        <td> <input type="number" class="form-control" disabled name="efile_fee_cxc" id="efile_fee_cxc" value="0">  </td>
                                     </tr>
                                     <tr>
                                         <td>Costo del Efile Fee a pagar a TaxWise</td>
                                         <td><input type="number" name="efile-taxwise-unit" id="efile-taxwise-unit" class="form-control" value="0"></td>
-                                        <td> <input type="number" name="efile-taxwise" id="efile-taxwise" disabled class="form-control" value="0"> <input type="number" class="form-control" hidden name="efile-taxwise" id="efile-taxwise" value="0">  </td>
+                                        <td> <input type="number" name="efile-taxwise" id="efile-taxwise" disabled class="form-control" value="0"> 
+										<input type="number" class="form-control" hidden name="efile-taxwise" id="efile-taxwise" value="0">  </td>
                                         <td></td>
                                     </tr>
                                     <tr>
                                         <td>Fee Asignado para los Productos Bancarios</td>
                                         <td><input type="number" name="banking-fee-unit" id="banking-fee-unit" class="form-control" value="0"></td>
-                                        <td> <input type="number" name="banking-fee" id="banking-fee" disabled class="form-control" value="0"> <input type="number" class="form-control" hidden name="banking-fee" id="banking-fee" value="0">  </td>
+                                        <td> <input type="number" name="banking-fee" id="banking-fee" disabled class="form-control" value="0"> 
+										<input type="number" class="form-control" hidden name="banking-fee" id="banking-fee" value="0">  </td>
                                         <td></td>
                                     </tr>
                                     <tr>
                                         <td>Cargo a la Oficina por el Efile Fee</td>
-                                        <td><input type="number" name="efile-fee-unit_1" id="efile-fee-unit_1" class="form-control" value="0"></td>
-                                        <td> <input type="number" name="efile-fee_1" id="efile-fee_1" disabled class="form-control" value="0"> <input type="number" class="form-control" hidden name="efile-fee_1" id="efile-fee_1" value="0">  </td>
+                                        <td><input type="number" name="efile_fee_unit_1" id="efile_fee_unit_1" class="form-control" value="0"></td>
+                                        <td> <input type="number" name="efile_fee_1" id="efile_fee_1" disabled class="form-control" value="0">
+										<input type="number" class="form-control" hidden name="efile_fee_1" id="efile_fee_1" value="0">  </td>
                                         <td></td>
                                     </tr>
                                     <tr>
                                         <td>Costo del Efile Fee a pagar a TaxWise</td>
                                         <td><input type="number" name="efile-taxwise-unit_1" id="efile-taxwise-unit_1" class="form-control" value="0"></td>
-                                        <td> <input type="number" name="efile-taxwise_1" id="efile-taxwise_1" disabled class="form-control" value="0"> <input type="number" class="form-control" hidden name="efile-taxwise_1" id="efile-taxwise_1" value="0">  </td>
+                                        <td> <input type="number" name="efile-taxwise_1" id="efile-taxwise_1" disabled class="form-control" value="0"> 
+										<input type="number" class="form-control" hidden name="efile-taxwise_1" id="efile-taxwise_1" value="0">  </td>
                                         <td></td>
                                     </tr>
                                     <tr>
                                         <td>Comision por Fee Collect por pagar a la Oficina</td>
                                         <td><input type="number" name="commission-office-unit" id="commission-office-unit" class="form-control" value="0"></td>
-                                        <td> <input type="number" name="commission-office" id="commission-office" disabled class="form-control" value="0"> <input type="number" class="form-control" hidden name="commission-office" id="commission-office" value="0">  </td>
+                                        <td> <input type="number" name="commission-office" id="commission-office" disabled class="form-control" value="0"> 
+										<input type="number" class="form-control" hidden name="commission-office" id="commission-office" value="0">  </td>
                                         <td> <input type="number" class="form-control" disabled name="commission-office-cxc" id="commission-office-cxc" value="0">  </td>
                                     </tr>
                                     <tr>
                                         <td>other commisions or fees</td>
                                         <td></td>
-                                        <td> <input type="number" name="other-commission" id="other-commission" class="form-control" value="0"> </td>
-                                        <td> <input type="number" class="form-control" disabled name="other-commission1" id="other-commission1" value="0">  </td>
+                                        <td> <input readonly type="number" name="other-commission" id="other-commission" class="form-control" value="0"> </td>
+                                        <td> <input readonly  type="number" class="form-control" disabled name="other-commission1" id="other-commission1" value="0">  </td>
                                     </tr>
                                     <tr>
                                         <td>Total</td>
@@ -528,23 +552,25 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                             </table>
                             <button class="btn btn-primary" type="button" id="calTotal">Calculate Totals</button>
                             <button class="btn btn-success" type="submit" id="saveProfit">Save</button>
-                        </div>
-                        </form>
-                    </div>';
+                        </div>';
+                       
 
                     echo '<div class="col-md-12 mb-4">
                         <div class="alert d-none alert-success alert-dismissible fade show" role="alert">
                             <strong>Success!</strong> Office information added successfully.
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
-                        <p class="float-start fw-semibold balance">Balance: $<span id="balance"></span></p>
+
+                        <p class="float-start balance">Total Paid: $<input type="number" class="balance borderless" readonly  id="total_paid" name="total_paid" ></p>
+						
+                        <p class="float-start fw-semibold balance">Balance: $<input type="number" class="fw-semibold balance borderless" readonly  id="balance" name="balance" ></p>
                         <button class="btn btn-primary float-end mb-2" type="button" id="addEntry">Add Entry</button>
                         <input type="hidden" id="office_id" name="office_id" value="' . $office . '">
                         <input type="hidden" id="year1" name="year1" value="' . $year1 . '">
                             <table class="table table-bordered text-nowrap">
                                 <thead class="table-warning">
                                     <tr>
-                                        <th colspan="5" class="text-center">CxP</th>
+                                        <th colspan="5" class="text-center">CxP  ( paid )</th>
                                     </tr>
                                     <tr>
                                         <th>Sr.</th>
@@ -558,9 +584,39 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                                 </tbody>
                             </table>
                         <button class="btn btn-success" type="button" id="saveCxp">Update</button>
+
+
+<p> <p> Other Fees and Commissions , Total : $<input type="number" class="balance borderless" readonly  id="total_other" name="total_other" >
+
+                        <button class="btn btn-primary float-end mb-2" type="button" id="addOtherEntry">Add Other Entry</button>
+                       
+                            <table class="table table-bordered text-nowrap">
+                                <thead class="table-warning">
+                                    <tr>
+                                        <th colspan="5" class="text-center">Other Commissions or fees </th>
+                                    </tr>
+                                    <tr>
+                                        <th>Sr.</th>
+                                        <th>Amount</th>
+                                        <th>Receipt #</th>
+                                        <th>Date</th>
+                                        <th>Notes</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="otherTable">
+                                </tbody>
+                            </table>
+                        <button class="btn btn-success" type="button" id="saveOther">Update</button>
+
+
+
                     </div>';
 
-            }                               
+
+
+            }              
+              echo '</form>
+                    </div>';			
         }
 
         ?>
@@ -597,13 +653,58 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                     var sum = calculateSum(response);
                     // console.log('Sum of existing data: ' + sum);
                     var cxc = $("#total-cxc").val();
-                    $("#balance").text(`${cxc - sum}`);
+                    $("#balance").val(`${cxc - sum}`);
+                    $("#total_paid").val(`${sum}`);
+					
                 },
                 error: function(error) {
                     console.error(error);
                 }
             });
         }
+
+
+
+
+        function loadExistingOtherData() {
+            // Retrieve existing data from the server using AJAX
+            $.ajax({
+                type: 'POST',
+                url: 'load-other.php',
+                data: {
+                    office_id: $('#office_id').val(),
+                    year1: $('#year1').val(),
+                },
+                dataType: 'json',
+                success: function(response1) {
+                    // Populate the table with existing data
+                    $.each(response1, function(index, entry) {
+                        var newRow = '<tr id="row' + (index + 1) + '">' +
+                            '<td>' + (index + 1) + '</td>' +
+                            '<td><input type="text" class="form-control" name="amount_o[]" value="' + entry.amount + '" /></td>' +
+                            '<td><input type="text" class="form-control" name="receipt_o[]" value="' + entry.receipt + '" /></td>' +
+                            '<td><input type="date" class="form-control" name="date_o[]" value="' + entry.date + '" /></td>' +
+                           '<td><input type="text" class="form-control" name="notes_o[]" value="' + entry.notes + '" /></td>' +
+                            '</tr>';
+
+                        $('#otherTable').append(newRow);
+                    });
+                    var sum = calculateSum(response1);
+                    // console.log('Sum of existing data: ' + sum);
+                    var other = $("#other-commission").val();
+                    $("#other-commission").val(`${sum}`);
+                    $("#other-commission1").val(`${sum}`);
+                    $("#total_other").val(`${sum}`);
+					
+                },
+                error: function(error) {
+                    console.error(error);
+                }
+            });
+        }
+
+
+
 
         function calculateSum(entries) {
             var sum = 0;
@@ -613,8 +714,11 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
             return sum;
         }
 
+    
+
         // Load existing data when the page is initially loaded
         loadExistingData();
+        loadExistingOtherData();
 
         var rowCount = 0;
 
@@ -679,17 +783,18 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 
             var totalToCollect = $("#to_collect").val();
             //var transmissionsTotal = $("#transmissions_total").val();
+
             var totalEfile = transmissionsTotal.val() - totalToCollect;
-            $("#total-efile").val(totalEfile);
+            $("#total_efile").val(totalEfile);
 
-            var efileFeeUnit = $("#efile-fee-unit").val();
+            var efileFeeUnit = $("#efile_fee_unit").val();
             var totalEfileFee = efileFeeUnit * totalEfile;
-            $("#efile-fee").val(totalEfileFee);
-            $("#efile-fee-cxc").val(totalEfileFee);
+            $("#efile_fee").val(totalEfileFee);
+            $("#efile_fee_cxc").val(totalEfileFee);
 
-            var efileFeeUnit1 = $("#efile-fee-unit_1").val();
+            var efileFeeUnit1 = $("#efile_fee_unit_1").val();
             var totalEfileFee1 = (efileFeeUnit1 * totalToCollect);
-            $("#efile-fee_1").val(totalEfileFee1);
+            $("#efile_fee_1").val(totalEfileFee1);
 
             var efileTaxwiseUnit = $("#efile-taxwise-unit").val();
             var totalEfileTaxwise = -(efileTaxwiseUnit * totalEfile);
@@ -711,15 +816,15 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
             var prevYear = parseInt($("#prev-year").val()) || 0;
             var saleProgram = parseInt($("#sale-program").val()) || 0;
             var payTaxwise = parseInt($("#pay-taxwise").val()) || 0;
-            var efileFeeUnit = parseInt($("#efile-fee-unit").val()) || 0;
-            var efileFeeUnit1 = parseInt($("#efile-fee-unit_1").val()) || 0;
-            var efileFee = parseInt($("#efile-fee").val()) || 0;
-            var efileFee1 = parseInt($("#efile-fee_1").val()) || 0;
+            var efileFeeUnit = parseInt($("#efile_fee_unit").val()) || 0;
+            var efileFeeUnit1 = parseInt($("#efile_fee_unit_1").val()) || 0;
+            var efileFee =  parseInt($("#efile_fee").val()) || 0;
+            var efileFee1 = parseInt($("#efile_fee_1").val()) || 0;
             var efileTaxwiseUnit = parseInt($("#efile-taxwise-unit").val()) || 0;
             var efileTaxwiseUnit1 = parseInt($("#efile-taxwise-unit_1").val()) || 0;
             var efileTaxwise = parseInt($("#efile-taxwise").val()) || 0;
             var efileTaxwise1 = parseInt($("#efile-taxwise_1").val()) || 0;
-            var totalEfile = parseInt($("#total-efile").val()) || 0;
+            var totalEfile = parseInt($("#total_efile").val()) || 0;
             var bankingFeeUnit = parseInt($("#banking-fee-unit").val()) || 0;
             var bankingFee = parseInt($("#banking-fee").val()) || 0;
             var commissionOfficeUnit = parseInt($("#commission-office-unit").val()) || 0;
@@ -728,30 +833,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
             var year = $("#year1").val();
             var officeId = $("#office_id").val();
 
-            $.ajax({
-                type: 'POST',
-                url: 'edit-profit.php',
-                data: {
-                    office_id: officeId,
-                    year1: year,
-                    prevYear: prevYear,
-                    saleProgram: saleProgram,
-                    payTaxwise: payTaxwise,
-                    efileFee: efileFee,
-                    efileTaxwise: efileTaxwise,
-                    bankingFee: bankingFee,
-                    efileFee1: efileFee1,
-                    efileTaxwise1: efileTaxwise1,
-                    commissionOffice: commissionOffice,
-                    otherCommission: otherCommission,
-                },
-                success: function(response) {
-                    // console.log(response);
-                },
-                error: function(error) {
-                    console.error(error);
-                }
-            });
+      
 
             var totalProfit = prevYear + saleProgram + payTaxwise + efileFee + efileTaxwise + bankingFee + efileFee1 + efileTaxwise1 + commissionOffice + otherCommission;
 
@@ -763,19 +845,30 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
             $("#total-cxc").val(totalcxc);
 
             var sum = 0;
-
+            var sumOther = 0;
             $('input[name="amount[]"]').each(function() {
                 var amount = parseInt($(this).val()) || 0;
                 sum += amount;
             });
 
+            $('input[name="amount_o[]"]').each(function() {
+                var amount_o = parseInt($(this).val()) || 0;
+                sumOther += amount_o;
+            });
+
             // console.log("sum",sum);
             var balance = totalcxc - sum;
-            $("#balance").text(balance);
+            
+            $("#balance").val(balance);
+			$("#total_paid").val(`${sum}`);
+            $("#other-commission").val(`${sumOther}`);
+            $("#total_other").val(`${sumOther}`);
 
             negative();
 
         };
+
+
 
         // Add Entry button click event
         $('#addEntry').on('click', function() {
@@ -794,14 +887,53 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
             $('#cxpTable').append(newRow);
         });
 
+
+     // Add Entry Other button click event
+     $('#addOtherEntry').on('click', function() {
+            // Increment the row count
+            rowCount++;
+
+            // Add a new row to the table
+            var newRow = '<tr id="row' + rowCount + '">' +
+                '<td>' + rowCount + '</td>' +
+                '<td><input type="text" class="form-control" name="amount_o[]" /></td>' +
+                '<td><input type="text" class="form-control" name="receipt_o[]" /></td>' +
+                '<td><input type="date" class="form-control" name="date_o[]" /></td>' + // Use type "date"
+                '<td><input type="text" class="form-control" name="notes_o[]" /></td>' +
+                '</tr>';
+
+            $('#otherTable').append(newRow);
+        });
+
+
         // Save Data button click event
-        $('#saveCxp').on('click', function() {
+    $('#saveCxp').on('click', function() {  
+            var valid = true;
+            calculateAll(); 
+
+               $('#cxpTable tr').each(function(index, row) {
+               var receipt = $(row).find('input[name="receipt[]"]').val();
+               var date = $(row).find('input[name="date[]"]').val();
+
+                    if (receipt === '' || date === '') {
+                     valid = false;
+                     alert('Please fill in both receipt and date for all entries.');
+                     return false; // Break out of the loop
+                         }
+                });
+
+            if (!valid) {
+                return; // Abort the function if validation fails
+            }
+    
             var formData = {
                 office_id: $('#office_id').val(),
                 year1: $('#year1').val(),
-                balance: $('#balance').text(),
+                balance: $('#balance').val(),
+                total_paid: $('#total_paid').val(),
                 entries: []
             };
+           
 
             $('#cxpTable tr').each(function(index, row) {
                 var entry = {
@@ -809,6 +941,65 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                     receipt: $(row).find('input[name="receipt[]"]').val(),
                     date: $(row).find('input[name="date[]"]').val(),
                     notes: $(row).find('input[name="notes[]"]').val()
+
+                };
+                formData.entries.push(entry);
+            });
+            // Send data to the server using AJAX
+            $.ajax({
+                type: 'POST',
+                url: 'save-cxp.php',
+                data: formData,
+                success: function(response) {
+                    $('#cxpTable').empty();
+                    loadExistingData();
+                },
+                error: function(error) {
+                    console.error(error);
+                }
+            });
+    });
+    
+    
+    
+        // Save Other Data button click event
+     $('#saveOther').on('click', function() {
+     var valid = true;
+     calculateAll(); 
+     calculateAll(); //thats double call  needed for now, to calculate the totals, im sorry 
+
+    $('#otherTable tr').each(function(index, row) {
+        var receipt = $(row).find('input[name="receipt_o[]"]').val();
+        var date = $(row).find('input[name="date_o[]"]').val();
+
+        if (receipt === '' || date === '') {
+            valid = false;
+            alert('Please fill in both receipt and date for all entries.');
+            return false; // Break out of the loop
+        }
+    });
+
+    if (!valid) {
+        return; // Abort the function if validation fails
+    }
+
+            var formData = {
+                office_id: $('#office_id').val(),
+                year1: $('#year1').val(),
+              other_commission: $('#other-commission').val(),
+              total_other: $('#total_other').val(),
+              balance: $('#balance').val(),
+
+                entries: []
+            };
+
+            $('#otherTable tr').each(function(index, row) {
+                var entry = {
+                    amount: $(row).find('input[name="amount_o[]"]').val(),
+                    receipt: $(row).find('input[name="receipt_o[]"]').val(),
+                    date: $(row).find('input[name="date_o[]"]').val(),
+                    notes: $(row).find('input[name="notes_o[]"]').val()
+                    
                 };
 
                 formData.entries.push(entry);
@@ -817,22 +1008,23 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
             // Send data to the server using AJAX
             $.ajax({
                 type: 'POST',
-                url: 'save-cxp.php',
+                url: 'save-other.php',
                 data: formData,
                 success: function(response) {
-                    // console.log(response);
-
-                    // var cxc = $("#total-cxc").val();
-                    // $("#balance").text(`$${cxc- response.sum}`);
-
-                    $('#cxpTable').empty();
-                    loadExistingData();
+   
+                    $('#otherTable').empty();
+                   loadExistingOtherData();
                 },
                 error: function(error) {
                     console.error(error);
                 }
             });
         });
+
+
+
+
+
 
         function negative() {
         // Get all input elements with the class 'negativeInput'
@@ -864,6 +1056,11 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
         }
     }
 		
+
+
+
+
+
 
     </script>
 

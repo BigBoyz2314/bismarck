@@ -7,6 +7,11 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     header("location: login.php");
     exit;
 }
+
+$currentYear = date("Y");
+$defaultYear = $currentYear - 1;
+$year = $defaultYear ;
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -55,7 +60,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                     <a class="nav-link text-primary" href="index.php">Overview</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" href="office.php">Offices</a>
+                    <a class="nav-link active" href="office.php?year=<?php echo "$defaultYear"; ?> ">Offices</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link text-primary" href="#">Clients by States</a>
@@ -94,6 +99,9 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                     if (isset($_GET['year'])) {
                         echo "<h4>Year: ".$_GET['year']."</h4>";
                     }
+                    else{
+                        echo "<h4>Year: ALL</h4>";
+                    }
                 ?>
             </div>
             <div class="col-md-6">
@@ -127,25 +135,26 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                             <option value="Balance Pending">Balance Pending</option>
                         </select>
                     </div>
+					
+					
+					
                     <div class="col-md-5 mb-2">
                     <form action="" method="get">
                         <h6>Year</h6>
                         <select name="year" id="year" class="form-select" required>
-                            <option value="">Select</option>
                             <option value="All">All</option>
-                            <option value="2020">2020</option>
-                            <option value="2021">2021</option>
-                            <option value="2022">2022</option>
-                            <option value="2023">2023</option>
-                            <option value="2024">2024</option>
-                            <option value="2025">2025</option>
-                            <option value="2026">2026</option>
-                            <option value="2027">2027</option>
-                            <option value="2028">2028</option>
-                            <option value="2029">2029</option>
-                            <option value="2030">2030</option>
+                            <?php
+                        $currentYear = date("Y");
+                        $defaultYear = $currentYear - 1;
+
+                        // Loop to generate options
+                        for ($year = 2020; $year <= 2030; $year++) {
+                            $selected = ($year == $defaultYear) ? "selected" : ""; // Add "selected" attribute if it's the default year
+                            echo "<option value='$year' $selected>$year</option>";
+                        }
+                        ?>
                         </select>
-                        <button class="btn btn-primary mt-2" type="submit">Search</button>
+                        <button class="btn btn-primary mt-2" name="selectYear" id="selectYear" type="submit">Search</button>
                     </form>
                     <input type="text" name="search" id="search" class="form-control mt-4" placeholder="Search...">
                 </div>
@@ -173,32 +182,32 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                                         <th>Email Address</th>
                                         <th>City</th>
                                         <th>State</th>
-                                        <th>Zipcode</th>
                                         <th>Registration Code</th>
                                         <th>Office Status</th>
                                         <th>Bank App Status</th>
-                                        <th>Balance Acc Rec</th>
-                                        <th>Sofware Cost</th>
-                                        <th>Transm Fee</th>
-                                        <th>SB Fee  </th>
-                                        <th>Fee Collect</th>
+                                        <th>Balance</th>
+                                        <th>Received</th>
+                                        <th>Soft</th>
+                                        <th>Efile Fee</th>
+                                        <th>Bank Fee  </th>
+                                        <th>Coms</th>
                                     </tr>
                                 </thead>
                                 <tbody>";
                             while ($row = mysqli_fetch_assoc($result)) {
                                 echo "<tr class='text-center'>
                                         <td>".$row['preparer_efin']."</td>
-                                        <td>".$row['preparer_efin']."</td>
+                                        <td>".$row['office_ClientID']."</td>
                                         <td>".$row['preparer_ptin']."</td>
-                                        <td><a href='office-info.php?name=".$row['company_name']."' class='text-decoration-none'>".$row['company_name']."</a></td>
+                                        <td><a href='office-info.php?name=".$row['user_id']."' class='text-decoration-none'>".$row['company_name']."</a></td>
                                         <td>".$row['company_contact_name']."</td>
                                         <td>".$row['company_contact_phone']."</td>
-                                        <td></td>
+                                        <td>".$row['company_contact_email']."</td>
                                         <td>".$row['company_city']."</td>
-                                        <td>".$row['company_state']."</td>
-                                        <td>".$row['company_zip']."</td>";
-
-                                        $sql2 = "SELECT * FROM registration_codes WHERE user_id = ".$row['user_id']." ORDER BY year DESC LIMIT 1";
+                                        <td>".$row['company_state']."</td>";
+                                        if (isset($_GET['year']) && $_GET['year'] != "All") {
+                                            $year = $_GET['year'];
+                                        $sql2 = "SELECT * FROM registration_codes WHERE user_id = ".$row['user_id']." AND year = ".$year." ORDER BY year DESC LIMIT 1";
                                         $result2 = mysqli_query($conn, $sql2);
                                         $resultCheck2 = mysqli_num_rows($result2);
                                         if ($resultCheck2 > 0) {
@@ -208,73 +217,114 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                                         } else {
                                             echo "<td></td>";
                                         }
-                                        echo "<td> 
-                                        <select class='form-select' name='officeStatus" . $row['id'] . "' id=''>
+                                     
+									} 
+									else{
+										
+										 $sql2 = "SELECT * FROM registration_codes WHERE user_id = ".$row['user_id']." ORDER BY year DESC LIMIT 1";
+                                        $result2 = mysqli_query($conn, $sql2);
+                                        $resultCheck2 = mysqli_num_rows($result2);
+                                        if ($resultCheck2 > 0) {
+                                            while ($row2 = mysqli_fetch_assoc($result2)) {
+                                                echo "<td>".$row2['reg_code']."</td>";
+                                            }
+                                        } else {
+                                            echo "<td></td>";
+                                        }
+                                       
+										
+									}
+
+										echo "<td> 
+                                        <select class='form-select' name='officeStatus" . $row['id'] . "' id='officeStatus'>
                                             <option value='Active'>Active</option>
                                             <option value='Inactive'>Inactive</option>
+                                            <option value='Released'>Released</option>
+                                            <option value='EFINPending'>EFIN Pending</option>
+
+											
                                         </select>
-                                        </td>
-                                        <td></td>";
+                                        </td> ";
+
+
+                                        echo "<td> 
+                                        <select class='form-select' name='bankApStatus" . $row['id'] . "' id='bankApStatus'>
+                                            <option value='Aproved'>Aproved</option>
+                                            <option value='PendingAp'>Inactive</option>
+                                            <option value='NotApplied'>Not Applied</option>
+
+											
+                                        </select>
+                                        </td>";
+
+
 
                                         if (isset($_GET['year']) && $_GET['year'] != "All") {
                                             $year = $_GET['year'];
-                                            $sql3 = "SELECT balance FROM production WHERE office_id = ".$row['id']." AND year = ".$year."";
+                                            $sql3 = "SELECT * FROM production WHERE office_id = ".$row['id']." AND year = ".$year."";
                                             $result3 = mysqli_query($conn, $sql3);
                                             $resultCheck3 = mysqli_num_rows($result3);
                                             if ($resultCheck3 > 0) {
                                                 while ($row3 = mysqli_fetch_assoc($result3)) {
-                                                    echo "<td>".$row3['balance']."</td>";
-                                                }
-                                            } else {
-                                                echo "<td></td>";
-                                            }
+                                                    //echo "<td>".$row3['balance']."</td>";
+                                                echo "<td><a href='production.php?id=".$row['id']. '&year=' . $year ."' class='text-decoration-none'>".$row3['balance']."</a></td> ";
 
-                                            $sql3 = "SELECT * FROM profit WHERE office_id = ".$row['id']." AND year = ".$year."";
-                                            $result3 = mysqli_query($conn, $sql3);
-                                            $resultCheck3 = mysqli_num_rows($result3);
-                                            if ($resultCheck3 > 0) {
-                                                while ($row3 = mysqli_fetch_assoc($result3)) {
+									                echo "<td>".$row3['total_paid']."</td>";
                                                     echo "<td>".$row3['sale_program']."</td>";
-                                                }
+                                                    echo "<td>".$row3['efile_fee']."</td>";                                           
+													echo "<td>".$row3['banking_fee']."</td>";
+													echo "<td>".$row3['commission_office']."</td>";
+													   }
                                             } else {
+                                                echo "<td></td>";
+                                                echo "<td></td>";
+                                                echo "<td></td>";
+												echo "<td></td>";
+                                                echo "<td></td>";
                                                 echo "<td></td>";
                                             }
 
-                                            $sql3 = "SELECT * FROM profit WHERE office_id = ".$row['id']." AND year = ".$year."";
-                                            $result3 = mysqli_query($conn, $sql3);
-                                            $resultCheck3 = mysqli_num_rows($result3);
-                                            if ($resultCheck3 > 0) {
-                                                while ($row3 = mysqli_fetch_assoc($result3)) {
-                                                    echo "<td>".$row3['efile_fee']."</td>";
-                                                }
-                                            } else {
-                                                echo "<td></td>";
-                                            }
+                                           
 
-                                            $sql3 = "SELECT * FROM profit WHERE office_id = ".$row['id']." AND year = ".$year."";
-                                            $result3 = mysqli_query($conn, $sql3);
-                                            $resultCheck3 = mysqli_num_rows($result3);
-                                            if ($resultCheck3 > 0) {
-                                                while ($row3 = mysqli_fetch_assoc($result3)) {
-                                                    echo "<td>".$row3['banking_fee']."</td>";
-                                                }
-                                            } else {
-                                                echo "<td></td>";
-                                            }
-
-                                            $sql3 = "SELECT * FROM profit WHERE office_id = ".$row['id']." AND year = ".$year."";
-                                            $result3 = mysqli_query($conn, $sql3);
-                                            $resultCheck3 = mysqli_num_rows($result3);
-                                            if ($resultCheck3 > 0) {
-                                                while ($row3 = mysqli_fetch_assoc($result3)) {
-                                                    echo "<td>".$row3['commission_office']."</td>";
-                                                }
-                                            } else {
-                                                echo "<td></td>";
-                                            }
+                                            
+                                               
+                                            
 
                                         } elseif (!isset($_GET['year']) || $_GET['year'] == "All") {
-                                            $sql4 = "SELECT SUM(balance) as balance FROM production WHERE office_id = ".$row['id']."";
+											
+											
+											 $sql_production = "SELECT 
+                                SUM(balance) as balance,
+                                SUM(total_paid) as total_paid,
+                                SUM(sale_program) as sale_program,
+                                SUM(efile_fee) as efile_fee,
+                                SUM(banking_fee) as banking_fee,
+								SUM(commission_office) as commission_office
+                            FROM 
+                                production 
+                            WHERE 
+                                office_id = ".$row['id']."";
+        $result_production = $conn->query($sql_production);
+        if (!$result_production) {
+            echo "<td></td><td></td><td></td><td></td><td></td><td></td>";
+        } elseif ($result_production->num_rows > 0) {
+            $row_production = $result_production->fetch_assoc();
+            echo "<td>".$row_production['balance']."</td>";
+            echo "<td>".$row_production['total_paid']."</td>";
+            echo "<td>".$row_production['sale_program']."</td>";
+            echo "<td>".$row_production['efile_fee']."</td>";
+            echo "<td>".$row_production['banking_fee']."</td>";
+            echo "<td>".$row_production['commission_office']."</td>";
+
+        } else {
+            echo "<td></td><td></td><td></td><td></td><td></td><td></td>";
+        }
+
+      
+
+											
+/*
+                                         $sql4 = "SELECT SUM(balance) as balance FROM production WHERE office_id = ".$row['id']."";
                                             $result4 = $conn->query($sql4);
                                             if (!$result4) {
                                                 // Check for errors in the query
@@ -287,7 +337,20 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                                                 echo "<td></td>";
                                             }
 
-                                            $sql4 = "SELECT SUM(sale_program) as sale_program FROM profit WHERE office_id = ".$row['id']."";
+                                            $sql4 = "SELECT SUM(total_paid) as total_paid FROM production WHERE office_id = ".$row['id']."";
+                                            $result4 = $conn->query($sql4);
+                                            if (!$result4) {
+                                                // Check for errors in the query
+                                                echo "Error: " . $conn->error;
+                                            } elseif ($result4->num_rows > 0) {
+                                                while ($row4 = $result4->fetch_assoc()) {
+                                                    echo "<td>".$row4['total_paid']."</td>";
+                                                }
+                                            } else {
+                                                echo "<td></td>";
+                                            }                                            
+											
+											$sql4 = "SELECT SUM(sale_program) as sale_program FROM production WHERE office_id = ".$row['id']."";
                                             $result4 = $conn->query($sql4);
                                             if (!$result4) {
                                                 // Check for errors in the query
@@ -300,7 +363,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                                                 echo "<td></td>";
                                             }
 
-                                            $sql4 = "SELECT SUM(efile_fee) as efile_fee FROM profit WHERE office_id = ".$row['id']."";
+                                            $sql4 = "SELECT SUM(efile_fee) as efile_fee FROM production WHERE office_id = ".$row['id']."";
                                             $result4 = $conn->query($sql4);
                                             if (!$result4) {
                                                 // Check for errors in the query
@@ -313,7 +376,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                                                 echo "<td></td>";
                                             }
 
-                                            $sql4 = "SELECT SUM(banking_fee) as banking_fee FROM profit WHERE office_id = ".$row['id']."";
+                                            $sql4 = "SELECT SUM(banking_fee) as banking_fee FROM production WHERE office_id = ".$row['id']."";
                                             $result4 = $conn->query($sql4);
                                             if (!$result4) {
                                                 // Check for errors in the query
@@ -326,7 +389,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                                                 echo "<td></td>";
                                             }
 
-                                            $sql4 = "SELECT SUM(commission_office) as commission_office FROM profit WHERE office_id = ".$row['id']."";
+                                            $sql4 = "SELECT SUM(commission_office) as commission_office FROM production WHERE office_id = ".$row['id']."";
                                             $result4 = $conn->query($sql4);
                                             if (!$result4) {
                                                 // Check for errors in the query
@@ -337,7 +400,9 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                                                 }
                                             } else {
                                                 echo "<td></td>";
-                                            }
+                                            } */
+											
+											
                                         }
                                         
                                     echo "</tr>";
@@ -346,52 +411,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                         }
 
                     ?>
-                    <!-- <thead>
-                        <tr class="text-center">
-                            <th>EFIN</th>
-                            <th>Client ID</th>
-                            <th>PID</th>
-                            <th>Office Name</th>
-                            <th>Contact First Name</th>
-                            <th>Contact Last Name</th>
-                            <th>Phone</th>
-                            <th>Email Address</th>
-                            <th>City</th>
-                            <th>State</th>
-                            <th>Zipcode</th>
-                            <th>Registration Code</th>
-                            <th>Office Status</th>
-                            <th>Bank App Status</th>
-                            <th>Balance Acc Rec</th>
-                            <th>Sofware Cost</th>
-                            <th>Transm Fee</th>
-                            <th>SB Fee  </th>
-                            <th>Fee Collect</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td>Active</td>
-                            <td>Approved</td>
-                            <td></td>
-                            <td>1135</td>
-                            <td>6</td>
-                        </tr>
-                    </tbody> -->
+                  
                 </table>
             </div>
         </div>
@@ -409,12 +429,10 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                             <th>Address</th>
                             <th>City</th>
                             <th>State</th>
-                            <th>Zipcode</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td></td>
                             <td></td>
                             <td></td>
                             <td></td>
@@ -447,8 +465,46 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                 $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
             });
         });
+
+        $(document).ready(function() {
+            $("#officeStatus").on("change", function () {
+                var officeStatus = $(this).val();
+                var officeName = $(this).attr('name');
+                var officeId = officeName.replace('officeStatus', '');
+                $.ajax({
+                    url: 'update-office-status.php',
+                    method: 'POST',
+                    data: {
+                        officeStatus: officeStatus,
+                        officeId: officeId
+                    },
+                    success: function(data) {
+                        alert(data);
+                    }
+                });
+            });
+
+            $("#bankApStatus").on("change", function () {
+                var bankApStatus = $(this).val();
+                var officeName = $(this).attr('name');
+                var officeId = officeName.replace('bankApStatus', '');
+                $.ajax({
+                    url: 'update-bank-ap-status.php',
+                    method: 'POST',
+                    data: {
+                        bankApStatus: bankApStatus,
+                        officeId: officeId
+                    },
+                    success: function(data) {
+                        alert(data);
+                    }
+                });
+            });
+        });
           
+        
 		</script>
+    
 		
 		<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </body>
