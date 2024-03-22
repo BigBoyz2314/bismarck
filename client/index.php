@@ -36,7 +36,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true || $_SESSION[
             <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
                 <ul class="navbar-nav mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link text-light" href="#">Manage Users</a>
+                        <a class="nav-link text-light" href="change-password.php">Change Password</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link text-light" href="logout.php">Logout</a>
@@ -87,6 +87,12 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true || $_SESSION[
         </div>
     </nav>
 	<div class="container-fluid w-75">
+        <?php
+            if (isset($_SESSION['successMsg'])) {
+                echo '<div class="alert alert-success mt-3">' . $_SESSION['successMsg'] . '</div>';
+                unset($_SESSION['successMsg']); // Clear the error message from session after displaying
+            }
+        ?>
         <div class="row mt-3">
             <div class="col-md-6">
                 <h3>Overview</h3>
