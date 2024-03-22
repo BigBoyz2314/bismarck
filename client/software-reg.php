@@ -1,5 +1,4 @@
 <?php
-include '../includes/config.php';
 // Initialize the session
 session_start();
 
@@ -8,59 +7,9 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true || $_SESSION[
     header("location: login.php");
     exit;
 }
-
-
-
-
 $currentYear = date("Y");
 $defaultYear = $currentYear - 1;
-$year1=$defaultYear;
-
-
-
-        if (isset($_SESSION['id'])) {
-            //$office = $_GET['id'];
-            $user_id = $_SESSION['id'];
-            $stmt = "SELECT * FROM offices WHERE user_id = $user_id";
-            $result = $conn->query($stmt);
-            $row = $result->fetch_assoc();
-            $name = $row["company_contact_name"];
-            $officeName = $row['company_name'];
-            $office_id = $row['id'];
-            // $officeName = $row['company_name'];
-            $stmt2 = "SELECT * FROM production WHERE office_id = $office_id ORDER BY year DESC";
-            $result2 = $conn->query($stmt2);
-
-
-           // Construct the SQL query to fetch all necessary data in one go
-           $stmt = "SELECT *
-           FROM production
-           WHERE office_id = $office_id AND year = $year1";
-
-// Execute the query
-$result = $conn->query($stmt);
-
-// Check if there are rows returned
-if ($result->num_rows > 0) {
-// Fetch the first row
-$row = $result->fetch_assoc();
-
-$total_transmissions_0 = $row['personal_tax'] + $row['corporate_tax_c'] + $row['corporate_tax_s'] + $row['partnership_tax'];
-$total_transmissions_1 = $row['personal_tax_1'] + $row['corporate_tax_c_1'] + $row['corporate_tax_s_1'] + $row['partnership_tax_1'];
-$total_transmissions_2 = $row['personal_tax_2'] + $row['corporate_tax_c_2'] + $row['corporate_tax_s_2'] + $row['partnership_tax_2'];
-
-
-$balance = $row['balance'];
-
-    }
-    
-}
-else {
-  echo 'no id' ;  }
 ?>
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -74,25 +23,6 @@ else {
       color: red;
       display: none;
     }
-
-        .negative {
-            color: #ff0000;
-        }
-   
-        .balance {
-            font-size: 1.2em;
-        }
-        
-		.borderless {
-        border: none; /* Removes border */
-		outline : none ;
-               }
-
-        .bold-font {
-        font-weight: bold; /* Makes the font bold */
-          }
-
-		 
   </style>
 </head>
 <body>
@@ -158,46 +88,13 @@ else {
             </div>
         </div>
     </nav>
-
-    <div class="container-fluid w-75">
+	<div class="container-fluid w-75">
         <div class="row mt-3">
             <div class="col-md-6">
                 <h3>Overview</h3>
             </div>
             <hr>
-
-            <div class="col-md-4">
-                
-            
-            
-                <div class="border p-3 rounded-4">
-
-
-                    <canvas id="myChart" height="200px"></canvas>
-                
-                </div>
-
-
-
-                <div class="d-flex mt-4">
-                    <p class="m-0">To Renew your 2023 Software Click Here</p>
-                    <button class="btn btn-primary">Renew</button>
-                </div>
-                <div class="d-flex mt-4">
-    <h5 class="m-0">Your  Balance Due 
-    <input type="text" name="balance" id="balance" disabled  class="balance bold borderless negative" value="$<?php if(isset($balance)){echo $balance;} else {echo '0';} ?>"></h5>
-</div>
-                <div class="d-flex mt-4 bg-success-subtle rounded-2">
-                    <p class="m-0 ms-2">Make a payment thru Zelle using the <br> phone number 239-391-6775 <br> to Bismarck Business Group LLC.</p>
-                </div>
-                <div class="d-flex mt-4 bg-info-subtle rounded-2 mb-5">
-                    <p class="m-0 ms-2">Make a payment with Debit or Credit Card</p>
-                </div>
-
-            </div>
-
-
-
+  
             <div class="col-md-8 mb-4 bg-info-subtle rounded-4 pt-3">
             <?php 
                 if (isset($_GET['office']) && $_GET['office'] == 'added') {
@@ -215,7 +112,7 @@ else {
             ?>
                 <h5 class="pt-3 pb-1 d-inline">Office/Contact Info</h5>
                 <button class="btn btn-warning float-end" id="editBtn">Edit</button>
-                <form action="update.php" method="post">
+                <form action="update-soft-reg.php" method="post">
                 <div class="client-info d-flex flex-column mt-4">
                 <?php
 // Assuming you have a database connection established
@@ -254,7 +151,8 @@ if (isset($_SESSION['id'])) {
     $stmt->close();
 
     // Array of field names and labels
-    $fields = [
+    $fields_company = [
+        'Company ClientID' => 'office_ClientID',
         'Company Contact Name' => 'company_contact_name',
         'Company Name' => 'company_name',
         'Company Address' => 'company_address',
@@ -262,9 +160,10 @@ if (isset($_SESSION['id'])) {
         'Company State' => 'company_state',
         'Company Zip' => 'company_zip',
         'Company Contact Phone' => 'company_contact_phone',
-        'Company Contact Email' => 'company_contact_email',
         'Company Fax' => 'company_fax',
-		'Company Federal Tax ID' => 'company_tax_id',
+        'Company Contact Email' => 'company_contact_email',
+		'Company Federal Tax ID' => 'company_tax_id'];
+	$fields_preparer = [	
         'Preparer ID' => 'preparer_id',
         'Preparer Name' => 'preparer_name',
         'Preparer Company Name' => 'preparer_company_name',
@@ -280,6 +179,17 @@ if (isset($_SESSION['id'])) {
         'ERO PIN' => 'preparer_ero_pin',
         'Preparer PIN' => 'preparer_pin'
     ];
+    $fields_software = [
+        'Soft Installation Type' => 'instalation_type',
+        'Server Name' => 'server_name',
+        'Installation Type' => 'server_type',
+        'IP Addres' => 'ip_address',
+        'Wndows Type' => 'os_version',
+        'Number of Sttaions' => 'num_stations',
+        'Number of Virtual PC' => 'num_vpc',
+        'Printer IP Address' => 'printer_ip_address'
+    ];
+
 
 
     // Function to create disabled input with value or empty if data is not available
@@ -300,7 +210,15 @@ if (isset($_SESSION['id'])) {
     }
 
     // Output inputs for each field
-    foreach ($fields as $label => $fieldName) {
+    foreach ($fields_company as $label => $fieldName) {
+      
+        echo createInput($label, $fieldName, $data[$fieldName] ?? null);
+        
+    }
+	
+	echo  '<p><h5 class="pt-3 pb-1 d-inline">Preparer Information </h5>' ;
+	
+	foreach ($fields_preparer as $label => $fieldName) {
         if ($fieldName == 'preparer_efin') {
             echo createInputEfin($label, $fieldName, $data[$fieldName] ?? null);
         } 
@@ -308,6 +226,20 @@ if (isset($_SESSION['id'])) {
         echo createInput($label, $fieldName, $data[$fieldName] ?? null);
         }
     }
+	      
+    
+	echo  '<p><h5 class="pt-3 pb-1 d-inline">Software and Network Information </h5>' ;
+	
+	  foreach ($fields_software as $label => $fieldName) {
+               echo createInput($label, $fieldName, $data[$fieldName] ?? null);
+        }
+    
+
+
+
+
+
+	
         echo "<input type='hidden' name='id' value='" . $_SESSION['id'] . "'>";
 
     } else {
@@ -330,55 +262,27 @@ if (isset($_SESSION['id'])) {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-
-
-<script type="text/javascript">
+	<script type="text/javascript">
 		function googleTranslateElementInit() {
 		  new google.translate.TranslateElement({pageLanguage: 'en', includedLanguages: 'es', layout: google.translate.TranslateElement.InlineLayout.SIMPLE, autoDisplay: false}, 'google_translate_element');
 		}
 
-
-var year1 = "<?php echo $year1 ;?>";
-var balance = "<?php echo $balance ;?>";
-
-var total_transmissions_0 = "<?php echo $total_transmissions_0; ?>";
-var total_transmissions_1 = "<?php echo $total_transmissions_1; ?>";
-var total_transmissions_2 = "<?php echo $total_transmissions_2; ?>";
-
-calculateAll();
-function calculateAll(){
-//$("#balance").val(44);
-}
-
-
-
-        var xValues = [year1, year1-1, year1-2];
-        var yValues = [total_transmissions_0, total_transmissions_1, total_transmissions_2 ];
-        var barColors = ["red", "green","blue","orange","brown"];
-
-        new Chart("myChart", {
-        type: "bar",
-        data: {
-            labels: xValues,
-            datasets: [{
-            backgroundColor: barColors,
-            data: yValues
-            }]
-        },
-        options: {
-            plugins: {
-                legend: {
-                    display: false,
-                }
-            }
-            // title: "Office Information Graph",
-        }
-        });
+   
 
         document.getElementById("editBtn").addEventListener("click", function() {
             document.querySelectorAll("input").forEach(function(input) {
-                input.disabled = false;
-                document.getElementById("saveBtn").classList.remove("d-none");
+                if (input.id !== 'office_ClientID' && input.id !== 'instalation_type' && //prevent specific fields to be edited by the client
+                    input.id !== 'server_name'     && input.id !== 'server_type' &&
+                    input.id !== 'num_stations'    && input.id !== 'num_vpc'   ) {
+                        input.disabled = false;
+                        input.style.color = 'black'; // Change the color back to black for other fields
+                        input.autocomplete = 'off'; // Disable autocomplete for other fields
+                } else {
+                        input.disabled = true; // Disable the office_ClientID field
+                        input.style.color = 'grey'; // Set color to grey for office_ClientID field
+                 }
+
+            document.getElementById("saveBtn").classList.remove("d-none");
             });
         });
 

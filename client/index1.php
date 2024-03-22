@@ -1,5 +1,4 @@
 <?php
-include '../includes/config.php';
 // Initialize the session
 session_start();
 
@@ -8,59 +7,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true || $_SESSION[
     header("location: login.php");
     exit;
 }
-
-
-
-
-$currentYear = date("Y");
-$defaultYear = $currentYear - 1;
-$year1=$defaultYear;
-
-
-
-        if (isset($_SESSION['id'])) {
-            //$office = $_GET['id'];
-            $user_id = $_SESSION['id'];
-            $stmt = "SELECT * FROM offices WHERE user_id = $user_id";
-            $result = $conn->query($stmt);
-            $row = $result->fetch_assoc();
-            $name = $row["company_contact_name"];
-            $officeName = $row['company_name'];
-            $office_id = $row['id'];
-            // $officeName = $row['company_name'];
-            $stmt2 = "SELECT * FROM production WHERE office_id = $office_id ORDER BY year DESC";
-            $result2 = $conn->query($stmt2);
-
-
-           // Construct the SQL query to fetch all necessary data in one go
-           $stmt = "SELECT *
-           FROM production
-           WHERE office_id = $office_id AND year = $year1";
-
-// Execute the query
-$result = $conn->query($stmt);
-
-// Check if there are rows returned
-if ($result->num_rows > 0) {
-// Fetch the first row
-$row = $result->fetch_assoc();
-
-$total_transmissions_0 = $row['personal_tax'] + $row['corporate_tax_c'] + $row['corporate_tax_s'] + $row['partnership_tax'];
-$total_transmissions_1 = $row['personal_tax_1'] + $row['corporate_tax_c_1'] + $row['corporate_tax_s_1'] + $row['partnership_tax_1'];
-$total_transmissions_2 = $row['personal_tax_2'] + $row['corporate_tax_c_2'] + $row['corporate_tax_s_2'] + $row['partnership_tax_2'];
-
-
-$balance = $row['balance'];
-
-    }
-    
-}
-else {
-  echo 'no id' ;  }
 ?>
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -74,25 +21,6 @@ else {
       color: red;
       display: none;
     }
-
-        .negative {
-            color: #ff0000;
-        }
-   
-        .balance {
-            font-size: 1.2em;
-        }
-        
-		.borderless {
-        border: none; /* Removes border */
-		outline : none ;
-               }
-
-        .bold-font {
-        font-weight: bold; /* Makes the font bold */
-          }
-
-		 
   </style>
 </head>
 <body>
@@ -108,7 +36,7 @@ else {
             <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
                 <ul class="navbar-nav mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link text-light" href="#">Manage Users</a>
+                        <a class="nav-link text-light" href="change-password.php">Change Password</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link text-light" href="logout.php">Logout</a>
@@ -128,7 +56,7 @@ else {
             <div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
             <ul class="navbar-nav mb-2 mb-lg-0 fw-semibold">
                 <li class="nav-item">
-                    <a class="nav-link active" href="index.php">Overview</a>
+                    <a class="nav-link active" href="#">Overview</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link text-primary" href="bank-reg.php">Bank Registration</a>
@@ -137,7 +65,7 @@ else {
                     <a class="nav-link text-primary" href="software-reg.php">Software Registration</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-primary" href="production.php?year=<?php echo $defaultYear . "&id=" . $_SESSION['id'] ; ?>">Production</a>
+                    <a class="nav-link text-primary" href="production.php">Production</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link text-primary" href="registration-codes.php">Registration Codes</a>
@@ -158,35 +86,30 @@ else {
             </div>
         </div>
     </nav>
-
-    <div class="container-fluid w-75">
+	<div class="container-fluid w-75">
+        <?php
+            if (isset($_SESSION['successMsg'])) {
+                echo '<div class="alert alert-success mt-3">' . $_SESSION['successMsg'] . '</div>';
+                unset($_SESSION['successMsg']); // Clear the error message from session after displaying
+            }
+        ?>
         <div class="row mt-3">
             <div class="col-md-6">
                 <h3>Overview</h3>
             </div>
             <hr>
-
             <div class="col-md-4">
-                
-            
-            
                 <div class="border p-3 rounded-4">
-
-
                     <canvas id="myChart" height="200px"></canvas>
-                
                 </div>
-
-
-
                 <div class="d-flex mt-4">
                     <p class="m-0">To Renew your 2023 Software Click Here</p>
                     <button class="btn btn-primary">Renew</button>
                 </div>
                 <div class="d-flex mt-4">
-    <h5 class="m-0">Your  Balance Due 
-    <input type="text" name="balance" id="balance" disabled  class="balance bold borderless negative" value="$<?php if(isset($balance)){echo $balance;} else {echo '0';} ?>"></h5>
-</div>
+                    <p class="m-0">Your curent Balance Due</p>
+                    <input type="text" disabled class="form-control disabled-input ms-5" value="$650.00">
+                </div>
                 <div class="d-flex mt-4 bg-success-subtle rounded-2">
                     <p class="m-0 ms-2">Make a payment thru Zelle using the <br> phone number 239-391-6775 <br> to Bismarck Business Group LLC.</p>
                 </div>
@@ -195,9 +118,6 @@ else {
                 </div>
 
             </div>
-
-
-
             <div class="col-md-8 mb-4 bg-info-subtle rounded-4 pt-3">
             <?php 
                 if (isset($_GET['office']) && $_GET['office'] == 'added') {
@@ -262,9 +182,8 @@ if (isset($_SESSION['id'])) {
         'Company State' => 'company_state',
         'Company Zip' => 'company_zip',
         'Company Contact Phone' => 'company_contact_phone',
-        'Company Contact Email' => 'company_contact_email',
         'Company Fax' => 'company_fax',
-		'Company Federal Tax ID' => 'company_tax_id',
+        'Company Federal Tax ID' => 'company_tax_id',
         'Preparer ID' => 'preparer_id',
         'Preparer Name' => 'preparer_name',
         'Preparer Company Name' => 'preparer_company_name',
@@ -330,30 +249,13 @@ if (isset($_SESSION['id'])) {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-
-
-<script type="text/javascript">
+	<script type="text/javascript">
 		function googleTranslateElementInit() {
 		  new google.translate.TranslateElement({pageLanguage: 'en', includedLanguages: 'es', layout: google.translate.TranslateElement.InlineLayout.SIMPLE, autoDisplay: false}, 'google_translate_element');
 		}
 
-
-var year1 = "<?php echo $year1 ;?>";
-var balance = "<?php echo $balance ;?>";
-
-var total_transmissions_0 = "<?php echo $total_transmissions_0; ?>";
-var total_transmissions_1 = "<?php echo $total_transmissions_1; ?>";
-var total_transmissions_2 = "<?php echo $total_transmissions_2; ?>";
-
-calculateAll();
-function calculateAll(){
-//$("#balance").val(44);
-}
-
-
-
-        var xValues = [year1, year1-1, year1-2];
-        var yValues = [total_transmissions_0, total_transmissions_1, total_transmissions_2 ];
+        var xValues = ["2023", "2022", "2021"];
+        var yValues = [60, 49, 44,];
         var barColors = ["red", "green","blue","orange","brown"];
 
         new Chart("myChart", {
@@ -387,7 +289,9 @@ function calculateAll(){
             let sanitizedValue = input.value.replace(/\D/g, '');
 
             // Ensure the value starts with 0
-          
+            if (!sanitizedValue.startsWith('0')) {
+                sanitizedValue = '0' + sanitizedValue;
+            }
 
             // Truncate to a maximum of 6 digits
             sanitizedValue = sanitizedValue.slice(0, 6);
