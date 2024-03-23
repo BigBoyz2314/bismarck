@@ -23,6 +23,7 @@ $year1=$defaultYear;
             $user_id = $_SESSION['id'];
             $stmt = "SELECT * FROM offices WHERE user_id = $user_id";
             $result = $conn->query($stmt);
+            if($result->num_rows > 0) {
             $row = $result->fetch_assoc();
             $name = $row["company_contact_name"];
             $officeName = $row['company_name'];
@@ -55,6 +56,7 @@ $balance = $row['balance'];
     }
     
 }
+        }
 else {
   echo 'no id' ;  }
 ?>
