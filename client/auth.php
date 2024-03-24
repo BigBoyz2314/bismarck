@@ -7,6 +7,26 @@
   include_once('../includes/config.php');
   
 if (isset($_POST)) {
+
+  $turnstile_secret     = '0x4AAAAAAAVeOhSiIwYvalWGrBJg8CdiwF8';
+  $turnstile_response   = $_POST['cf-turnstile-response'];
+  $url                  = "https://challenges.cloudflare.com/turnstile/v0/siteverify";
+  $post_fields          = "secret=$turnstile_secret&response=$turnstile_response";
+
+  $ch = curl_init($url);
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+  curl_setopt($ch, CURLOPT_POST, true);
+  curl_setopt($ch, CURLOPT_POSTFIELDS, $post_fields);
+  $response = curl_exec($ch);
+  curl_close($ch);
+
+  $response_data = json_decode($response);
+  if ($response_data->success != 1) {
+      $_SESSION['errorMsg'] =  "Catpcha verification failed!";
+      header("Location: login.php");
+      exit;
+  }
+  else {
       
     $name = $_POST['username'];
     $password = $_POST['password'];
@@ -42,6 +62,7 @@ if (isset($_POST)) {
     header("Location: login.php");
     exit();
     }
+}
 }
   
 ?>

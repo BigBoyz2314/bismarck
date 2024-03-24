@@ -8,6 +8,26 @@ $error='';
 
 if($_SERVER["REQUEST_METHOD"] == "POST" && $_POST['register'] == 'register') { 
 
+    $turnstile_secret     = '0x4AAAAAAAVeOhSiIwYvalWGrBJg8CdiwF8';
+    $turnstile_response   = $_POST['cf-turnstile-response'];
+    $url                  = "https://challenges.cloudflare.com/turnstile/v0/siteverify";
+    $post_fields          = "secret=$turnstile_secret&response=$turnstile_response";
+  
+    $ch = curl_init($url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_POST, true);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $post_fields);
+    $response = curl_exec($ch);
+    curl_close($ch);
+  
+    $response_data = json_decode($response);
+    if ($response_data->success != 1) {
+        $error =  "Catpcha verification failed!";
+        header("Location: login.php");
+        exit;
+    }
+    else {
+
     $name = $_POST["name"];
     $email = $_POST["email"];
     $password = $_POST["password"];
@@ -45,6 +65,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && $_POST['register'] == 'register') {
             }
         }
     }
+}
 }
 elseif ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST['register'] == 'login') {
 
@@ -87,6 +108,7 @@ elseif ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST['register'] == 'login') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Main Page</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?onload=_turnstileCb" defer></script>
 	<link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
@@ -172,6 +194,7 @@ elseif ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST['register'] == 'login') {
                     <label for="password" class="form-label">Password</label>
                     <input type="password" class="form-control" id="password" name="password" required min="6">
                 </div>
+                <div class="cf-turnstile mb-3" data-sitekey="0x4AAAAAAAVeOuJT-BnBxkML"></div>
                 <div class="mb-3">
                     <p>To make your first payment, you will have to create an account with us to become our customer and you will need to complete the information contained in: Office Registration.</p>
                 </div>
@@ -194,7 +217,7 @@ elseif ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST['register'] == 'login') {
             }
             ?>
             <h2 class="text-center mb-4">Existing Client Login</h2>
-            <form action="" method="POST">
+            <!-- <form action="" method="POST"> -->
                 <div class="mb-3">
                     <label for="email" class="form-label">E-mail</label>
                     <input type="email" class="form-control" id="email" name="email" required>
@@ -218,9 +241,9 @@ elseif ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST['register'] == 'login') {
                     <a href="#" class="fw-bolder">Forgot User name or Password?</a>
                 </div>
                 <div class="text-center mb-5">
-                    <button type="submit" class="btn btn-primary">Login</button>
+                    <a href="client/login.php" class="btn btn-primary">Login</a>
                 </div>
-            </form>
+            <!-- </form> -->
         </div>
     </div>
 		<hr>

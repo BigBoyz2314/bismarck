@@ -126,20 +126,21 @@ $year = $defaultYear ;
                         </div>
                     </div>
                     <div class="col-md-3">
+                        <form action="" method="get">
                         <h6>Office Status</h6>
                         <select class="form-select" name="officeStatus" id="">
+                            <option value="All">All</option>
                             <option value="Active">Active</option>
                             <option value="Inactive">Inactive</option>
                             <option value="Released">Released</option>
-                            <option value="EFIN Pending">EFIN Pending</option>
-                            <option value="Balance Pending">Balance Pending</option>
+                            <option value="EFINPending">EFIN Pending</option>
+                            <option value="BalancePending">Balance Pending</option>
                         </select>
                     </div>
 					
 					
 					
                     <div class="col-md-5 mb-2">
-                    <form action="" method="get">
                         <h6>Year</h6>
                         <select name="year" id="year" class="form-select" required>
                             <option value="All">All</option>
@@ -154,10 +155,10 @@ $year = $defaultYear ;
                         }
                         ?>
                         </select>
-                        <button class="btn btn-primary mt-2" name="selectYear" id="selectYear" type="submit">Search</button>
-                    </form>
-                    <input type="text" name="search" id="search" class="form-control mt-4" placeholder="Search...">
-                </div>
+                        <button class="btn btn-primary mt-2" type="submit">Search</button>
+                        <input type="text" id="search" class="form-control mt-4" placeholder="Search...">
+                    </div>
+                </form>
 
                 </div>
             </div>
@@ -167,7 +168,13 @@ $year = $defaultYear ;
                 <table class="table table-responsive d-block w-100 table-bordered office-table" id="table">
                     <?php
                         include_once '../includes/config.php';
-                        $sql = "SELECT * FROM offices";
+                        if(isset($_GET['officeStatus']) && $_GET['officeStatus'] != "All") {
+                            $officeStatus = $_GET['officeStatus'];
+                            $sql = "SELECT * FROM offices WHERE status = '$officeStatus'";
+                        }
+                        else {
+                            $sql = "SELECT * FROM offices";
+                        }
                         $result = mysqli_query($conn, $sql);
                         $resultCheck = mysqli_num_rows($result);
                         if ($resultCheck > 0) {
@@ -235,26 +242,28 @@ $year = $defaultYear ;
 										
 									}
 
-										echo "<td> 
-                                        <select class='form-select' name='officeStatus" . $row['id'] . "' id='officeStatus'>
-                                            <option value='Active'>Active</option>
-                                            <option value='Inactive'>Inactive</option>
-                                            <option value='Released'>Released</option>
-                                            <option value='EFINPending'>EFIN Pending</option>
+                                    $status = $row['status'];
 
-											
-                                        </select>
-                                        </td> ";
+                                    echo "<td> 
+                                    <select class='form-select officeStatus' name='officeStatus" . $row['id'] . "' id='officeStatus'>";
+                                        echo "<option></option>";
+                                        echo "<option value='Active' " . ($status == 'Active' ? 'selected' : '') . ">Active</option>";
+                                        echo "<option value='Inactive' " . ($status == 'Inactive' ? 'selected' : '') . ">Inactive</option>";
+                                        echo "<option value='Released' " . ($status == 'Released' ? 'selected' : '') . ">Released</option>";
+                                        echo "<option value='EFINPending' " . ($status == 'EFINPending' ? 'selected' : '') . ">EFIN Pending</option>";
+                                        echo "<option value='BalancePending' " . ($status == 'BalancePending' ? 'selected' : '') . ">Balance Pending</option>";
+                                    echo "</select>
+                                        </td>";
 
+                                    $bank_status = $row['bank_status'];
 
-                                        echo "<td> 
-                                        <select class='form-select' name='bankApStatus" . $row['id'] . "' id='bankApStatus'>
-                                            <option value='Aproved'>Aproved</option>
-                                            <option value='PendingAp'>Inactive</option>
-                                            <option value='NotApplied'>Not Applied</option>
-
-											
-                                        </select>
+                                    echo "<td> 
+                                    <select class='form-select bankApStatus' name='bankApStatus" . $row['id'] . "' id='bankApStatus'>";
+                                        echo "<option></option>";
+                                        echo "<option value='Aproved' " . ($bank_status == 'Aproved' ? 'selected' : '') . ">Aproved</option>";
+                                        echo "<option value='PendingAp' " . ($bank_status == 'PendingAp' ? 'selected' : '') . ">Pending Approval</option>";
+                                        echo "<option value='NotApplied' " . ($bank_status == 'NotApplied' ? 'selected' : '') . ">Not Applied</option>";
+                                    echo "</select>
                                         </td>";
 
 
@@ -467,7 +476,7 @@ $year = $defaultYear ;
         });
 
         $(document).ready(function() {
-            $("#officeStatus").on("change", function () {
+            $(".officeStatus").on("change", function () {
                 var officeStatus = $(this).val();
                 var officeName = $(this).attr('name');
                 var officeId = officeName.replace('officeStatus', '');
@@ -484,7 +493,7 @@ $year = $defaultYear ;
                 });
             });
 
-            $("#bankApStatus").on("change", function () {
+            $(".bankApStatus").on("change", function () {
                 var bankApStatus = $(this).val();
                 var officeName = $(this).attr('name');
                 var officeId = officeName.replace('bankApStatus', '');

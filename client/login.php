@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login Page</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?onload=_turnstileCb" defer></script>
     <style>
     </style>
 </head>
@@ -31,6 +32,7 @@
                         <label for="password" class="form-label">Password</label>
                         <input type="password" class="form-control" id="password" name="password" required>
                     </div>
+                    <div class="cf-turnstile mb-3" data-sitekey="0x4AAAAAAAVeOuJT-BnBxkML"></div>
                     <?php
                         session_start();
                         if (isset($_SESSION['errorMsg'])) {
