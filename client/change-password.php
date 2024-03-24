@@ -23,10 +23,10 @@
                         <label for="clientid" class="form-label">Client ID</label>
                         <input type="number" class="form-control" id="clientid" name="clientid" required>
                     </div> -->
-                    <div class="mb-3">
+                    <!-- <div class="mb-3">
                         <label for="username" class="form-label">Old Password</label>
                         <input type="text" class="form-control" id="username" autocomplete="one-time-code" name="username" required>
-                    </div>
+                    </div> -->
                     <div class="mb-3">
                         <label for="oldPassword" class="form-label">Old Password</label>
                         <input type="text" class="form-control" id="oldPassword" autocomplete="one-time-code" name="oldPassword" required>
