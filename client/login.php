@@ -46,9 +46,9 @@
                     <div class="mb-3">
                         <a href="#">Need help logging in?</a>
                     </div>
-                    <div class="mb-3">
+                    <!-- <div class="mb-3">
                         <a href="#" class="fw-bolder">Forgot User name or Password?</a>
-                    </div>
+                    </div> -->
                     <div class="text-center">
                         <button type="submit" class="btn btn-primary">Login</button>
                     </div>

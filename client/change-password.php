@@ -25,11 +25,11 @@
                     </div> -->
                     <div class="mb-3">
                         <label for="oldPassword" class="form-label">Old Password</label>
-                        <input type="text" class="form-control" id="oldPassword" name="oldPassword" required>
+                        <input type="text" class="form-control" id="oldPassword" autocomplete="false" name="oldPassword" required>
                     </div>
                     <div class="mb-5">
                         <label for="newPassword" class="form-label">New Password</label>
-                        <input type="password" class="form-control" id="newPassword" name="newPassword" required>
+                        <input type="password" class="form-control" id="newPassword" autocomplete="false" name="newPassword" required>
                     </div>
                     <?php
                         session_start();
