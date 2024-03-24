@@ -11,6 +11,11 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 $currentYear = date("Y");
 $defaultYear = $currentYear - 1;
 $year = $defaultYear ;
+if(isset($_GET['officeStatus'])) {
+    $status = $_GET['officeStatus'];
+} else {
+    $status = 'All';
+}
 
 ?>
 <!DOCTYPE html>
@@ -129,12 +134,14 @@ $year = $defaultYear ;
                         <form action="" method="get">
                         <h6>Office Status</h6>
                         <select class="form-select" name="officeStatus" id="">
-                            <option value="All">All</option>
-                            <option value="Active">Active</option>
-                            <option value="Inactive">Inactive</option>
-                            <option value="Released">Released</option>
-                            <option value="EFINPending">EFIN Pending</option>
-                            <option value="BalancePending">Balance Pending</option>
+                            <?php
+                                echo "<option value='All'>All</option>";
+                                echo "<option value='Active' " . ($status == 'Active' ? 'selected' : '') . ">Active</option>";
+                                echo "<option value='Inactive' " . ($status == 'Inactive' ? 'selected' : '') . ">Inactive</option>";
+                                echo "<option value='Released' " . ($status == 'Released' ? 'selected' : '') . ">Released</option>";
+                                echo "<option value='EFINPending' " . ($status == 'EFINPending' ? 'selected' : '') . ">EFIN Pending</option>";
+                                echo "<option value='BalancePending' " . ($status == 'BalancePending' ? 'selected' : '') . ">Balance Pending</option>";
+                            ?>
                         </select>
                     </div>
 					
