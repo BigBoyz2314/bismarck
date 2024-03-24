@@ -18,22 +18,22 @@
         <div class="row justify-content-center mt-5">
             <div class="col-md-6">
                 <h2 class="text-center mb-4">Change Password</h2>
-                <form action="change-pass.php" method="POST">
+                <form action="change-pass.php" method="POST" autocomplete="off">
                     <!-- <div class="mb-3">
                         <label for="clientid" class="form-label">Client ID</label>
                         <input type="number" class="form-control" id="clientid" name="clientid" required>
                     </div> -->
                     <div class="mb-3">
                         <label for="username" class="form-label">Old Password</label>
-                        <input type="text" class="form-control" id="username" autocomplete="off" name="username" required>
+                        <input type="text" class="form-control" id="username" autocomplete="one-time-code" name="username" required>
                     </div>
                     <div class="mb-3">
                         <label for="oldPassword" class="form-label">Old Password</label>
-                        <input type="text" class="form-control" id="oldPassword" autocomplete="off" name="oldPassword" required>
+                        <input type="text" class="form-control" id="oldPassword" autocomplete="one-time-code" name="oldPassword" required>
                     </div>
                     <div class="mb-5">
                         <label for="newPassword" class="form-label">New Password</label>
-                        <input type="password" class="form-control" id="newPassword" autocomplete="off" name="newPassword" required>
+                        <input type="password" class="form-control" id="newPassword" autocomplete="one-time-code" name="newPassword" required>
                     </div>
                     <?php
                         session_start();
