@@ -157,12 +157,23 @@ $defaultYear = $currentYear - 1;
                 $row = $result->fetch_assoc();
                 $name = $row["company_contact_name"];
                 $officeName = $row['company_name'];
+                $address = $row['company_address'];
+                $city = $row['company_city'];
+                $state = $row['company_state'];
+                $zip = $row['company_zip'];
 
                 // $officeName = $row['company_name'];
                 $stmt2 = "SELECT * FROM production WHERE office_id = $office ORDER BY year DESC";
                 $result2 = $conn->query($stmt2);
 
                 $year1 = $_GET['year'];
+
+                echo '<input type="hidden" id="office_name" value="' . $officeName . '">';
+                echo '<input type="hidden" id="contact_name" value="' . $name . '">';
+                echo '<input type="hidden" id="address" value="' . $address . '">';
+                echo '<input type="hidden" id="city" value="' . $city . '">';
+                echo '<input type="hidden" id="state" value="' . $state . '">';
+                echo '<input type="hidden" id="zip" value="' . $zip . '">';
 
                 echo '<div class="row mt-3">
                     <div class="col-md-12">
@@ -366,7 +377,7 @@ $defaultYear = $currentYear - 1;
                         <table class="table table-bordered text-nowrap">
                             <thead class="table-warning">
                                 <tr>
-                                    <th colspan="5" class="text-center">CxP  ( Paid ) </th>
+                                    <th colspan="6" class="text-center">CxP  ( Paid ) </th>
                                 </tr>
                                 <tr>
                                     <th>Sr.</th>
@@ -374,6 +385,7 @@ $defaultYear = $currentYear - 1;
                                     <th>Receipt #</th>
                                     <th>Date</th>
                                     <th>Notes</th>
+                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody id="cxpTable">
@@ -387,7 +399,7 @@ $defaultYear = $currentYear - 1;
                         <table class="table table-bordered text-nowrap">
                             <thead class="table-warning">
                                 <tr>
-                                    <th colspan="5" class="text-center"> Other fees and commisions </th>
+                                    <th colspan="6" class="text-center"> Other fees and commisions </th>
                                 </tr>
                                 <tr>
                                     <th>Sr.</th>
@@ -395,6 +407,7 @@ $defaultYear = $currentYear - 1;
                                     <th>Receipt #</th>
                                     <th>Date</th>
                                     <th>Notes</th>
+                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody id="otherTable">
@@ -570,7 +583,7 @@ $defaultYear = $currentYear - 1;
                             <table class="table table-bordered text-nowrap">
                                 <thead class="table-warning">
                                     <tr>
-                                        <th colspan="5" class="text-center">CxP  ( paid )</th>
+                                        <th colspan="6" class="text-center">CxP  ( paid )</th>
                                     </tr>
                                     <tr>
                                         <th>Sr.</th>
@@ -578,6 +591,7 @@ $defaultYear = $currentYear - 1;
                                         <th>Receipt #</th>
                                         <th>Date</th>
                                         <th>Notes</th>
+                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody id="cxpTable">
@@ -593,7 +607,7 @@ $defaultYear = $currentYear - 1;
                             <table class="table table-bordered text-nowrap">
                                 <thead class="table-warning">
                                     <tr>
-                                        <th colspan="5" class="text-center">Other Commissions or fees </th>
+                                        <th colspan="6" class="text-center">Other Commissions or fees </th>
                                     </tr>
                                     <tr>
                                         <th>Sr.</th>
@@ -601,6 +615,7 @@ $defaultYear = $currentYear - 1;
                                         <th>Receipt #</th>
                                         <th>Date</th>
                                         <th>Notes</th>
+                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody id="otherTable">
@@ -646,6 +661,7 @@ $defaultYear = $currentYear - 1;
                             '<td><input type="text" class="form-control" name="receipt[]" value="' + entry.receipt + '" /></td>' +
                             '<td><input type="date" class="form-control" name="date[]" value="' + entry.date + '" /></td>' +
                             '<td><input type="text" class="form-control" name="notes[]" value="' + entry.notes + '" /></td>' +
+                            '<td><button type="button" class="btn btn-primary" onClick="printCxp(this)" id="print-cxp-'+ (index + 1) +'">Print</button></td>' +
                             '</tr>';
 
                         $('#cxpTable').append(newRow);
@@ -685,6 +701,7 @@ $defaultYear = $currentYear - 1;
                             '<td><input type="text" class="form-control" name="receipt_o[]" value="' + entry.receipt + '" /></td>' +
                             '<td><input type="date" class="form-control" name="date_o[]" value="' + entry.date + '" /></td>' +
                            '<td><input type="text" class="form-control" name="notes_o[]" value="' + entry.notes + '" /></td>' +
+                           '<td><button type="button" class="btn btn-primary" onClick="printOther(this)" id="print-other-'+ (index + 1) +'">Print</button></td>' +
                             '</tr>';
 
                         $('#otherTable').append(newRow);
@@ -702,6 +719,348 @@ $defaultYear = $currentYear - 1;
                 }
             });
         }
+
+        function printOther(button) {
+            // Extract values from your row, you'll need to replace these with the correct indices or class names
+            var row = button.closest('tr');
+            var amount = row.querySelector('input[name="amount_o[]"]').value;
+            var receiptNumber = row.querySelector('input[name="receipt_o[]"]').value;
+            var date = row.querySelector('input[name="date_o[]"]').value;
+            var notes = row.querySelector('input[name="notes_o[]"]').value;
+            var companyName = $('#office_name').val();
+            var contact_name = $('#contact_name').val();
+            var address = $('#address').val();
+            var city = $('#city').val();
+            var state = $('#state').val();
+            var zip = $('#zip').val();
+
+            // Open a new tab for printing
+            var printWindow = window.open('', '_blank');
+
+            // Define styles for the invoice
+            const invoiceStyles = `
+                <style>
+                body {
+                    font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
+                    line-height: 1.6em;
+                    font-size: 12px;
+                    background: #fff;
+                    color: #555;
+                }
+                .invoice-box {
+                    max-width: 800px;
+                    margin: auto;
+                    padding: 30px;
+                    border: 1px solid #eee;
+                    box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+                    font-size: 14px;
+                    line-height: 24px;
+                    font-family: 'Helvetica Neue', 'Helvetica', Arial, sans-serif;
+                }
+                .invoice-box table {
+                    width: 100%;
+                    line-height: inherit;
+                    text-align: left;
+                }
+                .invoice-box table td {
+                    padding: 5px;
+                    vertical-align: top;
+                }
+                .invoice-box table tr.top table td {
+                    padding-bottom: 20px;
+                }
+                .invoice-box table tr.heading td {
+                    background: #eee;
+                    border-bottom: 1px solid #ddd;
+                    font-weight: bold;
+                }
+                .invoice-box table tr.details td {
+                    padding-bottom: 20px;
+                }
+                .invoice-box table tr.item td {
+                    border-bottom: 1px solid #eee;
+                }
+                .invoice-box hr {
+                    border-top: 1px solid #eee;
+                }
+                .mt-20 {
+                    margin-top: 20px;
+                }
+                .text-right {
+                    text-align: right;
+                }
+                .text-center {
+                    text-align: center;
+                }
+                </style>
+            `;
+
+            // Define header and content for the invoice
+            const invoiceHeader = `
+                <table cellpadding="0" cellspacing="0">
+                    <tr class="top">
+                        <td colspan="6">
+                            <table>
+                                <tr>
+                                    <td class="title" style="font-size:16px; padding: 5px 0;">
+                                        <br><br>
+                                        <strong>Bismarck Business Group LLC</strong><br>
+                                        540 SE 47th Terrace, Cape Coral, FL 33904
+                                    </td>
+                                    <td border='1' align='right'>
+                                        <strong style="font-size: 32px;">Invoice</strong><br><br>
+                                        Date: ${new Date().toLocaleDateString()}<br>
+                                        Invoice #: ${receiptNumber}
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr class="information">
+                        <td colspan="4">
+                            <table>
+                                <tr>
+                                    <td style="padding-bottom: 40px;">
+                                        <span style="margin-right: 25px;">Phone #: 239-391-6775</span>Email: bismarckbusinessgroup@gmail.com<br><br>
+                                        Bill To: <br>
+                                        ${companyName}<br>
+                                        ${contact_name}<br>
+                                        ${address}<br>
+                                        ${city}, ${state} ${zip}
+                                    </td>
+                                    <td class="text-right">
+                                        <br><br>
+                                        
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+                <hr>
+            `;
+
+            const invoiceBody = `
+                <table cellpadding="0" cellspacing="0">
+                    <tr class="heading">
+                        <td>Notes</td>
+                        <td class="text-right">Date</td>
+                        <td class="text-right">Amount</td>
+                    </tr>
+                    <tr class="item">
+                        <td>${notes}</td>
+                        <td class="text-right">${date}</td>
+                        <td class="text-right">${amount}</td>
+                    </tr>
+                </table>
+                <hr>
+            `;
+
+            const invoiceFooter = `
+                <div class="mt-20">
+                    <table cellpadding="0" cellspacing="0">
+                        <tr class="total">
+                            <td></td>
+                            <td class="text-right" style="font-size: 18px; padding: 20px 0;">
+                                Total: $${amount}
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            `;
+
+            // Write the HTML content for the print window
+            printWindow.document.write('<html><head><title>Print Invoice</title>' + invoiceStyles + '</head><body>');
+            printWindow.document.write('<div class="invoice-box">');
+            printWindow.document.write(invoiceHeader);
+            printWindow.document.write(invoiceBody);
+            printWindow.document.write(invoiceFooter);
+            printWindow.document.write('</div>');
+            printWindow.document.write('</body></html>');
+
+            // Close the document to finish writing
+            printWindow.document.close();
+
+            // Focus on the new window/tab and print the content
+            printWindow.focus();
+
+            // Wait for the content to fully load before printing
+            printWindow.onload = function() {
+                printWindow.print();
+            };
+        }
+
+        function printCxp(button) {
+            // Extract values from your row, you'll need to replace these with the correct indices or class names
+            var row = button.closest('tr');
+            var amount = row.querySelector('input[name="amount[]"]').value;
+            var receiptNumber = row.querySelector('input[name="receipt[]"]').value;
+            var date = row.querySelector('input[name="date[]"]').value;
+            var notes = row.querySelector('input[name="notes[]"]').value;
+            var companyName = $('#office_name').val();
+            var contact_name = $('#contact_name').val();
+            var address = $('#address').val();
+            var city = $('#city').val();
+            var state = $('#state').val();
+            var zip = $('#zip').val();
+
+            // Open a new tab for printing
+            var printWindow = window.open('', '_blank');
+
+            // Define styles for the invoice
+            const invoiceStyles = `
+                <style>
+                body {
+                    font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
+                    line-height: 1.6em;
+                    font-size: 12px;
+                    background: #fff;
+                    color: #555;
+                }
+                .invoice-box {
+                    max-width: 800px;
+                    margin: auto;
+                    padding: 30px;
+                    border: 1px solid #eee;
+                    box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+                    font-size: 14px;
+                    line-height: 24px;
+                    font-family: 'Helvetica Neue', 'Helvetica', Arial, sans-serif;
+                }
+                .invoice-box table {
+                    width: 100%;
+                    line-height: inherit;
+                    text-align: left;
+                }
+                .invoice-box table td {
+                    padding: 5px;
+                    vertical-align: top;
+                }
+                .invoice-box table tr.top table td {
+                    padding-bottom: 20px;
+                }
+                .invoice-box table tr.heading td {
+                    background: #eee;
+                    border-bottom: 1px solid #ddd;
+                    font-weight: bold;
+                }
+                .invoice-box table tr.details td {
+                    padding-bottom: 20px;
+                }
+                .invoice-box table tr.item td {
+                    border-bottom: 1px solid #eee;
+                }
+                .invoice-box hr {
+                    border-top: 1px solid #eee;
+                }
+                .mt-20 {
+                    margin-top: 20px;
+                }
+                .text-right {
+                    text-align: right;
+                }
+                .text-center {
+                    text-align: center;
+                }
+                </style>
+            `;
+
+            // Define header and content for the invoice
+            const invoiceHeader = `
+                <table cellpadding="0" cellspacing="0">
+                    <tr class="top">
+                        <td colspan="6">
+                            <table>
+                                <tr>
+                                    <td class="title" style="font-size:16px; padding: 5px 0;">
+                                        <br><br>
+                                        <strong>Bismarck Business Group LLC</strong><br>
+                                        540 SE 47th Terrace, Cape Coral, FL 33904
+                                    </td>
+                                    <td border='1' align='right'>
+                                        <strong style="font-size: 32px;">Invoice</strong><br><br>
+                                        Date: ${new Date().toLocaleDateString()}<br>
+                                        Invoice #: ${receiptNumber}
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr class="information">
+                        <td colspan="4">
+                            <table>
+                                <tr>
+                                    <td style="padding-bottom: 40px;">
+                                        <span style="margin-right: 25px;">Phone #: 239-391-6775</span>Email: bismarckbusinessgroup@gmail.com<br><br>
+                                        Bill To: <br>
+                                        ${companyName}<br>
+                                        ${contact_name}<br>
+                                        ${address}<br>
+                                        ${city}, ${state} ${zip}
+                                    </td>
+                                    <td class="text-right">
+                                        <br><br>
+
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+                <hr>
+            `;
+
+            const invoiceBody = `
+                <table cellpadding="0" cellspacing="0">
+                    <tr class="heading">
+                        <td>Notes</td>
+                        <td class="text-right">Date</td>
+                        <td class="text-right">Amount</td>
+                    </tr>
+                    <tr class="item">
+                        <td>${notes}</td>
+                        <td class="text-right">${date}</td>
+                        <td class="text-right">${amount}</td>
+                    </tr>
+                </table>
+                <hr>
+            `;
+
+            const invoiceFooter = `
+                <div class="mt-20">
+                    <table cellpadding="0" cellspacing="0">
+                        <tr class="total">
+                            <td></td>
+                            <td class="text-right" style="font-size: 18px; padding: 20px 0;">
+                                Total: $${amount}
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            `;
+
+            // Write the HTML content for the print window
+            printWindow.document.write('<html><head><title>Print Invoice</title>' + invoiceStyles + '</head><body>');
+            printWindow.document.write('<div class="invoice-box">');
+            printWindow.document.write(invoiceHeader);
+            printWindow.document.write(invoiceBody);
+            printWindow.document.write(invoiceFooter);
+            printWindow.document.write('</div>');
+            printWindow.document.write('</body></html>');
+
+            // Close the document to finish writing
+            printWindow.document.close();
+
+            // Focus on the new window/tab and print the content
+            printWindow.focus();
+
+            // Wait for the content to fully load before printing
+            printWindow.onload = function() {
+                printWindow.print();
+            };
+        }
+
+
 
 
 
@@ -1055,6 +1414,8 @@ $defaultYear = $currentYear - 1;
             inputElement.classList.remove("negative");
         }
     }
+
+    
 		
 
 
